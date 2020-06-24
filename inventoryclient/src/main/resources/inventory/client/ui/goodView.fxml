@@ -10,7 +10,7 @@
    <children>
       <TextField layoutX="79.0" layoutY="38.0" prefHeight="26.0" prefWidth="197.0" promptText="name" />
       <Label layoutX="24.0" layoutY="46.0" prefHeight="18.0" prefWidth="49.0" text="Name:" />
-      <Label layoutX="24.0" layoutY="96.0" prefHeight="18.0" prefWidth="49.0" text="Group:" />
+      <Label layoutX="24.0" layoutY="96.0" prefHeight="18.0" prefWidth="49.0" text="entity.Group:" />
       <ComboBox layoutX="79.0" layoutY="89.0" prefHeight="26.0" prefWidth="198.0" styleClass="combo-box" />
       <Label layoutX="24.0" layoutY="146.0" prefHeight="18.0" prefWidth="49.0" text="Number:" />
       <TextField layoutX="79.0" layoutY="139.0" prefHeight="26.0" prefWidth="197.0" text="0" />
