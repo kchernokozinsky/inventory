@@ -47,9 +47,9 @@
       </HBox>
       <PasswordField fx:id="passwordTextField" onKeyTyped="#onPasswordTextChange" GridPane.columnIndex="1" GridPane.rowIndex="5" />
       <Label fx:id="errLbl" text="Login or password is invalid!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-      <ImageView fitHeight="150.0" fitWidth="183.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
+      <ImageView fitHeight="150.0" fitWidth="154.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <image>
-            <Image url="@../img/avatar.png" />
+            <Image url="@../../../img/avatar.png" />
          </image>
       </ImageView>
    </children>
