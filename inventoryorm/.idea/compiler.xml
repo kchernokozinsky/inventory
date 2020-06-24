@@ -6,8 +6,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="inventory-client" />
-        <module name="inventoryclient" />
+        <module name="inventoryorm" />
       </profile>
     </annotationProcessing>
   </component>

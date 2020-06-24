@@ -1,11 +1,10 @@
-package client_server_development;
+package inventory.client.ui;
 
 import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.input.InputMethodEvent;
 
 public class LogInController {
     @FXML

@@ -1,4 +1,4 @@
-package client_server_development;
+package inventory.client.ui;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
