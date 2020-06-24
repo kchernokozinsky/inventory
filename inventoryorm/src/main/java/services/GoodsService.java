@@ -1,5 +1,6 @@
 package services;
 
+import DTO.GoodsDTO;
 import entity.Goods;
 
 import java.util.List;
@@ -17,37 +18,41 @@ public class GoodsService {
 
     private GoodsService() {}
 
-    public void save(Goods goods) {
-        GoodsDao.getGroupDao().save(goods);
+    public void save(GoodsDTO goods) {
+//        GoodsDao.getGroupDao().save(goods);
     }
 
-    public void delete(Goods goods) {
-        GoodsDao.getGroupDao().delete(goods);
+    public void delete(GoodsDTO goods) {
+//        GoodsDao.getGroupDao().delete(goods);
     }
 
-    public void update(Goods goods) {
-        GoodsDao.getGroupDao().update(goods);
+    public void update(GoodsDTO goods) {
+//        GoodsDao.getGroupDao().update(goods);
     }
 
-    public List<Goods> findAll() {
-        return GoodsDao.getGroupDao().findAll();
+    public List<GoodsDTO> findAll() {
+//        return GoodsDao.getGroupDao().findAll();
+        return null;
     }
 
-    public Goods findById(int id) {
-        return GoodsDao.getGroupDao().findGoodsById(id);
+    public GoodsDTO findById(int id) {
+//        return GoodsDao.getGroupDao().findGoodsById(id);
+        return null;
     }
 
-    public Goods findByName(String name) {
-        return GoodsDao.getGroupDao().findGoodsByName(name);
-    }
-
-    public List<Goods> findByNameLike(String name) {
+    public GoodsDTO findByName(String name) {
 //        return GoodsDao.getGroupDao().findGoodsByName(name);
         return null;
     }
 
-    public List<Goods> listByNumber(int number) {
-        return GoodsDao.getGroupDao().listByNumber(number);
+    public List<GoodsDTO> findByNameLike(String name) {
+//        return GoodsDao.getGroupDao().findGoodsByName(name);
+        return null;
+    }
+
+    public List<GoodsDTO> listByNumber(int number) {
+//        return GoodsDao.getGroupDao().listByNumber(number);
+        return null;
     }
 
 

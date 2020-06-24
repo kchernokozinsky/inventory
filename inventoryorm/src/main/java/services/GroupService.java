@@ -1,5 +1,6 @@
 package services;
 
+import DTO.GroupDTO;
 import entity.Group;
 
 import java.util.List;
@@ -17,31 +18,38 @@ public class GroupService {
 
     private GroupService(){}
 
-    public void saveGroup(Group group) {
-        GroupDao.getGroupDao().save(group);
+    public void saveGroup(GroupDTO group) {
+
+//        GroupDao.getGroupDao().save(new Group(group));
     }
 
-    public void deleteGroup(Group group) {
-        GroupDao.getGroupDao().delete(group);
+    public void deleteGroup(GroupDTO group)
+    {
+//        GroupDao.getGroupDao().delete(group);
     }
 
-    public void updateGroup(Group group) {
-        GroupDao.getGroupDao().update(group);
+    public void updateGroup(GroupDTO group)
+    {
+//        GroupDao.getGroupDao().update(group);
     }
 
-    public List<Group> findAllGroup() {
-        return GroupDao.getGroupDao().findAll();
+    public List<GroupDTO> findAllGroup() {
+//        return GroupDao.getGroupDao().findAll();
+        return null;
     }
 
-    public Group findGroupById(int id) {
-        return GroupDao.getGroupDao().findGroupById(id);
+    public GroupDTO findGroupById(int id)
+    {
+//        return GroupDao.getGroupDao().findGroupById(id);
+        return null;
     }
 
-    public Group findGroupByName(String name) {
-        return GroupDao.getGroupDao().findGroupByName(name);
+    public GroupDTO findGroupByName(String name) {
+//        return GroupDao.getGroupDao().findGroupByName(name);
+        return null;
     }
 
-    public List<Group> findGroupByNameLike(String name) {
+    public List<GroupDTO> findGroupByNameLike(String name) {
 //        return GroupDao.getGroupDao().findGroupByName(name);
         return null;
     }

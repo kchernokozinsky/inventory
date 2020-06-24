@@ -1,5 +1,7 @@
 package entity;
 
+import DTO.GroupDTO;
+
 import javax.persistence.*;
 
 @Entity
@@ -16,6 +18,12 @@ public class Group {
         this.name = name;
     }
 
+    public Group(GroupDTO group)
+    {
+        this.name = group.getName();
+        this.id = group.getId();
+    }
+
     public Group() {}
 
     public String getName() {
@@ -27,7 +35,7 @@ public class Group {
 
     @Override
     public String toString() {
-        return "entity.Group{" +
+        return "entity.GroupDTO{" +
                 "id=" + id +
                 ", name='" + name +
                 '}';
