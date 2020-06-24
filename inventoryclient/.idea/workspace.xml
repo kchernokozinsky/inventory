@@ -1,55 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e49657a1-5908-4fe5-a567-3f74d13901b8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/inventory/client/api/InventoryService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../inventoryshared/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../inventoryshared/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../inventoryshared/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../inventoryshared/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../inventoryshared/inventoryshared.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../inventoryshared/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../inventoryshared/src/main/java/api/IDecryptor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../inventoryshared/src/main/java/api/IEncryptor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../inventoryshared/src/main/java/api/IProccesor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../inventoryshared/src/main/java/api/IReceiver.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../inventoryshared/src/main/java/api/ISender.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../inventoryshared/src/main/java/impl/CryptoException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../inventoryshared/src/main/java/impl/CryptoUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../inventoryshared/src/main/java/impl/Decryptor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../inventoryshared/src/main/java/impl/Encryptor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../inventoryshared/src/main/java/impl/Message.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../inventoryshared/src/main/java/impl/Packet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../inventoryshared/src/main/java/impl/Processor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../inventoryshared/src/main/java/impl/Receiver.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../inventoryshared/src/main/java/impl/Segments.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../inventoryshared/src/main/java/impl/SenderMock.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../inventoryshared/src/main/java/impl/StoreClientTCP.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../inventoryshared/src/main/java/impl/StoreClientUDP.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../inventoryshared/src/main/java/impl/StoreServerTCP.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../inventoryshared/src/main/java/impl/StoreServerUDP.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../inventoryshared/src/main/java/impl/TCPSocketThread.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../inventoryshared/src/main/java/impl/Util.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../inventoryshared/src/test/java/ClientServerTCPTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../inventoryshared/src/test/java/ClientServerUDPTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../inventoryshared/src/test/java/CryptoUtilTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../inventoryshared/src/test/java/MessageTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../inventoryshared/src/test/java/PacketTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../inventoryshared/src/test/java/ReceiverTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../inventoryshared/src/test/java/TestConst.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client_server_development/AddGoodViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/inventory/client/ui/AddGoodViewController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client_server_development/AddGroupViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/inventory/client/ui/AddGroupViewController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client_server_development/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/inventory/client/ui/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client_server_development/ListViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/inventory/client/ui/ListViewController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client_server_development/LogInController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/inventory/client/ui/LogInController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/client_server_development/goodView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/inventory/client/ui/goodView.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/client_server_development/groupView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/inventory/client/ui/groupView.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/client_server_development/listView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/inventory/client/ui/listView.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/client_server_development/logInView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/inventory/client/ui/logInView.fxml" afterDir="false" />
-    </list>
+    <list default="true" id="e49657a1-5908-4fe5-a567-3f74d13901b8" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -275,7 +227,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1592993325462" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1592995865857" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
