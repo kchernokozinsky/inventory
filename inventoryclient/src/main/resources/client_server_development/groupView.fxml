@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="122.0" prefWidth="333.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client_server_development.AddGroupViewController">
+   <children>
+      <Label layoutX="30.0" layoutY="35.0" text="Name:" />
+      <Button layoutX="117.0" layoutY="74.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="78.0" text="ok" />
+      <Button cancelButton="true" layoutX="207.0" layoutY="74.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="77.0" text="cancel" />
+      <TextField layoutX="87.0" layoutY="31.0" prefHeight="26.0" prefWidth="197.0" promptText="name" />
+      <Label layoutX="87.0" layoutY="7.0" prefHeight="18.0" prefWidth="130.0" text="Name can`t be empty" textFill="RED" />
+   </children>
+</AnchorPane>

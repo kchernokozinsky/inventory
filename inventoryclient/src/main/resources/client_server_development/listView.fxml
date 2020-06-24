@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client_server_development.ListViewController">
+   <children>
+      <TextField fx:id="searchField" layoutX="14.0" layoutY="32.0" prefHeight="26.0" prefWidth="662.0" promptText="search" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="123.60000000000002" AnchorPane.topAnchor="32.0" />
+      <ListView fx:id="List" layoutX="14.0" layoutY="104.0" prefHeight="478.0" prefWidth="662.0" AnchorPane.bottomAnchor="17.600000000000023" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="123.60000000000002" AnchorPane.topAnchor="104.0" />
+      <Label fx:id="goodsLbl" layoutX="14.0" layoutY="72.0" onMouseClicked="#chooseGoods" onMouseEntered="#goodsOnMouseEntered" onMouseExited="#goodsOnMouseExited" prefHeight="18.0" prefWidth="43.0" text="Goods" underline="true" AnchorPane.leftAnchor="14.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Label>
+      <Label fx:id="groupsLbl" layoutX="64.0" layoutY="72.0" onMouseClicked="#chooseGroups" onMouseEntered="#groupsOnMouseEntered" onMouseExited="#groupsOnMouseExited" prefHeight="18.0" prefWidth="43.0" text="Groups" AnchorPane.leftAnchor="64.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Label>
+      <ImageView fx:id="avatar" fitHeight="50.0" fitWidth="50.0" layoutX="711.0" layoutY="20.0" onMouseClicked="#avatarOnClick" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="39.0">
+         <image>
+            <Image url="@../img/avatar.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <Button fx:id="newBtn" layoutX="710.0" layoutY="104.0" mnemonicParsing="false" onAction="#newGoodOrGroup" prefHeight="26.0" prefWidth="59.0" text="new" AnchorPane.rightAnchor="38.0" AnchorPane.topAnchor="104.0" />
+      <Button fx:id="removeBtn" layoutX="710.0" layoutY="144.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="59.0" text="remove" AnchorPane.rightAnchor="38.0" AnchorPane.topAnchor="144.0" />
+      <Button fx:id="addBtn" layoutX="710.0" layoutY="184.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="59.0" text="+" AnchorPane.rightAnchor="38.0" AnchorPane.topAnchor="184.0" />
+      <Button fx:id="subtractBtn" layoutX="710.0" layoutY="224.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="59.0" text="-" AnchorPane.rightAnchor="38.0" AnchorPane.topAnchor="224.0" />
+   </children>
+</AnchorPane>
