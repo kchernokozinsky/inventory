@@ -1,5 +1,6 @@
 package services;
 
+import DTO.UserDTO;
 import entity.User;
 
 import java.util.List;
@@ -17,30 +18,33 @@ public class UserService {
 
     private UserService(){}
 
-    public void saveUser(User user) {
-        UserDao.getUserDao().save(user);
+    public void saveUser(UserDTO user) {
+//        UserDao.getUserDao().save(user);
     }
 
-    public void deleteUser(User user) {
-        UserDao.getUserDao().delete(user);
+    public void deleteUser(UserDTO user) {
+//        UserDao.getUserDao().delete(user);
     }
 
-    public void updateUser(User user) {
-        UserDao.getUserDao().update(user);
+    public void updateUser(UserDTO user) {
+//        UserDao.getUserDao().update(user);
     }
-    public List<User> findAllUser() {
-        return UserDao.getUserDao().findAll();
-    }
-
-    public User findUserById(int id) {
-        return UserDao.getUserDao().findUserById(id);
+    public List<UserDTO> findAllUser() {
+//        return UserDao.getUserDao().findAll();
+        return null;
     }
 
-    public User findUserByName(String name) {
-        return UserDao.getUserDao().findUserByName(name);
+    public UserDTO findUserById(int id) {
+//        return UserDao.getUserDao().findUserById(id);
+        return null;
     }
 
-    public List<User> findUserByNameLike(String name)
+    public UserDTO findUserByName(String name) {
+//        return UserDao.getUserDao().findUserByName(name);
+        return null;
+    }
+
+    public List<UserDTO> findUserByNameLike(String name)
     {
 //        return UserDao.getUserDao().findUserByName(name);
         return null;

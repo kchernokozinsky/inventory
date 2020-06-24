@@ -1,37 +1,20 @@
-package entity;
-import DTO.UserDTO;
-import services.UserDao;
+package DTO;
 
-import javax.persistence.*;
+public class UserDTO {
 
-@Entity
-@Table(name="users")
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "login")
     private String login;
 
-    @Column(name = "password")
     private String passwordCache;
 
-    public User(String login, String password)
-    {
+    public UserDTO(String login, String password) {
 //        String pw = DigestUtils.sha256Hex(password);
         this.login = login;
 //        this.password = MD5
     }
 
-    public User(UserDTO user)
-    {
-        this.login = user.getLogin();
-        this.passwordCache = user.getPasswordCache();
-    }
-
-
-    public User() {
+    public UserDTO() {
     }
 
     public String getLogin() {

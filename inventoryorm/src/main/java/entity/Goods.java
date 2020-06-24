@@ -1,5 +1,7 @@
 package entity;
 import javax.persistence.*;
+
+import DTO.GoodsDTO;
 import services.GroupService;
 
 @Entity
@@ -30,6 +32,13 @@ public class Goods {
         this.groupId = groupId;
     }
 
+    public Goods(GoodsDTO goods) {
+        this.id = goods.getId();
+        this.name = goods.getName();
+        this.number = goods.getNumber();
+        this.groupId = goods.getGroupId();
+    }
+
     public Goods() {}
 
     public String getName() {
@@ -46,7 +55,7 @@ public class Goods {
 
     @Override
     public String toString() {
-        return "entity.Goods{" +
+        return "entity.GoodsDTO{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", number=" + number +
