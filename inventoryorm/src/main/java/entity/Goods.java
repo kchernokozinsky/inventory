@@ -15,7 +15,7 @@ public class Goods {
     @Column(name = "number")
     private int number;
 
-    @Column(name = "grouo_id")
+    @Column(name = "group_id")
     private int groupId;
 
     public Goods(String name, int number, String groupName) {
