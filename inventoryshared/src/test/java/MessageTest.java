@@ -15,4 +15,6 @@ public class MessageTest {
 		Assert.assertEquals(message.getMessage(), decodedMessage.getMessage());
 
 	}
+
+
 }

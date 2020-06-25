@@ -28,7 +28,7 @@ public class StoreClientUDP {
 		try {
 			socket.send(datagramPacket);
 			System.out.println();
-			byte[] responseBytes = new byte[Util.BUFFER_SIZE];
+			byte[] responseBytes = new byte[PacketUtil.BUFFER_SIZE];
 			datagramPacket = new DatagramPacket(responseBytes, responseBytes.length);
 
 			socket.receive(datagramPacket);
