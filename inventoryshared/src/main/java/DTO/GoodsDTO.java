@@ -10,19 +10,20 @@ public class GoodsDTO {
 
     private int groupId;
 
-//    public GoodsDTO(String name, int number, String groupName) {
-//        this.name = name;
-//        this.number = number;
-//        this.groupId = GroupService.getGroupService().findGroupByName(groupName).getId();
-//    }
-
     public GoodsDTO(String name, int number, int groupId) {
         this.name = name;
         this.number = number;
         this.groupId = groupId;
     }
 
-    public GoodsDTO() {}
+    public GoodsDTO(int id, String name, int number, int groupId) {
+        this.id = id;
+        this.name = name;
+        this.number = number;
+        this.groupId = groupId;
+    }
+
+//    public GoodsDTO() {}
 
     public int getId() {
         return id;
@@ -38,6 +39,22 @@ public class GoodsDTO {
 
     public int getGroupId() {
         return groupId;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
+    public void setGroupId(int groupId) {
+        this.groupId = groupId;
     }
 
     @Override

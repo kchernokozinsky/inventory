@@ -5,8 +5,11 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
+import org.mindrot.jbcrypt.BCrypt;
 
+import java.util.InputMismatchException;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class UserDao {
 
@@ -45,17 +48,34 @@ public class UserDao {
         session.close();
     }
 
-    public User findUserById(int id) {
-        return HibernateSessionFactoryUtil.getSessionFactory(User.class).openSession().get(User.class, id);
+    public User findById(int id) {
+        User user = HibernateSessionFactoryUtil.getSessionFactory(User.class).openSession().get(User.class, id);
+        if (user != null){
+            return user;
+        }
+        throw new NoSuchElementException("User with such id does not exist");
     }
 
-    public User findUserByName(String name) {
+    public User findByLogin(String login) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory(User.class).openSession();
         Criteria criteria = session.createCriteria(User.class);
-        return (User) criteria.add(Restrictions.eq("name", name)).uniqueResult();
+        User user = (User) criteria.add(Restrictions.eq("login", login)).uniqueResult();
+        if (user != null){
+            return user;
+        }
+        throw new NoSuchElementException("User with such login does not exist");
     }
 
     public List<User> findAll() {
-        return (List<User>) HibernateSessionFactoryUtil.getSessionFactory(User.class).openSession().createQuery("From User").list();
+        return (List<User>) HibernateSessionFactoryUtil.getSessionFactory(User.class).openSession().createQuery("From entity.User").list();
+    }
+
+    public User validateUser(String login, String password)
+    {
+        User user = findByLogin(login);
+        if (BCrypt.checkpw(login+':'+password, user.getPasswordCache())){
+            return user;
+        }
+        throw new InputMismatchException("Validation failed");
     }
 }

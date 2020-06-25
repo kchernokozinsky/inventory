@@ -9,7 +9,12 @@ public class GroupDTO {
         this.name = name;
     }
 
-    public GroupDTO() {}
+    public GroupDTO(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+//    public GroupDTO() {}
 
     public String getName() {
         return name;
