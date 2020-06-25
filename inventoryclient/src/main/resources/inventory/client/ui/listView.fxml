@@ -13,7 +13,7 @@
    <children>
       <TextField fx:id="searchField" layoutX="14.0" layoutY="32.0" prefHeight="26.0" prefWidth="662.0" promptText="search" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="123.60000000000002" AnchorPane.topAnchor="32.0" />
       <ListView fx:id="List" layoutX="14.0" layoutY="104.0" prefHeight="478.0" prefWidth="662.0" AnchorPane.bottomAnchor="17.600000000000023" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="123.60000000000002" AnchorPane.topAnchor="104.0" />
-      <Label fx:id="goodsLbl" layoutX="14.0" layoutY="72.0" onMouseClicked="#chooseGoods" onMouseEntered="#goodsOnMouseEntered" onMouseExited="#goodsOnMouseExited" prefHeight="18.0" prefWidth="43.0" text="entity.Goods" underline="true" AnchorPane.leftAnchor="14.0">
+      <Label fx:id="goodsLbl" layoutX="14.0" layoutY="72.0" onMouseClicked="#chooseGoods" onMouseEntered="#goodsOnMouseEntered" onMouseExited="#goodsOnMouseExited" prefHeight="18.0" prefWidth="43.0" text="Goods" underline="true" AnchorPane.leftAnchor="14.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Label>

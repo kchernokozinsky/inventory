@@ -10,8 +10,8 @@
     <packaging>pom</packaging>
 	
 	<modules>
-        <module>inventoryclient</module>
         <module>inventoryshared</module>
+        <module>inventoryclient</module>
         <module>inventoryserver</module>
         <module>inventoryorm</module>
     </modules>
