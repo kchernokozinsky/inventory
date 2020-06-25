@@ -1,11 +1,11 @@
 package entity;
 import javax.persistence.*;
-
+import javax.persistence.Entity;
 import DTO.GoodsDTO;
 import services.GroupService;
 
 @Entity
-@Table(name="goods")
+@Table(name = "goods")
 public class Goods {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,20 +17,9 @@ public class Goods {
     @Column(name = "number")
     private int number;
 
+
     @Column(name = "group_id")
     private int groupId;
-
-    public Goods(String name, int number, String groupName) {
-        this.name = name;
-        this.number = number;
-        this.groupId = GroupService.getGroupService().findGroupByName(groupName).getId();
-    }
-
-    public Goods(String name, int number, int groupId) {
-        this.name = name;
-        this.number = number;
-        this.groupId = groupId;
-    }
 
     public Goods(GoodsDTO goods) {
         this.id = goods.getId();
@@ -40,6 +29,10 @@ public class Goods {
     }
 
     public Goods() {}
+
+    public int getId() {
+        return id;
+    }
 
     public String getName() {
         return name;
@@ -53,9 +46,25 @@ public class Goods {
         return groupId;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
+    public void setGroupId(int groupId) {
+        this.groupId = groupId;
+    }
+
     @Override
     public String toString() {
-        return "entity.GoodsDTO{" +
+        return "entity.Goods{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", number=" + number +

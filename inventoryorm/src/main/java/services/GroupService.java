@@ -1,9 +1,13 @@
 package services;
 
 import DTO.GroupDTO;
+import DTO.UserDTO;
 import entity.Group;
 
+import javax.persistence.EntityExistsException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class GroupService {
 
@@ -18,40 +22,66 @@ public class GroupService {
 
     private GroupService(){}
 
-    public void saveGroup(GroupDTO group) {
-
-//        GroupDao.getGroupDao().save(new Group(group));
+    public GroupDTO save(GroupDTO groupDTO) {
+        Group group = new Group(groupDTO);
+        try {
+            getByName(group.getName());
+            throw new EntityExistsException("Group with this name alreaty exict");
+        }catch (NoSuchElementException e){
+            GroupDao.getGroupDao().save(group);
+            return new GroupDTO(group.getId(), group.getName());
+        }
     }
 
-    public void deleteGroup(GroupDTO group)
+    public void delete(GroupDTO groupDTO)
     {
-//        GroupDao.getGroupDao().delete(group);
+        Group group = GroupDao.getGroupDao().findById(groupDTO.getId());
+        GroupDao.getGroupDao().delete(group);
     }
 
-    public void updateGroup(GroupDTO group)
+    public void update(GroupDTO groupDTO)
     {
-//        GroupDao.getGroupDao().update(group);
+        GroupDao.getGroupDao().findById(groupDTO.getId());
+        Group group = new Group(groupDTO);
+        GroupDao.getGroupDao().update(group);
     }
 
-    public List<GroupDTO> findAllGroup() {
-//        return GroupDao.getGroupDao().findAll();
-        return null;
+    public List<GroupDTO> getAll() {
+        List<Group> groups;
+        List<GroupDTO> groupsDTO = new ArrayList<GroupDTO>();
+        groups = GroupDao.getGroupDao().findAll();
+        for (Group group: groups){
+            groupsDTO.add(new GroupDTO(group.getId(), group.getName()));
+        }
+        return groupsDTO;
     }
 
-    public GroupDTO findGroupById(int id)
+    public GroupDTO getById(int id)
     {
-//        return GroupDao.getGroupDao().findGroupById(id);
-        return null;
+        Group group = GroupDao.getGroupDao().findById(id);
+        return new GroupDTO(group.getId(), group.getName());
     }
 
-    public GroupDTO findGroupByName(String name) {
-//        return GroupDao.getGroupDao().findGroupByName(name);
-        return null;
+    public GroupDTO getByName(String name) {
+        Group group = GroupDao.getGroupDao().findByName(name);
+        return new GroupDTO(group.getId(), group.getName());
     }
 
-    public List<GroupDTO> findGroupByNameLike(String name) {
-//        return GroupDao.getGroupDao().findGroupByName(name);
-        return null;
+    public List<GroupDTO> getByNameLike(String name) {
+        List<Group> groups;
+        List<GroupDTO> groupsDTO = new ArrayList<GroupDTO>();
+        groups = GroupDao.getGroupDao().findByNameLike(name);
+        for (Group group: groups){
+            groupsDTO.add(new GroupDTO(group.getId(), group.getName()));
+        }
+        return groupsDTO;
+    }
+
+    public GroupDTO changeName(GroupDTO goodDTO, String name){
+        Group group = GroupDao.getGroupDao().findById(goodDTO.getId());
+        group.setName(name);
+        GroupDao.getGroupDao().update(group);
+        return new GroupDTO(group.getId(), group.getName());
     }
 
 }
