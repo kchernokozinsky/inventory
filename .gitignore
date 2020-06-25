@@ -13,6 +13,8 @@ buildNumber.properties
 /inventoryclient/.idea
 /inventoryserver/.idea
 /inventoryshared/.idea
+/inventoryorm/.idea
 /inventoryclient/*.iml
 /inventoryserver/*.iml
 /inventoryshared/*.iml
+/inventoryorm/*.iml
