@@ -5,4 +5,5 @@ module inventory.shared {
     requires jjwt;
 	requires java.xml.bind;
 	exports inventory.shared.Dto;
+	exports inventory.shared.impl;
 }
