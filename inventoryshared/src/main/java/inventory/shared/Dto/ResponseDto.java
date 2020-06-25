@@ -4,7 +4,15 @@ public class ResponseDto {
 	private ResponseErrorType responseErrorType;
 	private RequestResponseType requestResponseType;
 	private Object data;
+	private String jwt;
 
+	public String getJwt() {
+		return jwt;
+	}
+
+	public void setJwt(String jwt) {
+		this.jwt = jwt;
+	}
 
 	public RequestResponseType getRequestResponseType() {
 		return requestResponseType;
@@ -29,4 +37,5 @@ public class ResponseDto {
 	public void setData(Object data) {
 		this.data = data;
 	}
+
 }
