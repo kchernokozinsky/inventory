@@ -69,7 +69,7 @@ public class UserDao {
 
 	public List<User> findAll() {
 		return (List<User>) HibernateSessionFactoryUtil.getSessionFactory(User.class).openSession()
-				.createQuery("From entity.User").list();
+				.createQuery("From inventory.orm.entity.User").list();
 	}
 
 	public User validateUser(String login, String password) {
