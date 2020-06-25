@@ -75,6 +75,6 @@ public class GroupDao {
 
 	public List<Group> findAll() {
 		return (List<Group>) HibernateSessionFactoryUtil.getSessionFactory(Group.class).openSession()
-				.createQuery("From entity.Group").list();
+				.createQuery("From inventory.orm.entity.Group").list();
 	}
 }

@@ -13,8 +13,8 @@ public class Message {
 
 	public static Message decode(byte[] data) {
 		validateData(data);
-		int cType = Util.bytesToInt(data, 0);
-		int bUserId = Util.bytesToInt(data, 4);
+		int cType = PacketUtil.bytesToInt(data, 0);
+		int bUserId = PacketUtil.bytesToInt(data, 4);
 		byte[] messageBytes = new byte[data.length - 8];
 		System.arraycopy(data, 8, messageBytes, 0, messageBytes.length);
 		Builder builder = new Builder();
@@ -32,11 +32,11 @@ public class Message {
 	/* Properties section */
 
 	public int getcType() {
-		return Util.bytesToInt(data.get(Segments.cType), 0);
+		return PacketUtil.bytesToInt(data.get(Segments.cType), 0);
 	}
 
 	public int getbUserId() {
-		return Util.bytesToInt(data.get(Segments.bUserId), 0);
+		return PacketUtil.bytesToInt(data.get(Segments.bUserId), 0);
 	}
 
 	public String getMessage() {
@@ -51,7 +51,7 @@ public class Message {
 	/* End of Properties section */
 
 	public byte[] encode() {
-		return Util.flatten(data.get(Segments.cType), data.get(Segments.bUserId), data.get(Segments.message));
+		return PacketUtil.flatten(data.get(Segments.cType), data.get(Segments.bUserId), data.get(Segments.message));
 	}
 
 	@Override
@@ -102,7 +102,7 @@ public class Message {
 		}
 
 		private Builder setSegment(Segments segment, int value) {
-			data.put(segment, Util.intToBytes(value));
+			data.put(segment, PacketUtil.intToBytes(value));
 			return this;
 		}
 

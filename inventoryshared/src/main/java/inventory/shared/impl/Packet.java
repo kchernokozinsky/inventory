@@ -36,7 +36,7 @@ public class Packet {
 			byte[] segmentData = new byte[length];
 			System.arraycopy(data, position, segmentData, 0, length);
 			if (segment == Segments.wLen)
-				wLen = Util.bytesToInt(segmentData, 0);
+				wLen = PacketUtil.bytesToInt(segmentData, 0);
 			pBuilder.setSegment(segment, segmentData);
 			position += length;
 		}
@@ -92,7 +92,7 @@ public class Packet {
 		for (Segments segment : SEGMENTS) {
 			segmentsData.add(data.get(segment));
 		}
-		return Util.flatten(segmentsData.toArray());
+		return PacketUtil.flatten(segmentsData.toArray());
 	}
 
 	public InetAddress getClientAddress() {
@@ -120,15 +120,15 @@ public class Packet {
 	}
 
 	public Long getBPktId() {
-		return data.containsKey(Segments.bPktId) ? Util.bytesToLong(data.get(Segments.bPktId), 0) : null;
+		return data.containsKey(Segments.bPktId) ? PacketUtil.bytesToLong(data.get(Segments.bPktId), 0) : null;
 	}
 
 	public Integer getWLen() {
-		return data.containsKey(Segments.wLen) ? Util.bytesToInt(data.get(Segments.wLen), 0) : null;
+		return data.containsKey(Segments.wLen) ? PacketUtil.bytesToInt(data.get(Segments.wLen), 0) : null;
 	}
 
 	public Short getWHeaderCrc16() {
-		return data.containsKey(Segments.wHeaderCrc16) ? Util.bytesToShort(data.get(Segments.wHeaderCrc16), 0) : null;
+		return data.containsKey(Segments.wHeaderCrc16) ? PacketUtil.bytesToShort(data.get(Segments.wHeaderCrc16), 0) : null;
 	}
 
 	public Message getbMsq() {
@@ -139,7 +139,7 @@ public class Packet {
 
 	public Short getWBodyCrc16() {
 
-		return data.containsKey(Segments.wBodyCrc16) ? Util.bytesToShort(data.get(Segments.wBodyCrc16), 0) : null;
+		return data.containsKey(Segments.wBodyCrc16) ? PacketUtil.bytesToShort(data.get(Segments.wBodyCrc16), 0) : null;
 	}
 
 	/* End of Properties section */
@@ -184,16 +184,16 @@ public class Packet {
 			}
 
 			//checking Header Crc16
-			short crc16 = Util.getCrc16(
-					Util.flatten(data.get(Segments.bMagic), data.get(Segments.bSrc), data.get(Segments.bPktId),
+			short crc16 = PacketUtil.getCrc16(
+					PacketUtil.flatten(data.get(Segments.bMagic), data.get(Segments.bSrc), data.get(Segments.bPktId),
 							data.get(Segments.wLen)));
-			if (crc16 != Util.bytesToShort(data.get(Segments.wHeaderCrc16), 0))
+			if (crc16 != PacketUtil.bytesToShort(data.get(Segments.wHeaderCrc16), 0))
 				throw new IllegalStateException("Invalid data!");
 
 			//checking Message Crc16
-			if (Util.bytesToShort(data.get(Segments.wBodyCrc16), 0) != Util.getCrc16(data.get(Segments.bMsq))) {
-				System.out.println(Util.bytesToShort(data.get(Segments.wBodyCrc16), 0) + " " +
-						Util.getCrc16(data.get(Segments.bMsq)));
+			if (PacketUtil.bytesToShort(data.get(Segments.wBodyCrc16), 0) != PacketUtil.getCrc16(data.get(Segments.bMsq))) {
+				System.out.println(PacketUtil.bytesToShort(data.get(Segments.wBodyCrc16), 0) + " " +
+						PacketUtil.getCrc16(data.get(Segments.bMsq)));
 				throw new IllegalStateException("Invalid data!");
 			}
 
@@ -215,10 +215,10 @@ public class Packet {
 			}
 
 			//checking Header Crc16
-			short crc16 = Util.getCrc16(
-					Util.flatten(data.get(Segments.bMagic), data.get(Segments.bSrc), data.get(Segments.bPktId),
+			short crc16 = PacketUtil.getCrc16(
+					PacketUtil.flatten(data.get(Segments.bMagic), data.get(Segments.bSrc), data.get(Segments.bPktId),
 							data.get(Segments.wLen)));
-			if (crc16 != Util.bytesToShort(data.get(Segments.wHeaderCrc16), 0))
+			if (crc16 != PacketUtil.bytesToShort(data.get(Segments.wHeaderCrc16), 0))
 				throw new IllegalStateException("Invalid data!");
 
 		}
@@ -264,17 +264,17 @@ public class Packet {
 		}
 
 		private Builder setSegment(Segments segment, short value) {
-			setSegment(segment, Util.shortToBytes(value));
+			setSegment(segment, PacketUtil.shortToBytes(value));
 			return this;
 		}
 
 		private Builder setSegment(Segments segment, int value) {
-			setSegment(segment, Util.intToBytes(value));
+			setSegment(segment, PacketUtil.intToBytes(value));
 			return this;
 		}
 
 		private Builder setSegment(Segments segment, long value) {
-			data.put(segment, Util.longToBytes(value));
+			data.put(segment, PacketUtil.longToBytes(value));
 			return this;
 		}
 
@@ -293,12 +293,12 @@ public class Packet {
 				this.setWLen(data.get(Segments.bMsq).length);
 
 			if (!data.containsKey(Segments.wHeaderCrc16))
-				this.setSegment(Segments.wHeaderCrc16, Util.getCrc16(
-						Util.flatten(data.get(Segments.bMagic), data.get(Segments.bSrc), data.get(Segments.bPktId),
+				this.setSegment(Segments.wHeaderCrc16, PacketUtil.getCrc16(
+						PacketUtil.flatten(data.get(Segments.bMagic), data.get(Segments.bSrc), data.get(Segments.bPktId),
 								data.get(Segments.wLen))));
 
 			if (!data.containsKey(Segments.wBodyCrc16))
-				this.setSegment(Segments.wBodyCrc16, Util.getCrc16(data.get(Segments.bMsq)));
+				this.setSegment(Segments.wBodyCrc16, PacketUtil.getCrc16(data.get(Segments.bMsq)));
 
 			validateData();
 			Packet packet = new Packet();

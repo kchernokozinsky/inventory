@@ -86,7 +86,7 @@ public class GoodsDao {
 
 	public List<Goods> findAll() {
 		return (List<Goods>) HibernateSessionFactoryUtil.getSessionFactory(Goods.class).openSession()
-				.createQuery("From entity.Goods").list();
+				.createQuery("From inventory.orm.entity.Goods").list();
 	}
 
 	public List<Goods> getListByGroupId(int id) {

@@ -26,7 +26,7 @@ public class StoreServerUDP extends Thread {
 
 		while (running) {
 			try {
-				byte[] requestBytes = new byte[Util.BUFFER_SIZE];
+				byte[] requestBytes = new byte[PacketUtil.BUFFER_SIZE];
 				DatagramPacket datagramPacket = new DatagramPacket(requestBytes, requestBytes.length);
 				socket.receive(datagramPacket);
 				Packet request = decryptor.decrypt(requestBytes);

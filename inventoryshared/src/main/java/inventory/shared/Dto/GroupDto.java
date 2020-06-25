@@ -14,7 +14,7 @@ public class GroupDto {
 		this.name = name;
 	}
 
-//    public GroupDto() {}
+    public GroupDto() {}
 
 	public String getName() {
 		return name;
@@ -26,6 +26,6 @@ public class GroupDto {
 
 	@Override
 	public String toString() {
-		return "inventory.orm.entity.GroupDto{" + "id=" + id + ", name='" + name + '}';
+		return "GroupDto{" + "id=" + id + ", name='" + name + '\'' + '}';
 	}
 }

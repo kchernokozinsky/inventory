@@ -1,0 +1,27 @@
+package inventory.shared.Dto;
+
+public class ChangeGoodsQuantityDto {
+	private GoodsDto goodsDto;
+	private Integer quantity;
+
+	public ChangeGoodsQuantityDto(GoodsDto goodsDto, Integer quantity) {
+		this.goodsDto = goodsDto;
+		this.quantity = quantity;
+	}
+
+	public GoodsDto getGoodsDto() {
+		return goodsDto;
+	}
+
+	public void setGoodsDto(GoodsDto goodsDto) {
+		this.goodsDto = goodsDto;
+	}
+
+	public Integer getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
+	}
+}

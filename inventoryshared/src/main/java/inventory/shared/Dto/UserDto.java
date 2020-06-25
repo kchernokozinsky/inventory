@@ -21,7 +21,7 @@ public class UserDto {
 		this.passwordCache = passwordCache;
 	}
 
-//    public UserDto() {}
+    public UserDto() {}
 
 	public int getId() {
 		return id;
@@ -49,6 +49,6 @@ public class UserDto {
 
 	@Override
 	public String toString() {
-		return "inventory.orm.entity.UserDto{" + "id=" + id + ", login='" + login + '}';
+		return "UserDto{" + "id=" + id + ", login='" + login + '\'' + ", passwordCache='" + passwordCache + '\'' + '}';
 	}
 }
