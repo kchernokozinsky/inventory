@@ -1,6 +1,10 @@
-package inventory.shared.impl;
+package inventory.server;
 
 import inventory.shared.api.ISender;
+import inventory.shared.impl.Decryptor;
+import inventory.shared.impl.Encryptor;
+import inventory.shared.impl.Packet;
+import inventory.shared.impl.PacketUtil;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
