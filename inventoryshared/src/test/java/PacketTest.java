@@ -1,8 +1,7 @@
-
-import impl.Decryptor;
-import impl.Encryptor;
-import impl.Message;
-import impl.Packet;
+import inventory.shared.impl.Decryptor;
+import inventory.shared.impl.Encryptor;
+import inventory.shared.impl.Message;
+import inventory.shared.impl.Packet;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -16,16 +15,11 @@ public class PacketTest {
 		Encryptor encryptor = new Encryptor(KEY);
 
 		Message.Builder mBuilder = new Message.Builder();
-		mBuilder.setCType(1)
-				.setBUserId(1)
-				.setMessage("{\"test\": true}");
+		mBuilder.setCType(1).setBUserId(1).setMessage("{\"test\": true}");
 		Message message = mBuilder.build();
 
 		Packet.Builder pBuilder = new Packet.Builder();
-		pBuilder.setBMagic((byte)0x13)
-				.setBSrc((byte)0x01)
-				.setBPktId(1L)
-				.setBMsq(message);
+		pBuilder.setBMagic((byte) 0x13).setBSrc((byte) 0x01).setBPktId(1L).setBMsq(message);
 
 		Packet packet = pBuilder.build();
 
@@ -40,7 +34,6 @@ public class PacketTest {
 		Assert.assertEquals(packet.getWLen(), pDecoded.getWLen());
 		Assert.assertEquals(packet.getWBodyCrc16(), pDecoded.getWBodyCrc16());
 		Assert.assertEquals(packet.getWHeaderCrc16(), pDecoded.getWHeaderCrc16());
-
 
 	}
 

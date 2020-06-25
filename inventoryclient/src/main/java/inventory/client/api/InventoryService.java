@@ -1,19 +1,13 @@
 package inventory.client.api;
 
+//import inventory.shared.Dto.GroupDto;
 
+//import inventory.shared.Dto.GroupDto;
 
-
-
-
-
-
-import DTO.GroupDTO;
-
-import java.util.ArrayList;
+import inventory.shared.Dto.GroupDto;
 
 public interface InventoryService {
-
-private GroupDTO;
-//	ArrayList<GroupDTO>
+	GroupDto g();
+//	ArrayList<GroupDto>
 
 }

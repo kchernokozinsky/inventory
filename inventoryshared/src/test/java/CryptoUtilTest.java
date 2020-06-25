@@ -1,6 +1,5 @@
-
-import impl.CryptoException;
-import impl.CryptoUtil;
+import inventory.shared.impl.CryptoException;
+import inventory.shared.impl.CryptoUtil;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -16,7 +15,7 @@ public class CryptoUtilTest {
 		Assert.assertEquals(json, new String(decrypted));
 	}
 
-	@Test (expected = CryptoException.class)
+	@Test(expected = CryptoException.class)
 	public void testCryptoException() throws CryptoException {
 		String json = "{\"test\": true}";
 		byte[] encrypted = CryptoUtil.encrypt(WRONG_KEY, json.getBytes());

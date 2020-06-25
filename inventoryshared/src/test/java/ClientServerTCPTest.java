@@ -1,5 +1,4 @@
-
-import impl.*;
+import inventory.shared.impl.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -7,15 +6,15 @@ import org.junit.Test;
 import java.io.IOException;
 
 public class ClientServerTCPTest {
-Encryptor encryptor;
-StoreServerTCP server;
+	Encryptor encryptor;
+	StoreServerTCP server;
 
 	@Before
 	public void setup() throws IOException {
 		server = new StoreServerTCP(TestConst.TCP_SERVER_PORT, TestConst.KEY);
 		server.start();
 		/* Encryptor Creating */
-		 encryptor = new Encryptor(TestConst.KEY);
+		encryptor = new Encryptor(TestConst.KEY);
 	}
 
 	@Test
@@ -25,16 +24,11 @@ StoreServerTCP server;
 
 		/* Packet Creating */
 		Message.Builder mBuilder = new Message.Builder();
-		mBuilder.setCType(1)
-				.setBUserId(1)
-				.setMessage("{\"test\": true}");
+		mBuilder.setCType(1).setBUserId(1).setMessage("{\"test\": true}");
 		Message message = mBuilder.build();
 
 		Packet.Builder pBuilder = new Packet.Builder();
-		pBuilder.setBMagic((byte)0x13)
-				.setBSrc((byte)0x01)
-				.setBPktId(1L)
-				.setBMsq(message);
+		pBuilder.setBMagic((byte) 0x13).setBSrc((byte) 0x01).setBPktId(1L).setBMsq(message);
 
 		Packet packet = pBuilder.build();
 		/* Packet Creating */

@@ -1,4 +1,4 @@
-import impl.*;
+import inventory.shared.impl.*;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -7,8 +7,9 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class ReceiverTest {
-	private ScheduledExecutorService executor = Executors.newScheduledThreadPool(2);
 	private static final String KEY = "Mary has one cat";
+	private ScheduledExecutorService executor = Executors.newScheduledThreadPool(2);
+
 	@Test
 	public void receiverTest() {
 		Decryptor decryptor = new Decryptor(KEY);
@@ -20,16 +21,11 @@ public class ReceiverTest {
 
 		/*Creating packet */
 		Message.Builder mBuilder = new Message.Builder();
-		mBuilder.setCType(1)
-				.setBUserId(1)
-				.setMessage("{\"test\": true}");
+		mBuilder.setCType(1).setBUserId(1).setMessage("{\"test\": true}");
 		Message message = mBuilder.build();
 
 		Packet.Builder pBuilder = new Packet.Builder();
-		pBuilder.setBMagic((byte)0x13)
-				.setBSrc((byte)0x01)
-				.setBPktId(1L)
-				.setBMsq(message);
+		pBuilder.setBMagic((byte) 0x13).setBSrc((byte) 0x01).setBPktId(1L).setBMsq(message);
 
 		Packet packet = pBuilder.build();
 
@@ -46,7 +42,6 @@ public class ReceiverTest {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-
 
 	}
 

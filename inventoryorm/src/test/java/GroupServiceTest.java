@@ -1,53 +1,56 @@
-import DTO.GroupDTO;
-import entity.Group;
-import org.junit.*;
-import services.GroupService;
+import inventory.orm.services.GroupService;
+import inventory.shared.Dto.GroupDto;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Ignore;
+import org.junit.Test;
 
 import java.util.List;
 
-import static junit.framework.TestCase.*;
+import static junit.framework.TestCase.assertEquals;
 
 public class GroupServiceTest {
-    @BeforeClass
-    public static void saveTest() {
-        GroupService.getGroupService().save(new GroupDTO("anme"));
-        GroupService.getGroupService().save(new GroupDTO("pugro"));
-    }
+	@BeforeClass
+	public static void saveTest() {
+		GroupService.getGroupService().save(new GroupDto("anme"));
+		GroupService.getGroupService().save(new GroupDto("pugro"));
+	}
 
-    @AfterClass
-    public static void afterTest() {
-        assertEquals(GroupService.getGroupService().getById(GroupService.getGroupService().getByName("name").getId()).getName(), "name");
-        GroupService.getGroupService().getByName("group");
-        GroupService.getGroupService().delete(GroupService.getGroupService().getByName("name"));
-        GroupService.getGroupService().delete(GroupService.getGroupService().getByName("group"));
-    }
+	@AfterClass
+	public static void afterTest() {
+		assertEquals(GroupService.getGroupService().getById(GroupService.getGroupService().getByName("name").getId())
+				.getName(), "name");
+		GroupService.getGroupService().getByName("group");
+		GroupService.getGroupService().delete(GroupService.getGroupService().getByName("name"));
+		GroupService.getGroupService().delete(GroupService.getGroupService().getByName("group"));
+	}
 
-    @Test
-    public void changeTest(){
-        GroupDTO GroupDTO = GroupService.getGroupService().getByName("pugro");
-        GroupService.getGroupService().changeName(GroupDTO, "group");
-    }
+	@Test
+	public void changeTest() {
+		GroupDto GroupDTO = GroupService.getGroupService().getByName("pugro");
+		GroupService.getGroupService().changeName(GroupDTO, "group");
+	}
 
-    @Test
-    public void getListTest(){
-        assert(GroupService.getGroupService().getAll().size() > 0);
-        List<GroupDTO> groupsDTO = GroupService.getGroupService().getByNameLike("n");
-        assert(groupsDTO.size() > 0);
-        for (GroupDTO group: groupsDTO) {
-            assert(group.getName().contains("n"));
-        }
-    }
+	@Test
+	public void getListTest() {
+		assert (GroupService.getGroupService().getAll().size() > 0);
+		List<GroupDto> groupsDTO = GroupService.getGroupService().getByNameLike("n");
+		assert (groupsDTO.size() > 0);
+		for (GroupDto group : groupsDTO) {
+			assert (group.getName().contains("n"));
+		}
+	}
 
-    @Test
-    public void updateTest() {
-        GroupDTO GroupDTO = GroupService.getGroupService().getByName("anme");
-        GroupService.getGroupService().update(new GroupDTO(GroupDTO.getId(), "name"));
-    }
+	@Test
+	public void updateTest() {
+		GroupDto GroupDTO = GroupService.getGroupService().getByName("anme");
+		GroupService.getGroupService().update(new GroupDto(GroupDTO.getId(), "name"));
+	}
 
-    @Ignore
-    public void deleteTest(){
-        GroupService.getGroupService().delete(GroupService.getGroupService().getByName("name"));
-        GroupService.getGroupService().delete(GroupService.getGroupService().getByName("group"));
-    }
+	@Ignore
+	public void deleteTest() {
+		GroupService.getGroupService().delete(GroupService.getGroupService().getByName("name"));
+		GroupService.getGroupService().delete(GroupService.getGroupService().getByName("group"));
+	}
 
 }

@@ -1,5 +1,4 @@
-
-import impl.Message;
+import inventory.shared.impl.Message;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -9,9 +8,7 @@ public class MessageTest {
 	@Test
 	public void encryptDecryptTest() {
 		Message.Builder builder = new Message.Builder();
-		builder.setCType(1)
-				.setBUserId(1)
-				.setMessage("{\"test\": true}");
+		builder.setCType(1).setBUserId(1).setMessage("{\"test\": true}");
 		Message message = builder.build();
 		byte[] data = message.encode();
 		Message decodedMessage = Message.decode(data);
