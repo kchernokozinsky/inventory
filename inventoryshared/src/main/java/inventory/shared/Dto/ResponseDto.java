@@ -2,11 +2,16 @@ package inventory.shared.Dto;
 
 public class ResponseDto {
 	private ResponseErrorType responseErrorType;
+	private RequestResponseType requestResponseType;
 	private Object data;
 
-	public ResponseDto(ResponseErrorType responseErrorType, Object data) {
-		this.responseErrorType = responseErrorType;
-		this.data = data;
+
+	public RequestResponseType getRequestResponseType() {
+		return requestResponseType;
+	}
+
+	public void setRequestResponseType(RequestResponseType requestResponseType) {
+		this.requestResponseType = requestResponseType;
 	}
 
 	public ResponseErrorType getResponseErrorType() {
