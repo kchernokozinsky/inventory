@@ -1,6 +1,12 @@
 package inventory.client.ui;
 
+import inventory.client.impl.RequestPacketsUtil;
+import inventory.client.impl.RequestUtil;
 import inventory.shared.Dto.GroupDto;
+import inventory.shared.Dto.RequestDto;
+import inventory.shared.Dto.ResponseDto;
+import inventory.shared.impl.Message;
+import inventory.shared.impl.Packet;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -173,13 +179,32 @@ public class InfoController {
 	}
 
 	void FillList() {
+		RequestDto requestDto = null;
 		if (isGroups) {
 			if (searchField.getText().isEmpty()) {
-				
+				requestDto = RequestUtil.getAllGoods(appController.getInventoryClient().getJwt());
+			}
+			else {
+				requestDto = RequestUtil.findGoods(searchField.getText(), appController.getInventoryClient().getJwt());
 			}
 		}
 		if (isGoods) {
-
+			if (searchField.getText().isEmpty()) {
+				requestDto = RequestUtil.getAllGroups(appController.getInventoryClient().getJwt());
+			}
+			else {
+				requestDto = RequestUtil.findGroups(searchField.getText(), appController.getInventoryClient().getJwt());
+			}
+		}
+		Packet packet = RequestPacketsUtil.createRequestPacket(requestDto,
+				appController.getInventoryClient().getClientSocket().getInetAddress(),
+				appController.getInventoryClient().getClientSocket().getPort());
+		try {
+			Packet responsePacket = appController.getInventoryClient().sendMessage(packet.encode());
+			ResponseDto responseDto = RequestUtil.packetToResponse(responsePacket);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 
