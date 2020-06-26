@@ -50,26 +50,38 @@ public class UserDao {
 	}
 
 	public User findById(int id) {
-		User user = HibernateSessionFactoryUtil.getSessionFactory(User.class).openSession().get(User.class, id);
+		Session session = HibernateSessionFactoryUtil.getSessionFactory(User.class).openSession();
+		Transaction tx1 = session.beginTransaction();
+		User user = session.get(User.class, id);
 		if (user != null) {
 			return user;
 		}
+		tx1.commit();
+		session.close();
 		throw new NoSuchElementException("User with such id does not exist");
 	}
 
 	public User findByLogin(String login) {
 		Session session = HibernateSessionFactoryUtil.getSessionFactory(User.class).openSession();
+		Transaction tx1 = session.beginTransaction();
 		Criteria criteria = session.createCriteria(User.class);
 		User user = (User) criteria.add(Restrictions.eq("login", login)).uniqueResult();
 		if (user != null) {
 			return user;
 		}
+		tx1.commit();
+		session.close();
+		System.out.println("11111111111111" + session);
 		throw new NoSuchElementException("User with such login does not exist");
 	}
 
 	public List<User> findAll() {
-		return (List<User>) HibernateSessionFactoryUtil.getSessionFactory(User.class).openSession()
-				.createQuery("From inventory.orm.entity.User").list();
+		Session session = HibernateSessionFactoryUtil.getSessionFactory(User.class).openSession();
+		Transaction tx1 = session.beginTransaction();
+		List<User> ret = (List<User>) session.createQuery("From inventory.orm.entity.User").list();
+		tx1.commit();
+		session.close();
+		return ret;
 	}
 
 	public User validateUser(String login, String password) {

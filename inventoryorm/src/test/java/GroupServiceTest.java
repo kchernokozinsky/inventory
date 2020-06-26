@@ -25,8 +25,8 @@ public class GroupServiceTest {
 		assertEquals(GroupService.getGroupService().getById(GroupService.getGroupService().getByName("name").getId())
 				.getName(), "name");
 		GroupService.getGroupService().getByName("group");
-//		GroupService.getGroupService().delete(GroupService.getGroupService().getByName("name"));
-//		GroupService.getGroupService().delete(GroupService.getGroupService().getByName("group"));
+		GroupService.getGroupService().delete(GroupService.getGroupService().getByName("name"));
+		GroupService.getGroupService().delete(GroupService.getGroupService().getByName("group"));
 	}
 
 	@Test
@@ -51,10 +51,24 @@ public class GroupServiceTest {
 		GroupService.getGroupService().update(new GroupDto(GroupDTO.getId(), "name"));
 	}
 
-	@Ignore
-	public void deleteTest() {
-		GroupService.getGroupService().delete(GroupService.getGroupService().getByName("name"));
-		GroupService.getGroupService().delete(GroupService.getGroupService().getByName("group"));
-	}
+    @Ignore
+    public void deleteTest() {
+        try {
+            GroupService.getGroupService().delete(GroupService.getGroupService().getByName("name"));
+        } catch (Exception e) {
+        }
+        try {
+            GroupService.getGroupService().delete(GroupService.getGroupService().getByName("group"));
+        } catch (Exception e) {
+        }
+        try {
+            GroupService.getGroupService().delete(GroupService.getGroupService().getByName("anme"));
+        } catch (Exception e) {
+        }
+        try {
+            GroupService.getGroupService().delete(GroupService.getGroupService().getByName("pugro"));
+        } catch (Exception e) {
+        }
+    }
 
 }

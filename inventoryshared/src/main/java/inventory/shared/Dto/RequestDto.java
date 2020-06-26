@@ -5,7 +5,8 @@ import inventory.shared.impl.JsonConverter;
 public class RequestDto {
 	private RequestResponseType requestType;
 	private Object data;
-	private String jwt;
+	private String jwtAccess;
+	private String jwtRefresh;
 
 
 	public RequestDto(RequestResponseType requestType, Object data) {
@@ -36,11 +37,19 @@ public class RequestDto {
 		return JsonConverter.objToJson(this);
 	}
 
-	public String getJwt() {
-		return jwt;
+	public String getJwtAccess() {
+		return jwtAccess;
 	}
 
-	public void setJwt(String jwt) {
-		this.jwt = jwt;
+	public void setJwtAccess(String jwtAccess) {
+		this.jwtAccess = jwtAccess;
+	}
+
+	public String getJwtRefresh() {
+		return jwtRefresh;
+	}
+
+	public void setJwtRefresh(String jwtRefresh) {
+		this.jwtRefresh = jwtRefresh;
 	}
 }

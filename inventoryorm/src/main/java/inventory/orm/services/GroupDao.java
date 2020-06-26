@@ -38,6 +38,7 @@ public class GroupDao {
 		Transaction tx1 = session.beginTransaction();
 		session.update(group);
 		tx1.commit();
+		session.close();
 	}
 
 	public void delete(Group group) {
@@ -49,32 +50,47 @@ public class GroupDao {
 	}
 
 	public Group findById(int id) {
-		Group group = HibernateSessionFactoryUtil.getSessionFactory(Group.class).openSession().get(Group.class, id);
+		Session session = HibernateSessionFactoryUtil.getSessionFactory(Group.class).openSession();
+		Transaction tx1 = session.beginTransaction();
+		Group group = session.get(Group.class, id);
 		if (group != null) {
 			return group;
 		}
+		tx1.commit();
+		session.close();
 		throw new NoSuchElementException("Group with such id does not exist");
 	}
 
 	public Group findByName(String name) {
 		Session session = HibernateSessionFactoryUtil.getSessionFactory(Group.class).openSession();
+		Transaction tx1 = session.beginTransaction();
 		Criteria criteria = session.createCriteria(Group.class);
 		Group group = (Group) criteria.add(Restrictions.eq("name", name)).uniqueResult();
 		if (group != null) {
 			return group;
 		}
+		tx1.commit();
+		session.close();
 		throw new NoSuchElementException("Group with such name does not exist");
 	}
 
 	public List<Group> findByNameLike(String name) {
 		Session session = HibernateSessionFactoryUtil.getSessionFactory(Group.class).openSession();
+		Transaction tx1 = session.beginTransaction();
 		Criteria criteria = session.createCriteria(Group.class);
 		Criterion c1 = Restrictions.like("name", name, MatchMode.ANYWHERE);
-		return criteria.add(c1).list();
+		List<Group> groups = criteria.add(c1).list();
+		tx1.commit();
+		session.close();
+		return groups;
 	}
 
 	public List<Group> findAll() {
-		return (List<Group>) HibernateSessionFactoryUtil.getSessionFactory(Group.class).openSession()
-				.createQuery("From inventory.orm.entity.Group").list();
+		Session session = HibernateSessionFactoryUtil.getSessionFactory(Group.class).openSession();
+		Transaction tx1 = session.beginTransaction();
+		List<Group> res = (List<Group>) session.createQuery("From inventory.orm.entity.Group").list();
+		tx1.commit();
+		session.close();
+		return res;
 	}
 }

@@ -6,14 +6,15 @@ public class ResponseDto {
 	private ResponseErrorType responseErrorType;
 	private RequestResponseType requestResponseType;
 	private Object data;
-	private String jwt;
+	private String jwtAccess;
+	private String jwtRefresh;
 
-	public String getJwt() {
-		return jwt;
+	public String getJwtAccess() {
+		return jwtAccess;
 	}
 
-	public void setJwt(String jwt) {
-		this.jwt = jwt;
+	public void setJwtAccess(String jwtAccess) {
+		this.jwtAccess = jwtAccess;
 	}
 
 	public RequestResponseType getRequestResponseType() {
@@ -44,4 +45,11 @@ public class ResponseDto {
 		return JsonConverter.objToJson(this);
 	}
 
+	public String getJwtRefresh() {
+		return jwtRefresh;
+	}
+
+	public void setJwtRefresh(String jwtRefresh) {
+		this.jwtRefresh = jwtRefresh;
+	}
 }

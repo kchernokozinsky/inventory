@@ -16,7 +16,10 @@ public enum RequestResponseType {
 	REMOVE_GOODS(GoodsDto.class, GoodsDto[].class),
 	CHANGE_GOODS_QUANTITY(ChangeGoodsQuantityDto.class, null),
 	FIND_GROUP(String.class, GroupDto.class),
-	FIND_GOOD(String.class, GoodsDto.class);
+	FIND_GOOD(String.class, GoodsDto.class),
+	// refresh and access token - response
+	// refresh token - request
+	REFRESH_JWT(null, null);
 
 	private Class<?> requestKlass;
 	private Class<?> responseKlass;
