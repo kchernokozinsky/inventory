@@ -68,7 +68,7 @@ public class LogInController {
 				inventoryClient.getClientSocket().getInetAddress(), inventoryClient.getClientSocket().getPort());
 		ResponseDto responseDto = RequestUtil.packetToResponse(appController.getInventoryClient().sendMessage(packet.encode()));
 		if(responseDto.getResponseErrorType() == ResponseErrorType.OK) {
-			inventoryClient.setJwt(responseDto.getJwt());
+			inventoryClient.setJwt(responseDto.getJwtAccess());
 			App.setRoot("TableView");
 		}
 		else {

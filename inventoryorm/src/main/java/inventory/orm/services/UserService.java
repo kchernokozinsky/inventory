@@ -27,7 +27,7 @@ public class UserService {
 		User user = new User(userDTO);
 		try {
 			getByLogin(user.getLogin());
-			throw new EntityExistsException("User with this login alreaty exict");
+			throw new EntityExistsException("User with this login already exist");
 		} catch (NoSuchElementException e) {
 			UserDao.getUserDao().save(user);
 			return new UserDto(user.getId(), user.getLogin(), user.getPasswordHash());

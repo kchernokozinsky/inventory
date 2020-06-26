@@ -6,7 +6,6 @@ import org.junit.*;
 
 public class ProcessorTest {
 
-
     @Ignore
     public void Test() throws InterruptedException {
         String jwtAccess;
