@@ -31,9 +31,11 @@ public class InventoryClient {
 	//
 
 	public void AuthRequest(UserDto userDto){
-		RequestDto request = new RequestDto(RequestResponseType.AUTH, );
+//		RequestDto request = new RequestDto(RequestResponseType.AUTH, );
 
 	}
+
+
 
 
 }

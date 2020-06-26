@@ -1,5 +1,8 @@
 package inventory.client.ui;
 
+import inventory.shared.Dto.GoodsDto;
+import inventory.shared.Dto.GroupDto;
+import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -9,10 +12,13 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.List;
 
-public class ListViewController {
+public class TableViewController {
 	private boolean isGoods = true;
 	private boolean isGroups;
+	private AddGroupViewController addGroupViewController;
+	private AddGoodViewController addGoodViewController;
 
 	@FXML
 	private TextField searchField;
@@ -42,6 +48,19 @@ public class ListViewController {
 	private Button subtractBtn;
 
 	@FXML
+	private TableView<GroupDto> goodsTable;
+	@FXML
+	private TableView<GroupDto> groupTable;
+
+	public void setAddGroupViewController(AddGroupViewController addGroupViewController) {
+		this.addGroupViewController = addGroupViewController;
+	}
+
+	public void setAddGoodViewController(AddGoodViewController addGoodViewController) {
+		this.addGoodViewController = addGoodViewController;
+	}
+
+	@FXML
 	void goodsOnMouseEntered() {
 		goodsLbl.setUnderline(true);
 	}
@@ -51,6 +70,8 @@ public class ListViewController {
 		if (!isGoods)
 			goodsLbl.setUnderline(false);
 	}
+
+
 
 	@FXML
 	void groupsOnMouseEntered() {
@@ -120,6 +141,13 @@ public class ListViewController {
 		groupsLbl.setUnderline(false);
 		addBtn.setVisible(true);
 		subtractBtn.setVisible(true);
+		groupTable.setVisible(false);
+		goodsTable.setVisible(true);
+		TableColumn nameCol = new TableColumn("Name");
+		TableColumn quantityCol = new TableColumn("quantity");
+		TableColumn groupCol = new TableColumn("group");
+		goodsTable.getColumns().clear();
+		goodsTable.getColumns().addAll(nameCol,quantityCol,groupCol);
 		FillList();
 	}
 
@@ -131,6 +159,12 @@ public class ListViewController {
 		goodsLbl.setUnderline(false);
 		addBtn.setVisible(false);
 		subtractBtn.setVisible(false);
+		goodsTable.setVisible(false);
+		groupTable.setVisible(true);
+		TableColumn col = new TableColumn("Name");
+		groupTable.getColumns().clear();
+		groupTable.getColumns().add(col);
+
 		FillList();
 	}
 
