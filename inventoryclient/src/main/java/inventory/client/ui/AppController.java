@@ -1,5 +1,6 @@
 package inventory.client.ui;
 
+import inventory.client.impl.InventoryClient;
 import javafx.fxml.FXML;
 
 
@@ -12,6 +13,7 @@ public class AppController {
 	AddGoodViewController addGoodViewController;
 	@FXML
 	AddGroupViewController addGroupViewController;
+	private InventoryClient inventoryClient;
 
 	public TableViewController getTableViewController() {
 		return tableViewController;
@@ -29,8 +31,11 @@ public class AppController {
 		return addGroupViewController;
 	}
 
+	public InventoryClient getInventoryClient() {
+		return inventoryClient;
+	}
+
 	public void init() {
-		tableViewController.setAddGoodViewController(addGoodViewController);
-		tableViewController.setAddGroupViewController(addGroupViewController);
+		logInController.setAppController(this);
 	}
 }

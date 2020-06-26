@@ -20,6 +20,10 @@ public class StoreClientTCP {
 		in = clientSocket.getInputStream();
 	}
 
+	public Socket getClientSocket() {
+		return clientSocket;
+	}
+
 	public Packet sendMessage(byte[] msg) throws IOException {
 		out.write(msg);
 		byte[] headerBytes = new byte[Packet.getHeaderLength()];

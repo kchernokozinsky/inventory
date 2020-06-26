@@ -6,4 +6,5 @@ module inventory.shared {
 	requires java.xml.bind;
 	exports inventory.shared.Dto;
 	exports inventory.shared.impl;
+	exports inventory.shared.api;
 }

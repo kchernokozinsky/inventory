@@ -20,12 +20,25 @@ public class InventoryClient {
 		storeClientTCP.startConnection(ip, port);
 	}
 
+	public Socket getClientSocket() {
+		return storeClientTCP.getClientSocket();
+	}
+
+
 	public Packet sendMessage(byte[] msg) throws IOException {
 		return storeClientTCP.sendMessage(msg);
 	}
 
 	public void stopConnection() throws IOException {
 		storeClientTCP.stopConnection();
+	}
+
+	public String getJwt() {
+		return jwt;
+	}
+
+	public void setJwt(String jwt) {
+		this.jwt = jwt;
 	}
 
 	//

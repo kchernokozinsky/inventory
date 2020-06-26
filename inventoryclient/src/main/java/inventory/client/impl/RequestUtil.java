@@ -1,13 +1,20 @@
 package inventory.client.impl;
 
 import inventory.shared.Dto.*;
+import inventory.shared.impl.JsonConverter;
+import inventory.shared.impl.Packet;
+
 import java.util.NoSuchElementException;
 
 public class RequestUtil {
 
+	public static ResponseDto packetToResponse(Packet packet){
+		ResponseDto responseDto =
+				(ResponseDto) JsonConverter.jsonToObj(packet.getbMsq().getMessage(), ResponseDto.class);
+		return responseDto;
+	}
 
-
-	private RequestDto changeGoodsQuantity(ChangeGoodsQuantityDto changeGoodsQuantityDto, String jwt) {
+	public static RequestDto changeGoodsQuantity(ChangeGoodsQuantityDto changeGoodsQuantityDto, String jwt) {
 		RequestDto requestDto = new RequestDto();
 		requestDto.setData(changeGoodsQuantityDto);
 		requestDto.setJwt(jwt);
@@ -15,7 +22,7 @@ public class RequestUtil {
 		return requestDto;
 	}
 
-	private RequestDto removeGoods(GoodsDto goodsDto, String jwt) {
+	public static RequestDto removeGoods(GoodsDto goodsDto, String jwt) {
 		RequestDto requestDto = new RequestDto();
 		requestDto.setData(goodsDto);
 		requestDto.setJwt(jwt);
@@ -23,7 +30,7 @@ public class RequestUtil {
 		return requestDto;
 	}
 
-	private RequestDto removeGroup(GroupDto groupDto, String jwt) {
+	public static RequestDto removeGroup(GroupDto groupDto, String jwt) {
 		RequestDto requestDto = new RequestDto();
 		requestDto.setData(groupDto);
 		requestDto.setJwt(jwt);
@@ -31,7 +38,7 @@ public class RequestUtil {
 		return requestDto;
 	}
 
-	public RequestDto addUser(UserDto userDto, String jwt) {
+	public static RequestDto addUser(UserDto userDto, String jwt) {
 		RequestDto requestDto = new RequestDto();
 		requestDto.setData(userDto);
 		requestDto.setJwt(jwt);
@@ -39,7 +46,7 @@ public class RequestUtil {
 		return requestDto;
 	}
 
-	private RequestDto addGoods(GoodsDto goodsDto, String jwt) {
+	public static RequestDto addGoods(GoodsDto goodsDto, String jwt) {
 		RequestDto requestDto = new RequestDto();
 		requestDto.setJwt(jwt);
 		requestDto.setData(goodsDto);
@@ -48,7 +55,7 @@ public class RequestUtil {
 
 	}
 
-	private RequestDto addGoodsByGroupName(AddGoodsByGroupNameDto addGoodsByGroupNameDto, String jwt) {
+	public static RequestDto addGoodsByGroupName(AddGoodsByGroupNameDto addGoodsByGroupNameDto, String jwt) {
 		RequestDto requestDto = new RequestDto();
 		requestDto.setJwt(jwt);
 		requestDto.setData(addGoodsByGroupNameDto);
@@ -56,7 +63,7 @@ public class RequestUtil {
 		return requestDto;
 	}
 
-	private RequestDto addGroup(GroupDto groupDto, String jwt) {
+	public static RequestDto addGroup(GroupDto groupDto, String jwt) {
 		RequestDto requestDto = new RequestDto();
 		requestDto.setJwt(jwt);
 		requestDto.setData(groupDto);
@@ -64,21 +71,21 @@ public class RequestUtil {
 		return requestDto;
 	}
 
-	private RequestDto getAllGroups(String jwt) {
+	public static RequestDto getAllGroups(String jwt) {
 		RequestDto requestDto = new RequestDto();
 		requestDto.setJwt(jwt);
 		requestDto.setRequestType(RequestResponseType.GET_ALL_GROUPS);
 		return requestDto;
 	}
 
-	private RequestDto getAllGoods(String jwt) {
+	public static RequestDto getAllGoods(String jwt) {
 		RequestDto requestDto = new RequestDto();
 		requestDto.setJwt(jwt);
 		requestDto.setRequestType(RequestResponseType.GET_ALL_GOODS);
 		return requestDto;
 	}
 
-	private RequestDto findGoods(String substring, String jwt) {
+	public static RequestDto findGoods(String substring, String jwt) {
 		RequestDto requestDto = new RequestDto();
 		requestDto.setJwt(jwt);
 		requestDto.setData(substring);
@@ -87,7 +94,7 @@ public class RequestUtil {
 
 	}
 
-	private RequestDto findGroups(String substring, String jwt) {
+	public static RequestDto findGroups(String substring, String jwt) {
 		RequestDto requestDto = new RequestDto();
 		requestDto.setJwt(jwt);
 		requestDto.setData(substring);
@@ -98,7 +105,7 @@ public class RequestUtil {
 
 
 
-	private RequestDto authorisation(AuthDto authDto) {
+	public static RequestDto authorisation(AuthDto authDto) {
 		RequestDto requestDto = new RequestDto();
 		requestDto.setRequestType(RequestResponseType.AUTH);
 		requestDto.setData(authDto);

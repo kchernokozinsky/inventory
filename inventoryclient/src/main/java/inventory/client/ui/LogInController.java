@@ -1,5 +1,13 @@
 package inventory.client.ui;
 
+import inventory.client.impl.InventoryClient;
+import inventory.client.impl.RequestPacketsUtil;
+import inventory.client.impl.RequestUtil;
+import inventory.shared.Dto.AuthDto;
+import inventory.shared.Dto.ResponseDto;
+import inventory.shared.Dto.ResponseErrorType;
+import inventory.shared.impl.Packet;
+import inventory.shared.impl.PacketUtil;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -9,6 +17,8 @@ import javafx.scene.control.TextField;
 import java.io.IOException;
 
 public class LogInController {
+	private AppController appController;
+
 	@FXML
 	private TextField loginTextField;
 
@@ -23,6 +33,10 @@ public class LogInController {
 
 	@FXML
 	private Label errLbl;
+
+	public void setAppController(AppController appController) {
+		this.appController = appController;
+	}
 
 	@FXML
 	void onLoginTextChange() {
@@ -42,11 +56,24 @@ public class LogInController {
 
 	@FXML
 	private void signUp() throws IOException {
-		App.setRoot("ListView");
+		App.setRoot("tableView");
+
 	}
 
 	@FXML
 	private void signIn() throws IOException {
-		App.setRoot("ListView");
+		InventoryClient inventoryClient = appController.getInventoryClient();
+		AuthDto authDto = new AuthDto(loginTextField.getText(), passwordTextField.getText());
+		Packet packet = RequestPacketsUtil.createRequestPacket(RequestUtil.authorisation(authDto),
+				inventoryClient.getClientSocket().getInetAddress(), inventoryClient.getClientSocket().getPort());
+		ResponseDto responseDto = RequestUtil.packetToResponse(appController.getInventoryClient().sendMessage(packet.encode()));
+		if(responseDto.getResponseErrorType() == ResponseErrorType.OK) {
+			inventoryClient.setJwt(responseDto.getJwt());
+			App.setRoot("TableView");
+		}
+		else {
+			errLbl.setVisible(true);
+		}
+
 	}
 }

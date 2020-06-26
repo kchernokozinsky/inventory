@@ -14,7 +14,7 @@ public class RequestPacketsUtil {
 
 
 
-	private static Packet createRequestPacket(RequestDto request, InetAddress clientAddress, int clientPort){
+	public static Packet createRequestPacket(RequestDto request, InetAddress clientAddress, int clientPort){
 		String requestJson = JsonConverter.objToJson(request);
 		Message.Builder mBuilder = new Message.Builder();
 		mBuilder.setCType(1).setBUserId(1).setMessage(requestJson);
