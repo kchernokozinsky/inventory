@@ -1,8 +1,11 @@
 package inventory.shared.Dto;
 
+import inventory.shared.impl.JsonConverter;
+
 public class RequestDto {
 	private RequestResponseType requestType;
 	private Object data;
+	private String jwt;
 
 
 	public RequestDto(RequestResponseType requestType, Object data) {
@@ -27,7 +30,14 @@ public class RequestDto {
 	}
 
 	public String toJson(){
-		//To do
-		return "";
+		return JsonConverter.objToJson(this);
+	}
+
+	public String getJwt() {
+		return jwt;
+	}
+
+	public void setJwt(String jwt) {
+		this.jwt = jwt;
 	}
 }

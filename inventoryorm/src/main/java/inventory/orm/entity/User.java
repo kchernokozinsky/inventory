@@ -15,12 +15,12 @@ public class User {
 	private String login;
 
 	@Column(name = "password")
-	private String passwordCache;
+	private String passwordHash;
 
 	public User(UserDto user) {
 		this.id = user.getId();
 		this.login = user.getLogin();
-		this.passwordCache = user.getPasswordCache();
+		this.passwordHash = user.getPasswordHash();
 	}
 
 	public User() {
@@ -42,16 +42,20 @@ public class User {
 		this.login = login;
 	}
 
-	public String getPasswordCache() {
-		return passwordCache;
+	public String getPasswordHash() {
+		return passwordHash;
 	}
 
-	public void setPasswordCache(String passwordCache) {
-		this.passwordCache = passwordCache;
+	public void setPasswordHash(String passwordHash) {
+		this.passwordHash = passwordHash;
 	}
 
 	@Override
 	public String toString() {
-		return "inventory.orm.entity.User{" + "id=" + id + ", login='" + login + '}';
+		return "User{" +
+				"id=" + id +
+				", login='" + login + '\'' +
+				", passwordHash='" + passwordHash + '\'' +
+				'}';
 	}
 }

@@ -30,7 +30,7 @@ public class UserService {
 			throw new EntityExistsException("User with this login alreaty exict");
 		} catch (NoSuchElementException e) {
 			UserDao.getUserDao().save(user);
-			return new UserDto(user.getId(), user.getLogin(), user.getPasswordCache());
+			return new UserDto(user.getId(), user.getLogin(), user.getPasswordHash());
 		}
 	}
 
@@ -50,38 +50,38 @@ public class UserService {
 		List<UserDto> usersDTO = new ArrayList<UserDto>();
 		users = UserDao.getUserDao().findAll();
 		for (User user : users) {
-			usersDTO.add(new UserDto(user.getId(), user.getLogin(), user.getPasswordCache()));
+			usersDTO.add(new UserDto(user.getId(), user.getLogin(), user.getPasswordHash()));
 		}
 		return usersDTO;
 	}
 
 	public UserDto getById(int id) {
 		User user = UserDao.getUserDao().findById(id);
-		return new UserDto(user.getId(), user.getLogin(), user.getPasswordCache());
+		return new UserDto(user.getId(), user.getLogin(), user.getPasswordHash());
 	}
 
 	public UserDto getByLogin(String login) {
 		User user = UserDao.getUserDao().findByLogin(login);
-		return new UserDto(user.getId(), user.getLogin(), user.getPasswordCache());
+		return new UserDto(user.getId(), user.getLogin(), user.getPasswordHash());
 	}
 
 	public UserDto validate(String login, String password) {
 		User user = UserDao.getUserDao().validateUser(login, password);
-		return new UserDto(user.getId(), user.getLogin(), user.getPasswordCache());
+		return new UserDto(user.getId(), user.getLogin(), user.getPasswordHash());
 	}
 
 	public UserDto changeLogin(UserDto userDTO, String login) {
 		User user = UserDao.getUserDao().findById(userDTO.getId());
 		user.setLogin(login);
 		UserDao.getUserDao().update(user);
-		return new UserDto(user.getId(), user.getLogin(), user.getPasswordCache());
+		return new UserDto(user.getId(), user.getLogin(), user.getPasswordHash());
 	}
 
 	public UserDto changePasswordCache(UserDto userDTO, String passwordCache) {
 		User user = UserDao.getUserDao().findById(userDTO.getId());
-		user.setPasswordCache(passwordCache);
+		user.setPasswordHash(passwordCache);
 		UserDao.getUserDao().update(user);
-		return new UserDto(user.getId(), user.getLogin(), user.getPasswordCache());
+		return new UserDto(user.getId(), user.getLogin(), user.getPasswordHash());
 	}
 
 }

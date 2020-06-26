@@ -1,4 +1,7 @@
+import inventory.orm.entity.Group;
+import inventory.orm.services.GoodsService;
 import inventory.orm.services.GroupService;
+import inventory.shared.Dto.GoodsDto;
 import inventory.shared.Dto.GroupDto;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -12,7 +15,8 @@ import static junit.framework.TestCase.assertEquals;
 public class GroupServiceTest {
 	@BeforeClass
 	public static void saveTest() {
-		GroupService.getGroupService().save(new GroupDto("anme"));
+		GroupDto groupDto = GroupService.getGroupService().save(new GroupDto("anme"));
+		GoodsDto goodsDto = GoodsService.getGoodsService().save(new GoodsDto("testgoods", 1, groupDto.getId()));
 		GroupService.getGroupService().save(new GroupDto("pugro"));
 	}
 
@@ -21,8 +25,8 @@ public class GroupServiceTest {
 		assertEquals(GroupService.getGroupService().getById(GroupService.getGroupService().getByName("name").getId())
 				.getName(), "name");
 		GroupService.getGroupService().getByName("group");
-		GroupService.getGroupService().delete(GroupService.getGroupService().getByName("name"));
-		GroupService.getGroupService().delete(GroupService.getGroupService().getByName("group"));
+//		GroupService.getGroupService().delete(GroupService.getGroupService().getByName("name"));
+//		GroupService.getGroupService().delete(GroupService.getGroupService().getByName("group"));
 	}
 
 	@Test

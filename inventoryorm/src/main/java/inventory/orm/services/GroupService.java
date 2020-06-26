@@ -1,5 +1,6 @@
 package inventory.orm.services;
 
+import inventory.orm.entity.Goods;
 import inventory.orm.entity.Group;
 import inventory.shared.Dto.GroupDto;
 
@@ -35,6 +36,10 @@ public class GroupService {
 
 	public void delete(GroupDto groupDTO) {
 		Group group = GroupDao.getGroupDao().findById(groupDTO.getId());
+		List<Goods> goods = GoodsDao.getGoodsDao().getListByGroupId(groupDTO.getId());
+		for (Goods g:goods) {
+			GoodsDao.getGoodsDao().delete(g);
+		}
 		GroupDao.getGroupDao().delete(group);
 	}
 
