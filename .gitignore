@@ -18,3 +18,4 @@ buildNumber.properties
 /inventoryserver/*.iml
 /inventoryshared/*.iml
 /inventoryorm/*.iml
+/inventoryorm/src/main/resources/hibernate.cfg.xml
