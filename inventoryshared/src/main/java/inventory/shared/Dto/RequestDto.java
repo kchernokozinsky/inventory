@@ -14,6 +14,9 @@ public class RequestDto {
 		this.data = data;
 	}
 
+	public RequestDto() {
+	}
+
 	public RequestResponseType getRequestType() {
 		return requestType;
 	}
