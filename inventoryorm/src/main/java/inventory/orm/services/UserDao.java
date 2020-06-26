@@ -74,7 +74,7 @@ public class UserDao {
 
 	public User validateUser(String login, String password) {
 		User user = findByLogin(login);
-		if (BCrypt.checkpw(login + ':' + password, user.getPasswordCache())) {
+		if (BCrypt.checkpw(login + ':' + password, user.getPasswordHash())) {
 			return user;
 		}
 		throw new InputMismatchException("Validation failed");

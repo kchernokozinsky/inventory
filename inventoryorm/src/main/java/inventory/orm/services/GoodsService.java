@@ -116,7 +116,7 @@ public class GoodsService {
 		return pmNumber(goodsDTO, -number);
 	}
 
-	private GoodsDto pmNumber(GoodsDto goodsDTO, int number) {
+	public GoodsDto pmNumber(GoodsDto goodsDTO, int number) {
 		Goods goods = GoodsDao.getGoodsDao().findById(goodsDTO.getId());
 		goods.setNumber(goods.getNumber() + number);
 		GoodsDao.getGoodsDao().update(goods);

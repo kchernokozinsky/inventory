@@ -8,17 +8,22 @@ public class UserDto {
 
 	private String login;
 
-	private String passwordCache;
+	private String passwordHash;
 
 	public UserDto(String login, String password) {
 		this.login = login;
-		this.passwordCache = BCrypt.hashpw(login + ':' + password, BCrypt.gensalt());
+		this.passwordHash = BCrypt.hashpw(login + ':' + password, BCrypt.gensalt());
 	}
 
-	public UserDto(int id, String login, String passwordCache) {
+	public UserDto(int id, String login, String passwordHash) {
 		this.id = id;
 		this.login = login;
-		this.passwordCache = passwordCache;
+		this.passwordHash = passwordHash;
+	}
+
+	public UserDto(AuthDto authDto){
+		this.login = authDto.getLogin();
+		this.passwordHash = BCrypt.hashpw(login + ':' + authDto.getPassword(), BCrypt.gensalt());
 	}
 
     public UserDto() {}
@@ -39,16 +44,16 @@ public class UserDto {
 		this.login = login;
 	}
 
-	public String getPasswordCache() {
-		return passwordCache;
+	public String getPasswordHash() {
+		return passwordHash;
 	}
 
-	public void setPasswordCache(String passwordCache) {
-		this.passwordCache = passwordCache;
+	public void setPasswordHash(String passwordHash) {
+		this.passwordHash = passwordHash;
 	}
 
 	@Override
 	public String toString() {
-		return "UserDto{" + "id=" + id + ", login='" + login + '\'' + ", passwordCache='" + passwordCache + '\'' + '}';
+		return "UserDto{" + "id=" + id + ", login='" + login + '\'' + ", passwordHash='" + passwordHash + '\'' + '}';
 	}
 }

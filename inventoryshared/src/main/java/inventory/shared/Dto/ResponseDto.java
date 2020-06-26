@@ -1,5 +1,7 @@
 package inventory.shared.Dto;
 
+import inventory.shared.impl.JsonConverter;
+
 public class ResponseDto {
 	private ResponseErrorType responseErrorType;
 	private RequestResponseType requestResponseType;
@@ -36,6 +38,10 @@ public class ResponseDto {
 
 	public void setData(Object data) {
 		this.data = data;
+	}
+
+	public String toJson(){
+		return JsonConverter.objToJson(this);
 	}
 
 }

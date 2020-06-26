@@ -1,23 +1,22 @@
 package inventory.shared.Dto;
 
-import inventory.shared.Dto.ChangeGoodsQuantityDto;
-import inventory.shared.Dto.GoodsDto;
-import inventory.shared.Dto.GroupDto;
-import inventory.shared.Dto.UserDto;
-
-
-
 public enum RequestResponseType {
+	// [] returns with id so it`s not necessary to use something by name
+	// (but if it will be useful)
 	FIND_GROUPS(String.class, GroupDto[].class),
 	FIND_GOODS(String.class, GoodsDto[].class),
 	GET_ALL_GOODS(null, GoodsDto[].class),
 	GET_ALL_GROUPS(null,GroupDto[].class),
-	AUTH(UserDto.class, null), // to do
+	AUTH(AuthDto.class, null),
 	ADD_GROUP(GroupDto.class, GoodsDto[].class),
+	ADD_USER(UserDto.class, null),
 	ADD_GOODS(GoodsDto.class, GoodsDto[].class),
+	ADD_GOODS_BY_GROUP_NAME(AddGoodsByGroupNameDto.class, GoodsDto[].class),
 	REMOVE_GROUP(GroupDto.class, GroupDto[].class),
 	REMOVE_GOODS(GoodsDto.class, GoodsDto[].class),
-	CHANGE_GOODS_QUANTITY(ChangeGoodsQuantityDto.class, null);
+	CHANGE_GOODS_QUANTITY(ChangeGoodsQuantityDto.class, null),
+	FIND_GROUP(String.class, GroupDto.class),
+	FIND_GOOD(String.class, GoodsDto.class);
 
 	private Class<?> requestKlass;
 	private Class<?> responseKlass;
