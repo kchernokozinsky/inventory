@@ -24,6 +24,8 @@ public class Processor implements IProccesor {
 		this.sender = sender;
 	}
 
+	public Processor() {}
+
 	@Override
 	public void process(Packet request) {
 		String requestJson = request.getbMsq().getMessage();
@@ -159,7 +161,7 @@ public class Processor implements IProccesor {
 		return responseDto;
 	}
 
-	private ResponseDto addUser(RequestDto requestDto) {
+	public ResponseDto addUser(RequestDto requestDto) {
 		ResponseDto responseDto = new ResponseDto();
 		responseDto.setRequestResponseType(requestDto.getRequestType());
 		UserDto userDto = (UserDto) requestDto.getData();
@@ -170,7 +172,9 @@ public class Processor implements IProccesor {
 			return responseDto;
 		}
 		responseDto.setResponseErrorType(ResponseErrorType.OK);
-		requestDto.setJwt(JwtTokenUtil.createJWT("inventory", userDto.getLogin(), 999999999));
+		String s = JwtTokenUtil.createJWT("inventory", userDto.getLogin(), 999999999);
+		System.out.println(s);
+		responseDto.setJwt(s);
 		return responseDto;
 	}
 
@@ -291,7 +295,7 @@ public class Processor implements IProccesor {
 			return responseDto;
 		}
 		responseDto.setResponseErrorType(ResponseErrorType.OK);
-		requestDto.setJwt(JwtTokenUtil.createJWT("inventory", userDto.getLogin(), 999999999));
+		responseDto.setJwt(JwtTokenUtil.createJWT("inventory", userDto.getLogin(), 999999999));
 		return responseDto;
 	}
 
