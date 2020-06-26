@@ -1,24 +1,24 @@
 package inventory.client.ui;
 
-import inventory.shared.Dto.GoodsDto;
 import inventory.shared.Dto.GroupDto;
-import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.List;
 
-public class TableViewController {
+public class InfoController {
 	private boolean isGoods = true;
 	private boolean isGroups;
-	private AddGroupViewController addGroupViewController;
-	private AddGoodViewController addGoodViewController;
+
+	private AppController appController;
+	@FXML
+	private AnchorPane infoPane;
 
 	@FXML
 	private TextField searchField;
@@ -52,12 +52,20 @@ public class TableViewController {
 	@FXML
 	private TableView<GroupDto> groupTable;
 
-	public void setAddGroupViewController(AddGroupViewController addGroupViewController) {
-		this.addGroupViewController = addGroupViewController;
+	public void setAppController(AppController appController) {
+		this.appController = appController;
 	}
 
-	public void setAddGoodViewController(AddGoodViewController addGoodViewController) {
-		this.addGoodViewController = addGoodViewController;
+	public void init() {
+		hide();
+	}
+
+	public void show() {
+		infoPane.setVisible(true);
+	}
+
+	public void hide() {
+		infoPane.setVisible(false);
 	}
 
 	@FXML
@@ -70,8 +78,6 @@ public class TableViewController {
 		if (!isGoods)
 			goodsLbl.setUnderline(false);
 	}
-
-
 
 	@FXML
 	void groupsOnMouseEntered() {
@@ -90,11 +96,9 @@ public class TableViewController {
 
 		MenuItem item = new MenuItem("Log out");
 		item.setOnAction(event1 -> {
-			try {
-				App.setRoot("logInView");
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+				hide();
+				appController.getLoginController().show();
+				appController.getInventoryClient().setJwt(null);
 		});
 		contextMenu.getItems().addAll(item);
 		contextMenu.show(avatar, event.getScreenX(), event.getScreenY());
@@ -147,7 +151,7 @@ public class TableViewController {
 		TableColumn quantityCol = new TableColumn("quantity");
 		TableColumn groupCol = new TableColumn("group");
 		goodsTable.getColumns().clear();
-		goodsTable.getColumns().addAll(nameCol,quantityCol,groupCol);
+		goodsTable.getColumns().addAll(nameCol, quantityCol, groupCol);
 		FillList();
 	}
 
@@ -170,7 +174,9 @@ public class TableViewController {
 
 	void FillList() {
 		if (isGroups) {
-
+			if (searchField.getText().isEmpty()) {
+				
+			}
 		}
 		if (isGoods) {
 
