@@ -3,24 +3,30 @@ package inventory.client.ui;
 import inventory.client.impl.InventoryClient;
 import javafx.fxml.FXML;
 
+import java.io.IOException;
+
+import static inventory.shared.impl.SettingsConst.LOCALHOST;
+import static inventory.shared.impl.SettingsConst.TCP_SERVER_PORT;
 
 public class AppController {
 	@FXML
-	TableViewController tableViewController;
+	InfoController infoController;
 	@FXML
-	LogInController logInController;
+	LoginController loginController;
 	@FXML
 	AddGoodViewController addGoodViewController;
 	@FXML
 	AddGroupViewController addGroupViewController;
+
+
 	private InventoryClient inventoryClient;
 
-	public TableViewController getTableViewController() {
-		return tableViewController;
+	public InfoController getInfoController() {
+		return infoController;
 	}
 
-	public LogInController getLogInController() {
-		return logInController;
+	public LoginController getLoginController() {
+		return loginController;
 	}
 
 	public AddGoodViewController getAddGoodViewController() {
@@ -36,6 +42,19 @@ public class AppController {
 	}
 
 	public void init() {
-		logInController.setAppController(this);
+		System.out.println(loginController);
+		System.out.println(infoController);
+		loginController.setAppController(this);
+		infoController.setAppController(this);
+		loginController.init();
+		infoController.init();
+		inventoryClient = new InventoryClient();
+		try {
+			inventoryClient.startConnection(LOCALHOST, TCP_SERVER_PORT);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 	}
 }

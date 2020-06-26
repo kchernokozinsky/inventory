@@ -9,7 +9,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inventory.client.ui.TableViewController">
+<AnchorPane fx:id="infoPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inventory.client.ui.InfoController">
     <children>
         <TextField fx:id="searchField" layoutX="14.0" layoutY="32.0" prefHeight="26.0" prefWidth="662.0" promptText="search" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="123.60000000000002" AnchorPane.topAnchor="32.0" />
         <Label fx:id="goodsLbl" layoutX="14.0" layoutY="72.0" onMouseClicked="#chooseGoods" onMouseEntered="#goodsOnMouseEntered" onMouseExited="#goodsOnMouseExited" prefHeight="18.0" prefWidth="43.0" text="Goods" underline="true" AnchorPane.leftAnchor="14.0">

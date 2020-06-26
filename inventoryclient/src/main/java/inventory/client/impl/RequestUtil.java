@@ -38,10 +38,9 @@ public class RequestUtil {
 		return requestDto;
 	}
 
-	public static RequestDto addUser(UserDto userDto, String jwt) {
+	public static RequestDto addUser(UserDto userDto) {
 		RequestDto requestDto = new RequestDto();
 		requestDto.setData(userDto);
-		requestDto.setJwtAccess(jwt);
 		requestDto.setRequestType(RequestResponseType.ADD_USER);
 		return requestDto;
 	}
