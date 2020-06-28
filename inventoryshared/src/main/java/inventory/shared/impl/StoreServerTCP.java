@@ -25,6 +25,7 @@ public class StoreServerTCP extends Thread {
 
 	public void run() {
 		running = true;
+		System.out.println("SERVER STARTED");
 		while (running) {
 			try {
 				Socket clientSocket = serverSocket.accept();

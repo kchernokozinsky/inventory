@@ -1,14 +1,5 @@
 package inventory.client.ui;
 
-import inventory.client.impl.InventoryClient;
-import inventory.client.impl.RequestPacketsUtil;
-import inventory.client.impl.RequestUtil;
-import inventory.shared.Dto.AuthDto;
-import inventory.shared.Dto.ResponseDto;
-import inventory.shared.Dto.ResponseErrorType;
-import inventory.shared.Dto.UserDto;
-import inventory.shared.impl.Packet;
-import inventory.shared.impl.PacketUtil;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;

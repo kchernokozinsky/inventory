@@ -1,4 +1,4 @@
-package inventory.client.impl;
+package inventory.client.impl.Utils;
 
 import inventory.shared.Dto.RequestDto;
 import inventory.shared.Dto.ResponseDto;

@@ -1,10 +1,8 @@
-package inventory.client.impl;
+package inventory.client.impl.Utils;
 
 import inventory.shared.Dto.*;
 import inventory.shared.impl.JsonConverter;
 import inventory.shared.impl.Packet;
-
-import java.util.NoSuchElementException;
 
 public class RequestUtil {
 
@@ -93,6 +91,7 @@ public class RequestUtil {
 
 	}
 
+
 	public static RequestDto findGroups(String substring, String jwt) {
 		RequestDto requestDto = new RequestDto();
 		requestDto.setJwtAccess(jwt);
@@ -100,6 +99,27 @@ public class RequestUtil {
 		requestDto.setRequestType(RequestResponseType.FIND_GROUPS);
 		return requestDto;
 	}
+
+	public static RequestDto findGood(String substring, String jwt) {
+		RequestDto requestDto = new RequestDto();
+		requestDto.setJwtAccess(jwt);
+		requestDto.setData(substring);
+		requestDto.setRequestType(RequestResponseType.FIND_GOOD);
+		return requestDto;
+
+	}
+
+	public static RequestDto findGroup(String substring, String jwt) {
+		RequestDto requestDto = new RequestDto();
+		requestDto.setJwtAccess(jwt);
+		requestDto.setData(substring);
+		requestDto.setRequestType(RequestResponseType.FIND_GROUP);
+		return requestDto;
+	}
+
+
+
+
 
 
 	public static RequestDto authorisation(AuthDto authDto) {

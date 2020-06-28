@@ -43,7 +43,7 @@ public class AddGroupViewController {
 		else {
 			nameLblErr.setVisible(false);
 		}
-		if (appController.getProxyServiceMock().findGroup(nameTextField.getText())){
+		if (appController.getProxyService().findGroup(nameTextField.getText())){
 			nameLblErr.setText(ErrConstants.NAME_EXIST);
 			nameLblErr.setVisible(true);
 		}
@@ -53,7 +53,7 @@ public class AddGroupViewController {
 
 		if (!nameLblErr.isVisible()){
 			GroupDto groupDto = new GroupDto(nameTextField.getText());
-			appController.getProxyServiceMock().addGroup(groupDto);
+			appController.getProxyService().addGroup(groupDto);
 			infoController.fillGroupTable();
 			stage.close();
 		}

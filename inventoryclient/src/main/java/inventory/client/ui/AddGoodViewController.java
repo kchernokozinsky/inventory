@@ -56,7 +56,7 @@ public class AddGoodViewController {
 			nameLblErr.setVisible(true);
 		}
 		else {
-			if (appController.getProxyServiceMock().findGood(nameTextField.getText())){
+			if (appController.getProxyService().findGood(nameTextField.getText())){
 				nameLblErr.setText(ErrConstants.NAME_EXIST);
 				nameLblErr.setVisible(true);
 			}
@@ -94,7 +94,7 @@ public class AddGoodViewController {
 			goodsDto.setName(nameTextField.getText());
 			goodsDto.setNumber(number);
 			goodsDto.setGroupId(groupComboBox.getSelectionModel().getSelectedItem().getId());
-			appController.getProxyServiceMock().addGoods(goodsDto);
+			appController.getProxyService().addGoods(goodsDto);
 			infoController.fillGoodsTable();
 			infoController.getAddBtn().setDisable(true);
 			infoController.getSubtractBtn().setDisable(true);
@@ -112,7 +112,7 @@ public class AddGoodViewController {
 	public void init(){
 		ObservableList<GroupDto> options =
 				FXCollections.<GroupDto>observableArrayList();
-		options.addAll(appController.getProxyServiceMock().getGroups());
+		options.addAll(appController.getProxyService().getGroups());
 		groupComboBox.setItems(options);
 	}
 }

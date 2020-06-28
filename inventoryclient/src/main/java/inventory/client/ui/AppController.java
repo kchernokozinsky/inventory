@@ -1,8 +1,8 @@
 package inventory.client.ui;
 
+import inventory.client.impl.ProxyService;
 import inventory.shared.api.IProxyService;
 import inventory.shared.impl.ProxyServiceMock;
-import inventory.client.impl.InventoryClient;
 import javafx.fxml.FXML;
 
 public class AppController {
@@ -16,12 +16,10 @@ public class AppController {
 	AddGroupViewController addGroupViewController;
 
 
-	private IProxyService proxyServiceMock;
+	private IProxyService proxyService;
 
-	private InventoryClient inventoryClient;
-
-	public IProxyService getProxyServiceMock() {
-		return proxyServiceMock;
+	public IProxyService getProxyService() {
+		return proxyService;
 	}
 
 	public InfoController getInfoController() {
@@ -40,25 +38,13 @@ public class AppController {
 		return addGroupViewController;
 	}
 
-	public InventoryClient getInventoryClient() {
-		return inventoryClient;
-	}
-
 	public void init() {
-		proxyServiceMock = new ProxyServiceMock();
-		System.out.println(loginController);
-		System.out.println(infoController);
+		proxyService = new ProxyServiceMock();
+		proxyService.start();
 		loginController.setAppController(this);
 		infoController.setAppController(this);
 		loginController.init();
 		infoController.init();
-//		inventoryClient = new InventoryClient();
-//		try {
-//			inventoryClient.startConnection(LOCALHOST, TCP_SERVER_PORT);
-//
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
 
 	}
 }

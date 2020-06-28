@@ -1,7 +1,9 @@
 package inventory.shared.impl;
 
+import inventory.shared.Dto.AuthDto;
 import inventory.shared.Dto.GoodsDto;
 import inventory.shared.Dto.GroupDto;
+import inventory.shared.Dto.UserDto;
 import inventory.shared.api.IProxyService;
 
 import java.util.ArrayList;
@@ -133,8 +135,19 @@ public class ProxyServiceMock implements IProxyService {
 		goods.remove(goodsDto);
 	}
 
+	@Override
+	public void start() {
 
+	}
 
+	@Override
+	public boolean auth(AuthDto authDto) {
+		return false;
+	}
 
+	@Override
+	public void addUser(UserDto userDto) {
+
+	}
 
 }

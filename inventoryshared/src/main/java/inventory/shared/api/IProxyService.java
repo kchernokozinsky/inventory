@@ -1,7 +1,9 @@
 package inventory.shared.api;
 
+import inventory.shared.Dto.AuthDto;
 import inventory.shared.Dto.GoodsDto;
 import inventory.shared.Dto.GroupDto;
+import inventory.shared.Dto.UserDto;
 
 import java.util.ArrayList;
 
@@ -34,4 +36,10 @@ public interface IProxyService {
 	public void removeGroup(GroupDto groupDto);
 
 	public void removeGoods(GoodsDto goodsDto);
+
+	public void start();
+
+	public boolean auth(AuthDto authDto);
+	public void addUser(UserDto userDto);
+
 }

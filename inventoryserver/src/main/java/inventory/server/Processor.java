@@ -14,6 +14,7 @@ import io.jsonwebtoken.ExpiredJwtException;
 
 import javax.persistence.EntityExistsException;
 import java.util.NoSuchElementException;
+import java.util.concurrent.TimeUnit;
 
 public class Processor implements IProcessor {
 	private ISender sender;
@@ -353,8 +354,10 @@ public class Processor implements IProcessor {
 			return responseDto;
 		}
 		responseDto.setResponseErrorType(ResponseErrorType.OK);
-		responseDto.setJwtAccess(JwtTokenUtil.createJWT("inventory", userDto.getLogin(), 20, false));
-		responseDto.setJwtRefresh(JwtTokenUtil.createJWT("inventory", userDto.getLogin(), 1000000000, true));
+		responseDto.setJwtAccess(JwtTokenUtil.createJWT("inventory", userDto.getLogin(), TimeUnit.HOURS.toMillis(1),
+				false));
+		responseDto.setJwtRefresh(JwtTokenUtil.createJWT("inventory", userDto.getLogin(), TimeUnit.HOURS.toMillis(10),
+				true));
 		return responseDto;
 	}
 
