@@ -9,7 +9,7 @@ public interface IProxyService {
 
 	public ArrayList<GroupDto> getGroups();
 
-	public ArrayList<GoodsDto> getGoods();}
+	public ArrayList<GoodsDto> getGoods();
 
 	public ArrayList<GroupDto> findGroups(String substring);
 

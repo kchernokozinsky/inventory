@@ -1,6 +1,6 @@
 package inventory.client.ui;
 
-import inventory.client.impl.ProxyServiceMock;
+import inventory.client.ProxyServiceMock;
 import inventory.client.impl.InventoryClient;
 import javafx.fxml.FXML;
 

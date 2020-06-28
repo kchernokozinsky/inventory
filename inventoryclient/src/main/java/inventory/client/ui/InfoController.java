@@ -66,6 +66,12 @@ public class InfoController {
 	@FXML
 	private TableColumn columnGroupId;
 
+	@FXML
+	private ComboBox<GroupDto> groupComboBox;
+
+	@FXML
+	private Label groupFilterLbl;
+
 
 	@FXML
 	private TableView<GoodsDto> goodsTable;
@@ -236,6 +242,8 @@ public class InfoController {
 
 	@FXML
 	void chooseGoods() {
+		groupComboBox.setVisible(true);
+		groupFilterLbl.setVisible(true);
 		removeBtn.setDisable(true);
 		typeView = TypeView.GOODS;
 		goodsLbl.setUnderline(true);
@@ -250,6 +258,8 @@ public class InfoController {
 
 	@FXML
 	void chooseGroups() {
+		groupComboBox.setVisible(false);
+		groupFilterLbl.setVisible(false);
 		addBtn.setDisable(true);
 		subtractBtn.setDisable(true);
 		removeBtn.setDisable(true);
@@ -301,39 +311,39 @@ public class InfoController {
 	}
 
 
-	void FillList() {
-		RequestDto requestDto = null;
-		switch (typeView){
-			case GOODS:
-				if (searchField.getText().isEmpty()) {
-					requestDto = RequestUtil.getAllGroups(appController.getInventoryClient().getJwt());
-				}
-				else {
-					requestDto = RequestUtil.findGroups(searchField.getText(), appController.getInventoryClient().getJwt());
-				}
-				break;
-			case GROUP:
-				if (searchField.getText().isEmpty()) {
-					requestDto = RequestUtil.getAllGoods(appController.getInventoryClient().getJwt());
-				}
-				else {
-					requestDto = RequestUtil.findGoods(searchField.getText(), appController.getInventoryClient().getJwt());
-				}
-				break;
-
-		}
-
-		Packet packet = RequestPacketsUtil.createRequestPacket(requestDto,
-				appController.getInventoryClient().getClientSocket().getInetAddress(),
-				appController.getInventoryClient().getClientSocket().getPort());
-		try {
-			Packet responsePacket = appController.getInventoryClient().sendMessage(packet.encode());
-			ResponseDto responseDto = RequestUtil.packetToResponse(responsePacket);
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+//	void FillList() {
+//		RequestDto requestDto = null;
+//		switch (typeView){
+//			case GOODS:
+//				if (searchField.getText().isEmpty()) {
+//					requestDto = RequestUtil.getAllGroups(appController.getInventoryClient().getJwt());
+//				}
+//				else {
+//					requestDto = RequestUtil.findGroups(searchField.getText(), appController.getInventoryClient().getJwt());
+//				}
+//				break;
+//			case GROUP:
+//				if (searchField.getText().isEmpty()) {
+//					requestDto = RequestUtil.getAllGoods(appController.getInventoryClient().getJwt());
+//				}
+//				else {
+//					requestDto = RequestUtil.findGoods(searchField.getText(), appController.getInventoryClient().getJwt());
+//				}
+//				break;
+//
+//		}
+//
+//		Packet packet = RequestPacketsUtil.createRequestPacket(requestDto,
+//				appController.getInventoryClient().getClientSocket().getInetAddress(),
+//				appController.getInventoryClient().getClientSocket().getPort());
+//		try {
+//			Packet responsePacket = appController.getInventoryClient().sendMessage(packet.encode());
+//			ResponseDto responseDto = RequestUtil.packetToResponse(responsePacket);
+//
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//	}
 
 	@FXML
 	private void addQuantity(){

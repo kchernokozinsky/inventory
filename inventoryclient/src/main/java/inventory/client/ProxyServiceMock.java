@@ -1,4 +1,4 @@
-package inventory.client.impl;
+package inventory.client;
 
 import inventory.shared.Dto.GoodsDto;
 import inventory.shared.Dto.GroupDto;
