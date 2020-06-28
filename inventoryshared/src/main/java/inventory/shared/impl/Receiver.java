@@ -10,11 +10,11 @@
 //public class Receiver implements IReceiver, Runnable {
 //	private Queue<byte[]> packetQueue = new ArrayDeque<>(1024);
 //	private Decryptor decryptor;
-//	private Processor processor;
+//	private ProcessorMock processor;
 //	private SenderMock sender;
 //	private AtomicBoolean running = new AtomicBoolean(false);
 //
-//	public Receiver(Decryptor decryptor, Processor processor, SenderMock sender) {
+//	public Receiver(Decryptor decryptor, ProcessorMock processor, SenderMock sender) {
 //		this.decryptor = decryptor;
 //		this.sender = sender;
 //		this.processor = processor;

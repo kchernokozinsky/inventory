@@ -1,16 +1,16 @@
-package inventory.shared.impl;
-
 import inventory.shared.api.IProcessor;
 import inventory.shared.api.ISender;
+import inventory.shared.impl.Message;
+import inventory.shared.impl.Packet;
 
-public class Processor implements IProcessor {
+public class ProcessorMock implements IProcessor {
 	private ISender sender;
 
-	public Processor(ISender sender) {
+	public ProcessorMock(ISender sender) {
 		this.sender = sender;
 	}
 
-	public Processor() {
+	public ProcessorMock() {
 	}
 
 	@Override

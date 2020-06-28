@@ -15,7 +15,7 @@
 //		Decryptor decryptor = new Decryptor(KEY);
 //		Encryptor encryptor = new Encryptor(KEY);
 //		SenderMock sender = new SenderMock(encryptor);
-//		Processor processor = new Processor(sender);
+//		ProcessorMock processor = new ProcessorMock(sender);
 //		Receiver receiver = new Receiver(decryptor, processor, sender);
 //
 //

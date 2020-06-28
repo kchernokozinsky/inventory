@@ -12,7 +12,7 @@ public class ClientServerTCPTest {
 
 	@Before
 	public void setup() throws IOException {
-		IProcessor processor = new Processor();
+		IProcessor processor = new ProcessorMock();
 		server = new StoreServerTCP(TestConst.TCP_SERVER_PORT, TestConst.KEY, processor);
 		server.start();
 		/* Encryptor Creating */
