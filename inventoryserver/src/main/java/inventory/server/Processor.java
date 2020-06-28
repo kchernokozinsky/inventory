@@ -30,6 +30,7 @@ public class Processor implements IProcessor {
 		String requestJson = request.getbMsq().getMessage();
 		System.out.println(requestJson);
 		RequestDto requestDto = (RequestDto) JsonConverter.jsonToObj(requestJson, RequestDto.class);
+		JsonConverter.fixRequest(requestDto);
 		RequestResponseType requestType = requestDto.getRequestType();
 		ResponseDto responseDto = null;
 

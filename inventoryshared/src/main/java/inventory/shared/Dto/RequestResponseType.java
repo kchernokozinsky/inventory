@@ -24,6 +24,14 @@ public enum RequestResponseType {
 	private Class<?> requestKlass;
 	private Class<?> responseKlass;
 
+	public Class<?> getRequestKlass() {
+		return requestKlass;
+	}
+
+	public Class<?> getResponseKlass() {
+		return responseKlass;
+	}
+
 	RequestResponseType(Class<?> requestKlass, Class<?> responseKlass) {
 		this.requestKlass = requestKlass;
 		this.responseKlass = responseKlass;

@@ -3,6 +3,8 @@ package inventory.shared.impl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import inventory.shared.Dto.RequestDto;
+import inventory.shared.Dto.RequestResponseType;
 
 import java.io.IOException;
 
@@ -29,6 +31,18 @@ public class JsonConverter {
 			e.printStackTrace();
 		}
 		return value;
+	}
+
+	public static void fixRequest(Object obj) {
+		if (obj instanceof RequestDto) {
+			RequestDto requestDto = (RequestDto)obj;
+			Object data = requestDto.getData();
+			RequestResponseType requestResponseType = requestDto.getRequestType();
+			if (data == null || requestResponseType == null) return;
+			String dataJson = objToJson(data);
+			data = jsonToObj(dataJson, requestResponseType.getRequestKlass());
+			requestDto.setData(data);
+		}
 	}
 
 }
