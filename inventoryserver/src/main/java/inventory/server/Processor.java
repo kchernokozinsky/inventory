@@ -28,7 +28,8 @@ public class Processor implements IProcessor {
 	@Override
 	public void process(Packet request) {
 		String requestJson = request.getbMsq().getMessage();
-		RequestDto requestDto = (RequestDto) JsonConverter.jsonToObj(requestJson, ResponseDto.class);
+		System.out.println(requestJson);
+		RequestDto requestDto = (RequestDto) JsonConverter.jsonToObj(requestJson, RequestDto.class);
 		RequestResponseType requestType = requestDto.getRequestType();
 		ResponseDto responseDto = null;
 

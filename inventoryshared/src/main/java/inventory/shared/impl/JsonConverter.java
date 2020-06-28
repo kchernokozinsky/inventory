@@ -25,7 +25,6 @@ public class JsonConverter {
 		Object value = null;
 		try {
 			 value = objectMapper.readValue(json, klass);
-			System.out.println(value);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
