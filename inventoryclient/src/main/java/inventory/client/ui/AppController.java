@@ -1,12 +1,8 @@
 package inventory.client.ui;
 
+import inventory.client.impl.ProxyServiceMock;
 import inventory.client.impl.InventoryClient;
 import javafx.fxml.FXML;
-
-import java.io.IOException;
-
-import static inventory.shared.impl.SettingsConst.LOCALHOST;
-import static inventory.shared.impl.SettingsConst.TCP_SERVER_PORT;
 
 public class AppController {
 	@FXML
@@ -19,7 +15,13 @@ public class AppController {
 	AddGroupViewController addGroupViewController;
 
 
+	private ProxyServiceMock mockDB;
+
 	private InventoryClient inventoryClient;
+
+	public ProxyServiceMock getMockDB() {
+		return mockDB;
+	}
 
 	public InfoController getInfoController() {
 		return infoController;
@@ -42,19 +44,20 @@ public class AppController {
 	}
 
 	public void init() {
+		mockDB = new ProxyServiceMock();
 		System.out.println(loginController);
 		System.out.println(infoController);
 		loginController.setAppController(this);
 		infoController.setAppController(this);
 		loginController.init();
 		infoController.init();
-		inventoryClient = new InventoryClient();
-		try {
-			inventoryClient.startConnection(LOCALHOST, TCP_SERVER_PORT);
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+//		inventoryClient = new InventoryClient();
+//		try {
+//			inventoryClient.startConnection(LOCALHOST, TCP_SERVER_PORT);
+//
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 
 	}
 }

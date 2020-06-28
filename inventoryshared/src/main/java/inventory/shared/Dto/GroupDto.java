@@ -20,12 +20,16 @@ public class GroupDto {
 		return name;
 	}
 
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public int getId() {
 		return id;
 	}
 
 	@Override
 	public String toString() {
-		return "GroupDto{" + "id=" + id + ", name='" + name + '\'' + '}';
+		return name;
 	}
 }

@@ -62,11 +62,11 @@ public class LoginController {
 	@FXML
 	private void signUp() throws IOException {
 
-		InventoryClient inventoryClient = appController.getInventoryClient();
-		UserDto userDto = new UserDto(loginTextField.getText(), passwordTextField.getText());
-		Packet packet = RequestPacketsUtil.createRequestPacket(RequestUtil.addUser(userDto),
-				inventoryClient.getClientSocket().getInetAddress(), inventoryClient.getClientSocket().getPort() );
-		inventoryClient.sendMessage(packet.encode());
+//		InventoryClient inventoryClient = appController.getInventoryClient();
+//		UserDto userDto = new UserDto(loginTextField.getText(), passwordTextField.getText());
+//		Packet packet = RequestPacketsUtil.createRequestPacket(RequestUtil.addUser(userDto),
+//				inventoryClient.getClientSocket().getInetAddress(), inventoryClient.getClientSocket().getPort() );
+//		inventoryClient.sendMessage(packet.encode());
 
 	}
 
@@ -84,21 +84,22 @@ public class LoginController {
 
 	@FXML
 	private void signIn() throws IOException {
-		InventoryClient inventoryClient = appController.getInventoryClient();
-		AuthDto authDto = new AuthDto(loginTextField.getText(), passwordTextField.getText());
-		Packet packet = RequestPacketsUtil.createRequestPacket(RequestUtil.authorisation(authDto),
-				inventoryClient.getClientSocket().getInetAddress(), inventoryClient.getClientSocket().getPort());
-		ResponseDto responseDto = RequestUtil.packetToResponse(appController.getInventoryClient().sendMessage(packet.encode()));
-		if(responseDto.getResponseErrorType() == ResponseErrorType.OK) {
-			//inventoryClient.setJwt(responseDto.getJwtAccess());
-			//App.setRoot("TableView");
-			inventoryClient.setJwt(responseDto.getJwtAccess());
+//		InventoryClient inventoryClient = appController.getInventoryClient();
+//		AuthDto authDto = new AuthDto(loginTextField.getText(), passwordTextField.getText());
+//		Packet packet = RequestPacketsUtil.createRequestPacket(RequestUtil.authorisation(authDto),
+//				inventoryClient.getClientSocket().getInetAddress(), inventoryClient.getClientSocket().getPort());
+//		ResponseDto responseDto = RequestUtil.packetToResponse(appController.getInventoryClient().sendMessage(packet.encode()));
+//		if(responseDto.getResponseErrorType() == ResponseErrorType.OK) {
+//			//inventoryClient.setJwt(responseDto.getJwtAccess());
+//			//App.setRoot("TableView");
+//			inventoryClient.setJwt(responseDto.getJwtAccess());
 			hide();
-			appController.infoController.show();
-		}
-		else {
-			errLbl.setVisible(true);
-		}
+			appController.getInfoController().show();
+//			appController.infoController.show();
+//		}
+//		else {
+//			errLbl.setVisible(true);
+//		}
 
 	}
 }

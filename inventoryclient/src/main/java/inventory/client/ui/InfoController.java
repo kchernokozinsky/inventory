@@ -2,14 +2,19 @@ package inventory.client.ui;
 
 import inventory.client.impl.RequestPacketsUtil;
 import inventory.client.impl.RequestUtil;
+import inventory.shared.Dto.GoodsDto;
 import inventory.shared.Dto.GroupDto;
 import inventory.shared.Dto.RequestDto;
 import inventory.shared.Dto.ResponseDto;
-import inventory.shared.impl.Message;
 import inventory.shared.impl.Packet;
+import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -19,8 +24,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class InfoController {
-	private boolean isGoods = true;
-	private boolean isGroups;
+	TypeView typeView = TypeView.GOODS;
 
 	private AppController appController;
 	@FXML
@@ -54,15 +58,55 @@ public class InfoController {
 	private Button subtractBtn;
 
 	@FXML
-	private TableView<GroupDto> goodsTable;
+	private TableColumn columnGroupName;
+	@FXML
+	private TableColumn columnGoodsName;
+	@FXML
+	private TableColumn columnQuantity;
+	@FXML
+	private TableColumn columnGroupId;
+
+
+	@FXML
+	private TableView<GoodsDto> goodsTable;
 	@FXML
 	private TableView<GroupDto> groupTable;
+
+	public Button getRemoveBtn() {
+		return removeBtn;
+	}
+
+	public Button getAddBtn() {
+		return addBtn;
+	}
+
+	public Button getSubtractBtn() {
+		return subtractBtn;
+	}
 
 	public void setAppController(AppController appController) {
 		this.appController = appController;
 	}
 
 	public void init() {
+		goodsTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+			if (newSelection != null) {
+				removeBtn.setDisable(false);
+				addBtn.setDisable(false);
+				subtractBtn.setDisable(false);
+			}
+		});
+		groupTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+			if (newSelection != null) {
+				removeBtn.setDisable(false);
+
+			}
+		});
+		columnGoodsName.setCellValueFactory(new PropertyValueFactory<GoodsDto, String>("name"));
+		columnQuantity.setCellValueFactory(new PropertyValueFactory<GoodsDto, Integer>("number"));
+		columnGroupId.setCellValueFactory(new PropertyValueFactory<GoodsDto, Integer>("groupId"));
+		columnGroupName.setCellValueFactory(new PropertyValueFactory<GroupDto, Integer>("name"));
+		fillGoodsTable();
 		hide();
 	}
 
@@ -81,8 +125,16 @@ public class InfoController {
 
 	@FXML
 	void goodsOnMouseExited() {
-		if (!isGoods)
-			goodsLbl.setUnderline(false);
+		switch (typeView){
+			case GOODS:
+
+				break;
+			case GROUP:
+				goodsLbl.setUnderline(false);
+				break;
+
+		}
+
 	}
 
 	@FXML
@@ -92,8 +144,15 @@ public class InfoController {
 
 	@FXML
 	void groupsOnMouseExited() {
-		if (!isGroups)
-			groupsLbl.setUnderline(false);
+		switch (typeView){
+			case GOODS:
+				groupsLbl.setUnderline(false);
+				break;
+			case GROUP:
+				break;
+
+		}
+
 	}
 
 	@FXML
@@ -112,31 +171,192 @@ public class InfoController {
 
 	@FXML
 	void newGoodOrGroup() {
+		// New window (Stage)
+		Stage newWindow = new Stage();
 		Scene secondScene = null;
 		try {
-			if (isGoods)
-				secondScene = new Scene(App.loadFXML("goodView"));
-			else if (isGroups)
-				secondScene = new Scene(App.loadFXML("groupView"));
+			switch (typeView){
+				case GOODS:
+					FXMLLoader goodFxmlLoader = new FXMLLoader(App.class.getResource("goodView.fxml"));
+					secondScene = new Scene(goodFxmlLoader.load());
+					AddGoodViewController addGoodViewController = goodFxmlLoader.getController();
+					addGoodViewController.setAppController(appController);
+					addGoodViewController.setStage(newWindow);
+					addGoodViewController.setInfoController(this);
+					addGoodViewController.init();
+					newWindow.setTitle("Create good");
+					break;
+				case GROUP:
+					FXMLLoader groupFxmlLoader = new FXMLLoader(App.class.getResource("groupView.fxml"));
+					secondScene = new Scene(groupFxmlLoader.load());
+					AddGroupViewController addGroupViewController = groupFxmlLoader.getController();
+					addGroupViewController.setAppController(appController);
+					addGroupViewController.setInfoController(this);
+					addGroupViewController.setStage(newWindow);
+
+					newWindow.setTitle("Create group");
+					break;
+
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
-		// New window (Stage)
-		Stage newWindow = new Stage();
-		if (isGoods)
-			newWindow.setTitle("Create good");
-		else if (isGroups)
-			newWindow.setTitle("Create group");
 		newWindow.setScene(secondScene);
-
 		// Specifies the modality for new window.
 		newWindow.initModality(Modality.WINDOW_MODAL);
-
 		// Specifies the owner Window (parent) for new window
 		newWindow.initOwner(App.getRootStage());
-
 		// Set position of second window, related to primary window.
+		newWindow.setX(App.getRootStage().getX() + 200);
+		newWindow.setY(App.getRootStage().getY() + 100);
+		newWindow.setResizable(false);
+		newWindow.show();
+	}
+	@FXML
+	void remove() {
+
+		switch (typeView){
+			case GOODS:
+						GoodsDto goodsDto = goodsTable.getSelectionModel().getSelectedItem();
+						appController.getMockDB().removeGoods(goodsDto);
+						fillGoodsTable();
+				break;
+			case GROUP:
+				GroupDto groupDto = groupTable.getSelectionModel().getSelectedItem();
+				appController.getMockDB().removeGroup(groupDto);
+				fillGroupTable();
+				break;
+
+		}
+
+		removeBtn.setDisable(true);
+		addBtn.setDisable(true);
+		subtractBtn.setDisable(true);
+	}
+
+	@FXML
+	void chooseGoods() {
+		removeBtn.setDisable(true);
+		typeView = TypeView.GOODS;
+		goodsLbl.setUnderline(true);
+		groupsLbl.setUnderline(false);
+		addBtn.setVisible(true);
+		subtractBtn.setVisible(true);
+		groupTable.setVisible(false);
+		goodsTable.setVisible(true);
+		fillGoodsTable();
+//		FillList();
+	}
+
+	@FXML
+	void chooseGroups() {
+		addBtn.setDisable(true);
+		subtractBtn.setDisable(true);
+		removeBtn.setDisable(true);
+		typeView = TypeView.GROUP;
+		groupsLbl.setUnderline(true);
+		goodsLbl.setUnderline(false);
+		addBtn.setVisible(false);
+		subtractBtn.setVisible(false);
+		goodsTable.setVisible(false);
+		groupTable.setVisible(true);
+		fillGroupTable();
+
+//		FillList();
+	}
+	@FXML
+	void onSearchFieldChange() {
+		switch (typeView){
+			case GROUP:
+				fillGroupTable();
+				break;
+			case GOODS:
+				fillGoodsTable();
+				break;
+		}
+	}
+
+
+	void fillGroupTable(){
+		ObservableList<GroupDto> data = FXCollections.<GroupDto>observableArrayList();
+		if (searchField.getText().isEmpty())
+			data.addAll(appController.getMockDB().getGroups());
+		else {
+			data.addAll(appController.getMockDB().findGroups(searchField.getText()));
+		}
+
+		groupTable.setItems(data);
+	}
+	void fillGoodsTable(){
+		System.out.println(searchField.getText());
+		goodsTable.getItems().clear();
+		ObservableList<GoodsDto> data = FXCollections.<GoodsDto>observableArrayList();
+		if (searchField.getText().isEmpty())
+		data.addAll(appController.getMockDB().getGoods());
+		else {
+			data.addAll(appController.getMockDB().findGoods(searchField.getText()));
+		}
+
+		goodsTable.setItems(data);
+	}
+
+
+	void FillList() {
+		RequestDto requestDto = null;
+		switch (typeView){
+			case GOODS:
+				if (searchField.getText().isEmpty()) {
+					requestDto = RequestUtil.getAllGroups(appController.getInventoryClient().getJwt());
+				}
+				else {
+					requestDto = RequestUtil.findGroups(searchField.getText(), appController.getInventoryClient().getJwt());
+				}
+				break;
+			case GROUP:
+				if (searchField.getText().isEmpty()) {
+					requestDto = RequestUtil.getAllGoods(appController.getInventoryClient().getJwt());
+				}
+				else {
+					requestDto = RequestUtil.findGoods(searchField.getText(), appController.getInventoryClient().getJwt());
+				}
+				break;
+
+		}
+
+		Packet packet = RequestPacketsUtil.createRequestPacket(requestDto,
+				appController.getInventoryClient().getClientSocket().getInetAddress(),
+				appController.getInventoryClient().getClientSocket().getPort());
+		try {
+			Packet responsePacket = appController.getInventoryClient().sendMessage(packet.encode());
+			ResponseDto responseDto = RequestUtil.packetToResponse(responsePacket);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@FXML
+	private void addQuantity(){
+		Stage newWindow = new Stage();
+		Scene secondScene = null;
+		try {
+					FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("addSubQuantity.fxml"));
+					secondScene = new Scene(fxmlLoader.load());
+					AddSubQuantityController addSubQuantityController = fxmlLoader.getController();
+					addSubQuantityController.setAppController(appController);
+					addSubQuantityController.setInfoController(this);
+					addSubQuantityController.setGoodsDto(goodsTable.getSelectionModel().getSelectedItem());
+					addSubQuantityController.setStage(newWindow);
+					addSubQuantityController.setTypeView(TypeView.ADD);
+					addSubQuantityController.init();
+					newWindow.setTitle("Add");
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		newWindow.setScene(secondScene);
+		newWindow.initModality(Modality.WINDOW_MODAL);
+		newWindow.initOwner(App.getRootStage());
 		newWindow.setX(App.getRootStage().getX() + 200);
 		newWindow.setY(App.getRootStage().getY() + 100);
 		newWindow.setResizable(false);
@@ -144,68 +364,32 @@ public class InfoController {
 	}
 
 	@FXML
-	void chooseGoods() {
-		isGoods = true;
-		isGroups = false;
-		goodsLbl.setUnderline(true);
-		groupsLbl.setUnderline(false);
-		addBtn.setVisible(true);
-		subtractBtn.setVisible(true);
-		groupTable.setVisible(false);
-		goodsTable.setVisible(true);
-		TableColumn nameCol = new TableColumn("Name");
-		TableColumn quantityCol = new TableColumn("quantity");
-		TableColumn groupCol = new TableColumn("group");
-		goodsTable.getColumns().clear();
-		goodsTable.getColumns().addAll(nameCol, quantityCol, groupCol);
-		FillList();
-	}
-
-	@FXML
-	void chooseGroups() {
-		isGoods = false;
-		isGroups = true;
-		groupsLbl.setUnderline(true);
-		goodsLbl.setUnderline(false);
-		addBtn.setVisible(false);
-		subtractBtn.setVisible(false);
-		goodsTable.setVisible(false);
-		groupTable.setVisible(true);
-		TableColumn col = new TableColumn("Name");
-		groupTable.getColumns().clear();
-		groupTable.getColumns().add(col);
-
-		FillList();
-	}
-
-	void FillList() {
-		RequestDto requestDto = null;
-		if (isGroups) {
-			if (searchField.getText().isEmpty()) {
-				requestDto = RequestUtil.getAllGoods(appController.getInventoryClient().getJwt());
-			}
-			else {
-				requestDto = RequestUtil.findGoods(searchField.getText(), appController.getInventoryClient().getJwt());
-			}
-		}
-		if (isGoods) {
-			if (searchField.getText().isEmpty()) {
-				requestDto = RequestUtil.getAllGroups(appController.getInventoryClient().getJwt());
-			}
-			else {
-				requestDto = RequestUtil.findGroups(searchField.getText(), appController.getInventoryClient().getJwt());
-			}
-		}
-		Packet packet = RequestPacketsUtil.createRequestPacket(requestDto,
-				appController.getInventoryClient().getClientSocket().getInetAddress(),
-				appController.getInventoryClient().getClientSocket().getPort());
+	private void subQuantity(){
+		Stage newWindow = new Stage();
+		Scene secondScene = null;
 		try {
-			Packet responsePacket = appController.getInventoryClient().sendMessage(packet.encode());
-			ResponseDto responseDto = RequestUtil.packetToResponse(responsePacket);
-			
+			FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("addSubQuantity.fxml"));
+			secondScene = new Scene(fxmlLoader.load());
+			AddSubQuantityController addSubQuantityController = fxmlLoader.getController();
+			addSubQuantityController.setAppController(appController);
+			addSubQuantityController.setInfoController(this);
+			addSubQuantityController.setStage(newWindow);
+			addSubQuantityController.setGoodsDto(goodsTable.getSelectionModel().getSelectedItem());
+			addSubQuantityController.setTypeView(TypeView.SUB);
+			addSubQuantityController.init();
+			newWindow.setTitle("Subtract");
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		newWindow.setScene(secondScene);
+		newWindow.initModality(Modality.WINDOW_MODAL);
+		newWindow.initOwner(App.getRootStage());
+		newWindow.setX(App.getRootStage().getX() + 200);
+		newWindow.setY(App.getRootStage().getY() + 100);
+		newWindow.setResizable(false);
+		newWindow.show();
 	}
+
 
 }
