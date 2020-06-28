@@ -123,7 +123,6 @@ public class InfoController {
 		columnGroupId.setCellValueFactory(new PropertyValueFactory<GoodsDto, Integer>("groupId"));
 		columnGroupName.setCellValueFactory(new PropertyValueFactory<GroupDto, Integer>("name"));
 		fillGoodsTable();
-		hide();
 	}
 
 	public void show() {

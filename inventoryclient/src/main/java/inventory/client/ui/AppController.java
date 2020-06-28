@@ -39,12 +39,13 @@ public class AppController {
 	}
 
 	public void init() {
-		proxyService = new ProxyServiceMock();
+		proxyService = new ProxyService();
 		proxyService.start();
 		loginController.setAppController(this);
 		infoController.setAppController(this);
 		loginController.init();
-		infoController.init();
+		infoController.hide();
+
 
 	}
 }
