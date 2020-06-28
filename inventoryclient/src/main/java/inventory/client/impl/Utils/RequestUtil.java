@@ -87,7 +87,7 @@ public class RequestUtil {
 		RequestDto requestDto = new RequestDto();
 		requestDto.setJwtAccess(jwt);
 		requestDto.setData(substring);
-		requestDto.setRequestType(RequestResponseType.FIND_GOODS);
+		requestDto.setRequestType(RequestResponseType.FIND_GOODS_BY_NAME_LIKE);
 		return requestDto;
 
 	}
@@ -97,7 +97,7 @@ public class RequestUtil {
 		RequestDto requestDto = new RequestDto();
 		requestDto.setJwtAccess(jwt);
 		requestDto.setData(substring);
-		requestDto.setRequestType(RequestResponseType.FIND_GROUPS);
+		requestDto.setRequestType(RequestResponseType.FIND_GROUPS_BY_NAME_LIKE);
 		return requestDto;
 	}
 
@@ -105,7 +105,7 @@ public class RequestUtil {
 		RequestDto requestDto = new RequestDto();
 		requestDto.setJwtAccess(jwt);
 		requestDto.setData(substring);
-		requestDto.setRequestType(RequestResponseType.FIND_GOOD);
+		requestDto.setRequestType(RequestResponseType.FIND_GOOD_BY_NAME);
 		return requestDto;
 
 	}
@@ -114,7 +114,7 @@ public class RequestUtil {
 		RequestDto requestDto = new RequestDto();
 		requestDto.setJwtAccess(jwt);
 		requestDto.setData(substring);
-		requestDto.setRequestType(RequestResponseType.FIND_GROUP);
+		requestDto.setRequestType(RequestResponseType.FIND_GROUP_BY_NAME);
 		return requestDto;
 	}
 

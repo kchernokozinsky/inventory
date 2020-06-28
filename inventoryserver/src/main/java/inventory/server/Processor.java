@@ -1,23 +1,27 @@
 package inventory.server;
 
+import inventory.orm.entity.Group;
 import inventory.orm.services.GoodsService;
 import inventory.orm.services.GroupService;
 import inventory.orm.services.UserService;
 import inventory.shared.Dto.*;
-import inventory.shared.api.IProcessor;
+import inventory.shared.api.IProccesor;
 import inventory.shared.api.ISender;
 import inventory.shared.impl.JsonConverter;
 import inventory.shared.impl.Message;
 import inventory.shared.impl.Packet;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
+import org.hibernate.boot.model.naming.IllegalIdentifierException;
 
 import javax.persistence.EntityExistsException;
+import java.util.InputMismatchException;
 import java.util.NoSuchElementException;
-import java.util.concurrent.TimeUnit;
 
-public class Processor implements IProcessor {
+public class Processor implements IProccesor {
 	private ISender sender;
+	private static long JWT_ACCESS_TIME = 100;
+	private static long JWT_REFRESH_TIME = Long.MAX_VALUE;
 
 	public Processor(ISender sender) {
 		this.sender = sender;
@@ -28,9 +32,7 @@ public class Processor implements IProcessor {
 	@Override
 	public void process(Packet request) {
 		String requestJson = request.getbMsq().getMessage();
-		System.out.println(requestJson);
-		RequestDto requestDto = (RequestDto) JsonConverter.jsonToObj(requestJson, RequestDto.class);
-		JsonConverter.fixRequest(requestDto);
+		RequestDto requestDto = (RequestDto) JsonConverter.jsonToObj(requestJson, ResponseDto.class);
 		RequestResponseType requestType = requestDto.getRequestType();
 		ResponseDto responseDto = null;
 
@@ -38,11 +40,11 @@ public class Processor implements IProcessor {
 			case AUTH:
 				responseDto = authorisation(requestDto);
 				break;
-			case FIND_GROUPS:
-				responseDto = findGroups(requestDto);
+			case FIND_GROUPS_BY_NAME_LIKE:
+				responseDto = findGroupsByNameLike(requestDto);
 				break;
-			case FIND_GOODS:
-				responseDto = findGoods(requestDto);
+			case FIND_GOODS_BY_NAME_LIKE:
+				responseDto = findGoodsByNameLike(requestDto);
 				break;
 			case GET_ALL_GOODS:
 				responseDto = getAllGoods(requestDto);
@@ -56,8 +58,8 @@ public class Processor implements IProcessor {
 			case ADD_GOODS:
 				responseDto = addGoods(requestDto);
 				break;
-			case ADD_GOODS_BY_GROUP_NAME:
-				responseDto = addGoodsByGroupName(requestDto);
+			case FIND_GOODS_IN_GROUP_BY_NAME_LIKE:
+				responseDto = findGoodsInGroupByNameLike(requestDto);
 				break;
 			case ADD_USER:
 				responseDto = addUser(requestDto);
@@ -71,11 +73,20 @@ public class Processor implements IProcessor {
 			case CHANGE_GOODS_QUANTITY:
 				responseDto = changeGoodsQuantity(requestDto);
 				break;
-			case FIND_GROUP:
-				responseDto = findGroup(requestDto);
+			case FIND_GROUP_BY_ID:
+				responseDto = findGroupById(requestDto);
 				break;
-			case FIND_GOOD:
-				responseDto = findGood(requestDto);
+			case FIND_GOOD_BY_ID:
+				responseDto = findGoodById(requestDto);
+				break;
+			case FIND_GROUP_BY_NAME:
+				responseDto = findGroupByName(requestDto);
+				break;
+			case FIND_GOOD_BY_NAME:
+				responseDto = findGoodByName(requestDto);
+				break;
+			case ADD_GOODS_BY_GROUP_NAME:
+				responseDto = addGoodsByGroupName(requestDto);
 				break;
 			case REFRESH_JWT:
 				responseDto = refreshJwt(requestDto);
@@ -86,35 +97,64 @@ public class Processor implements IProcessor {
 		sender.sendMessage(response, response.getClientAddress());
 	}
 
-	@Override
-	public void setSender(ISender sender) {
-		this.sender = sender;
-	}
-
-	private ResponseDto findGood(RequestDto requestDto) {
+	private ResponseDto findGoodByName(RequestDto requestDto) {
 		ResponseDto responseDto = checkJwt(requestDto);
-		if(responseDto.getResponseErrorType() == ResponseErrorType.FAILED_AUTH || 
+		if(responseDto.getResponseErrorType() == ResponseErrorType.FAILED_AUTH ||
 				responseDto.getResponseErrorType() == ResponseErrorType.EXPIRED_JWT)
 			return responseDto;
 		String name = (String) requestDto.getData();
 		try {
-			GoodsService.getGoodsService().getByName(name);
+			GoodsDto goodsDto = GoodsService.getGoodsService().getByName(name);
 			responseDto.setResponseErrorType(ResponseErrorType.OK);
+			responseDto.setData(goodsDto);
 		}catch (NoSuchElementException e){
 			responseDto.setResponseErrorType(ResponseErrorType.ENTITY_NOT_FOUND);
 		}
 		return responseDto;
 	}
 
-	private ResponseDto findGroup(RequestDto requestDto) {
+	private ResponseDto findGroupByName(RequestDto requestDto) {
 		ResponseDto responseDto = checkJwt(requestDto);
-		if(responseDto.getResponseErrorType() == ResponseErrorType.FAILED_AUTH || 
+		if(responseDto.getResponseErrorType() == ResponseErrorType.FAILED_AUTH ||
 				responseDto.getResponseErrorType() == ResponseErrorType.EXPIRED_JWT)
 			return responseDto;
 		String name = (String) requestDto.getData();
 		try {
-			GroupService.getGroupService().getByName(name);
+			GroupDto groupDto = GroupService.getGroupService().getByName(name);
 			responseDto.setResponseErrorType(ResponseErrorType.OK);
+			responseDto.setData(groupDto);
+		}catch (NoSuchElementException e){
+			responseDto.setResponseErrorType(ResponseErrorType.ENTITY_NOT_FOUND);
+		}
+		return responseDto;
+	}
+
+	private ResponseDto findGoodById(RequestDto requestDto) {
+		ResponseDto responseDto = checkJwt(requestDto);
+		if(responseDto.getResponseErrorType() == ResponseErrorType.FAILED_AUTH ||
+				responseDto.getResponseErrorType() == ResponseErrorType.EXPIRED_JWT)
+			return responseDto;
+		Integer id = (Integer) requestDto.getData();
+		try {
+			GoodsDto goodsDto = GoodsService.getGoodsService().getById(id);
+			responseDto.setResponseErrorType(ResponseErrorType.OK);
+			responseDto.setData(goodsDto);
+		}catch (NoSuchElementException e){
+			responseDto.setResponseErrorType(ResponseErrorType.ENTITY_NOT_FOUND);
+		}
+		return responseDto;
+	}
+
+	private ResponseDto findGroupById(RequestDto requestDto) {
+		ResponseDto responseDto = checkJwt(requestDto);
+		if(responseDto.getResponseErrorType() == ResponseErrorType.FAILED_AUTH ||
+				responseDto.getResponseErrorType() == ResponseErrorType.EXPIRED_JWT)
+			return responseDto;
+		Integer id = (Integer) requestDto.getData();
+		try {
+			GroupDto groupDto = GroupService.getGroupService().getById(id);
+			responseDto.setResponseErrorType(ResponseErrorType.OK);
+			responseDto.setData(groupDto);
 		}catch (NoSuchElementException e){
 			responseDto.setResponseErrorType(ResponseErrorType.ENTITY_NOT_FOUND);
 		}
@@ -123,33 +163,33 @@ public class Processor implements IProcessor {
 
 	private ResponseDto changeGoodsQuantity(RequestDto requestDto) {
 		ResponseDto responseDto = checkJwt(requestDto);
-		if(responseDto.getResponseErrorType() == ResponseErrorType.FAILED_AUTH || 
+		if(responseDto.getResponseErrorType() == ResponseErrorType.FAILED_AUTH ||
 				responseDto.getResponseErrorType() == ResponseErrorType.EXPIRED_JWT)
 			return responseDto;
 		ChangeGoodsQuantityDto d = (ChangeGoodsQuantityDto) responseDto.getData();
 		try {
-			if (d.getGoodsDto().getId() != 0)
-				GoodsService.getGoodsService().pmNumber(d.getGoodsDto(), d.getQuantity());
-			else
-				GoodsService.getGoodsService().pmNumber(GoodsService.getGoodsService().getByName(d.getGoodsDto().getName()), d.getQuantity());
+			GoodsService.getGoodsService().getById(d.getGoodsDto().getId());
+			GoodsService.getGoodsService().pmNumber(d.getGoodsDto(), d.getQuantity());
 			responseDto.setResponseErrorType(ResponseErrorType.OK);
 		}catch (NoSuchElementException e){
 			responseDto.setResponseErrorType(ResponseErrorType.ENTITY_NOT_FOUND);
+		}catch (IllegalArgumentException e){
+			responseDto.setResponseErrorType(ResponseErrorType.ILLEGAL_ARGUMENT);
 		}
 		return responseDto;
 	}
 
 	private ResponseDto removeGoods(RequestDto requestDto) {
 		ResponseDto responseDto = checkJwt(requestDto);
-		if(responseDto.getResponseErrorType() == ResponseErrorType.FAILED_AUTH || 
+		if(responseDto.getResponseErrorType() == ResponseErrorType.FAILED_AUTH ||
 				responseDto.getResponseErrorType() == ResponseErrorType.EXPIRED_JWT)
 			return responseDto;
 		GoodsDto goodsDto = (GoodsDto) requestDto.getData();
 		try {
-			if (goodsDto.getId() != 0)
-				GoodsService.getGoodsService().delete(goodsDto);
-			else
-				GoodsService.getGoodsService().delete(GoodsService.getGoodsService().getByName(goodsDto.getName()));
+			GoodsService.getGoodsService().getById(goodsDto.getId());
+			GoodsService.getGoodsService().delete(goodsDto);
+			GoodsDto[] goodsDtos = GoodsService.getGoodsService().getAll().toArray(new GoodsDto[0]);
+			responseDto.setData(goodsDtos);
 			responseDto.setResponseErrorType(ResponseErrorType.OK);
 		}catch (NoSuchElementException e){
 			responseDto.setResponseErrorType(ResponseErrorType.ENTITY_NOT_FOUND);
@@ -159,15 +199,15 @@ public class Processor implements IProcessor {
 
 	private ResponseDto removeGroup(RequestDto requestDto) {
 		ResponseDto responseDto = checkJwt(requestDto);
-		if(responseDto.getResponseErrorType() == ResponseErrorType.FAILED_AUTH || 
+		if(responseDto.getResponseErrorType() == ResponseErrorType.FAILED_AUTH ||
 				responseDto.getResponseErrorType() == ResponseErrorType.EXPIRED_JWT)
 			return responseDto;
 		GroupDto groupDto = (GroupDto) requestDto.getData();
 		try {
-			if (groupDto.getId() != 0)
-				GroupService.getGroupService().delete(groupDto);
-			else
-				GroupService.getGroupService().delete(GroupService.getGroupService().getByName(groupDto.getName()));
+			GroupService.getGroupService().getById(groupDto.getId());
+			GroupService.getGroupService().delete(groupDto);
+			GroupDto[] groupsDto = GroupService.getGroupService().getAll().toArray(new GroupDto[0]);
+			responseDto.setData(groupsDto);
 			responseDto.setResponseErrorType(ResponseErrorType.OK);
 		}catch (NoSuchElementException e){
 			responseDto.setResponseErrorType(ResponseErrorType.ENTITY_NOT_FOUND);
@@ -186,18 +226,20 @@ public class Processor implements IProcessor {
 			return responseDto;
 		}
 		responseDto.setResponseErrorType(ResponseErrorType.OK);
-		responseDto.setJwtAccess(JwtTokenUtil.createJWT("inventory", userDto.getLogin(), 20, false));
-		responseDto.setJwtRefresh(JwtTokenUtil.createJWT("inventory", userDto.getLogin(), 1000000000, true));
+		responseDto.setJwtAccess(JwtTokenUtil.createJWT("inventory", userDto.getLogin(), JWT_ACCESS_TIME, false));
+		responseDto.setJwtRefresh(JwtTokenUtil.createJWT("inventory", userDto.getLogin(), JWT_REFRESH_TIME, true));
 		return responseDto;
 	}
 
 	private ResponseDto addGoods(RequestDto requestDto) {
 		ResponseDto responseDto = checkJwt(requestDto);
-		if(responseDto.getResponseErrorType() == ResponseErrorType.FAILED_AUTH || 
+		if(responseDto.getResponseErrorType() == ResponseErrorType.FAILED_AUTH ||
 				responseDto.getResponseErrorType() == ResponseErrorType.EXPIRED_JWT)
 			return responseDto;
 		try {
 			GoodsService.getGoodsService().save((GoodsDto) requestDto.getData());
+			GoodsDto[] goodsDtos = GoodsService.getGoodsService().getAll().toArray(new GoodsDto[0]);
+			responseDto.setData(goodsDtos);
 			responseDto.setResponseErrorType(ResponseErrorType.OK);
 		}catch (EntityExistsException e){
 			responseDto.setResponseErrorType(ResponseErrorType.ALREADY_EXIST);
@@ -207,13 +249,15 @@ public class Processor implements IProcessor {
 
 	private ResponseDto addGoodsByGroupName(RequestDto requestDto) {
 		ResponseDto responseDto = checkJwt(requestDto);
-		if(responseDto.getResponseErrorType() == ResponseErrorType.FAILED_AUTH || 
+		if(responseDto.getResponseErrorType() == ResponseErrorType.FAILED_AUTH ||
 				responseDto.getResponseErrorType() == ResponseErrorType.EXPIRED_JWT)
 			return responseDto;
 		AddGoodsByGroupNameDto d = (AddGoodsByGroupNameDto) requestDto.getData();
 		try {
-			d.getGoodsDto().setGroupId(GroupService.getGroupService().getByName(d.getGroupName()).getId());
+			d.getGoodsDto().setGroup(new GroupDto(GroupService.getGroupService().getByName(d.getGroupName()).getId(), d.getGroupName()));
 			GoodsService.getGoodsService().save(d.getGoodsDto());
+			GoodsDto[] goodsDtos = GoodsService.getGoodsService().getListByGroupId(d.getGoodsDto().getGroup().getId()).toArray(new GoodsDto[0]);
+			responseDto.setData(goodsDtos);
 			responseDto.setResponseErrorType(ResponseErrorType.OK);
 		}catch (NoSuchElementException e){
 			//no such group name in DB
@@ -230,9 +274,10 @@ public class Processor implements IProcessor {
 		if(responseDto.getResponseErrorType() == ResponseErrorType.FAILED_AUTH ||
 				responseDto.getResponseErrorType() == ResponseErrorType.EXPIRED_JWT)
 			return responseDto;
-		System.out.println("this " + responseDto.getResponseErrorType());
 		try {
 			GroupService.getGroupService().save((GroupDto) requestDto.getData());
+			GroupDto[] groupsDtos = GroupService.getGroupService().getAll().toArray(new GroupDto[0]);
+			responseDto.setData(groupsDtos);
 			responseDto.setResponseErrorType(ResponseErrorType.OK);
 		}catch (EntityExistsException e){
 			responseDto.setResponseErrorType(ResponseErrorType.ALREADY_EXIST);
@@ -242,18 +287,18 @@ public class Processor implements IProcessor {
 
 	private ResponseDto getAllGroups(RequestDto requestDto) {
 		ResponseDto responseDto = checkJwt(requestDto);
-		if(responseDto.getResponseErrorType() == ResponseErrorType.FAILED_AUTH || 
+		if(responseDto.getResponseErrorType() == ResponseErrorType.FAILED_AUTH ||
 				responseDto.getResponseErrorType() == ResponseErrorType.EXPIRED_JWT)
 			return responseDto;
-		GroupDto[] groupDtos = GroupService.getGroupService().getAll().toArray(new GroupDto[0]);
-		responseDto.setData(groupDtos);
+		GroupDto[] groupsDto = GroupService.getGroupService().getAll().toArray(new GroupDto[0]);
+		responseDto.setData(groupsDto);
 		responseDto.setResponseErrorType(ResponseErrorType.OK);
 		return responseDto;
 	}
 
 	private ResponseDto getAllGoods(RequestDto requestDto) {
 		ResponseDto responseDto = checkJwt(requestDto);
-		if(responseDto.getResponseErrorType() == ResponseErrorType.FAILED_AUTH || 
+		if(responseDto.getResponseErrorType() == ResponseErrorType.FAILED_AUTH ||
 				responseDto.getResponseErrorType() == ResponseErrorType.EXPIRED_JWT)
 			return responseDto;
 		GoodsDto[] goodsDto = GoodsService.getGoodsService().getAll().toArray(new GoodsDto[0]);
@@ -262,27 +307,38 @@ public class Processor implements IProcessor {
 		return responseDto;
 	}
 
-	private ResponseDto findGoods(RequestDto requestDto) {
+	private ResponseDto findGoodsByNameLike(RequestDto requestDto) {
 		ResponseDto responseDto = checkJwt(requestDto);
-		if(responseDto.getResponseErrorType() == ResponseErrorType.FAILED_AUTH || 
+		if(responseDto.getResponseErrorType() == ResponseErrorType.FAILED_AUTH ||
 				responseDto.getResponseErrorType() == ResponseErrorType.EXPIRED_JWT)
 			return responseDto;
 		String name = (String) requestDto.getData();
-		// not sure
-		GoodsDto[] goodsDto = (GoodsDto[])GroupService.getGroupService().getByNameLike(name).toArray();
+		GoodsDto[] goodsDto = GoodsService.getGoodsService().getByNameLike(name).toArray(new GoodsDto[0]);
 		responseDto.setData(goodsDto);
 		responseDto.setResponseErrorType(ResponseErrorType.OK);
 		return responseDto;
 	}
 
-	private ResponseDto findGroups(RequestDto requestDto) {
+	private ResponseDto findGoodsInGroupByNameLike(RequestDto requestDto) {
 		ResponseDto responseDto = checkJwt(requestDto);
-		if(responseDto.getResponseErrorType() == ResponseErrorType.FAILED_AUTH || 
+		if(responseDto.getResponseErrorType() == ResponseErrorType.FAILED_AUTH ||
+				responseDto.getResponseErrorType() == ResponseErrorType.EXPIRED_JWT)
+			return responseDto;
+		FindGoodsInGroupByNameLike data = (FindGoodsInGroupByNameLike) requestDto.getData();
+		GoodsDto[] goodsDto = GoodsService.getGoodsService().getListByGroupIdAndNameLike(data.getGoodsDto().getGroup().getId(), data.getName()).toArray(new GoodsDto[0]);
+		responseDto.setData(goodsDto);
+		responseDto.setResponseErrorType(ResponseErrorType.OK);
+		return responseDto;
+	}
+
+	private ResponseDto findGroupsByNameLike(RequestDto requestDto) {
+		ResponseDto responseDto = checkJwt(requestDto);
+		if(responseDto.getResponseErrorType() == ResponseErrorType.FAILED_AUTH ||
 				responseDto.getResponseErrorType() == ResponseErrorType.EXPIRED_JWT)
 			return responseDto;
 		String name = (String) requestDto.getData();
-		GroupDto[] groupDtos = (GroupDto[])GroupService.getGroupService().getByNameLike(name).toArray();
-		responseDto.setData(groupDtos);
+		GroupDto[] groupsDto = GroupService.getGroupService().getByNameLike(name).toArray(new GroupDto[0]);
+		responseDto.setData(groupsDto);
 		responseDto.setResponseErrorType(ResponseErrorType.OK);
 		return responseDto;
 	}
@@ -330,11 +386,8 @@ public class Processor implements IProcessor {
 		}
 
 		responseDto.setResponseErrorType(ResponseErrorType.OK);
-		String setJwtAccess = JwtTokenUtil.createJWT("inventory", jwtRefresh.getSubject(), 20, false);
-		String setJwtRefresh = JwtTokenUtil.createJWT("inventory", jwtRefresh.getSubject(), 1000000000, true);
-		System.out.println("jwt trouble  ");
-		System.out.println(setJwtAccess);
-		System.out.println(setJwtRefresh);
+		String setJwtAccess = JwtTokenUtil.createJWT("inventory", jwtRefresh.getSubject(), JWT_ACCESS_TIME, false);
+		String setJwtRefresh = JwtTokenUtil.createJWT("inventory", jwtRefresh.getSubject(), JWT_REFRESH_TIME, true);
 		responseDto.setJwtAccess(setJwtAccess);
 		responseDto.setJwtRefresh(setJwtRefresh);
 		return responseDto;
@@ -348,18 +401,13 @@ public class Processor implements IProcessor {
 		UserDto userDto;
 		try {
 			userDto = UserService.getUserService().validate(authDto.getLogin(), authDto.getPassword());
-		}catch (NoSuchElementException e){
+		}catch (InputMismatchException e){
 			responseDto.setResponseErrorType(ResponseErrorType.FAILED_AUTH);
-			return responseDto;
-		}catch (Exception ex){
-			responseDto.setResponseErrorType(ResponseErrorType.JWT_CHECK_FAILED);
 			return responseDto;
 		}
 		responseDto.setResponseErrorType(ResponseErrorType.OK);
-		responseDto.setJwtAccess(JwtTokenUtil.createJWT("inventory", userDto.getLogin(), TimeUnit.HOURS.toMillis(1),
-				false));
-		responseDto.setJwtRefresh(JwtTokenUtil.createJWT("inventory", userDto.getLogin(), TimeUnit.HOURS.toMillis(10),
-				true));
+		responseDto.setJwtAccess(JwtTokenUtil.createJWT("inventory", userDto.getLogin(), JWT_ACCESS_TIME, false));
+		responseDto.setJwtRefresh(JwtTokenUtil.createJWT("inventory", userDto.getLogin(), JWT_REFRESH_TIME, true));
 		return responseDto;
 	}
 
@@ -377,7 +425,6 @@ public class Processor implements IProcessor {
 		Packet response = pBuilder.build();
 		response.setClientAddress(requestPacket.getClientAddress());
 		response.setClientPort(requestPacket.getClientPort());
-
 		return response;
 	}
 

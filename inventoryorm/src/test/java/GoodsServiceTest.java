@@ -25,11 +25,11 @@ public class GoodsServiceTest {
 	public static void afterTest() {
 		GoodsDto name = GoodsService.getGoodsService().getByName("namename");
 		assert (name.getNumber() == 100);
-		assert (name.getGroupId() == GroupService.getGroupService().getByName("testtest").getId());
+		assert (name.getGroup().getId() == GroupService.getGroupService().getByName("testtest").getId());
 		GoodsService.getGoodsService().delete(name);
 		GoodsDto goods = GoodsService.getGoodsService().getByName("goods");
 		assert (goods.getNumber() == 60);
-		assert (goods.getGroupId() == GroupService.getGroupService().getByName("test").getId());
+		assert (goods.getGroup().getId() == GroupService.getGroupService().getByName("test").getId());
 		GoodsService.getGoodsService().delete(goods);
 		GroupService.getGroupService().delete(GroupService.getGroupService().getByName("test"));
 		GroupService.getGroupService().delete(GroupService.getGroupService().getByName("testtest"));
@@ -45,7 +45,7 @@ public class GoodsServiceTest {
 		assert (goodsDTO.getNumber() == 100);
 		goodsDTO = GoodsService.getGoodsService().changeName(goodsDTO, "namename");
 		GoodsService.getGoodsService()
-				.changeGroupId(goodsDTO, GroupService.getGroupService().getByName("testtest").getId());
+				.changeGroup(goodsDTO, GroupService.getGroupService().getByName("testtest"));
 	}
 
 	@Test

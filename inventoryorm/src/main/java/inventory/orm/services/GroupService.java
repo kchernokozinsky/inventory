@@ -34,6 +34,13 @@ public class GroupService {
 		}
 	}
 
+	public GroupDto changeName(GroupDto goodDTO, String name) {
+		Group group = GroupDao.getGroupDao().findById(goodDTO.getId());
+		group.setName(name);
+		GroupDao.getGroupDao().update(group);
+		return new GroupDto(group.getId(), group.getName());
+	}
+
 	public void delete(GroupDto groupDTO) {
 		Group group = GroupDao.getGroupDao().findById(groupDTO.getId());
 		List<Goods> goods = GoodsDao.getGoodsDao().getListByGroupId(groupDTO.getId());
@@ -77,13 +84,6 @@ public class GroupService {
 			groupsDTO.add(new GroupDto(group.getId(), group.getName()));
 		}
 		return groupsDTO;
-	}
-
-	public GroupDto changeName(GroupDto goodDTO, String name) {
-		Group group = GroupDao.getGroupDao().findById(goodDTO.getId());
-		group.setName(name);
-		GroupDao.getGroupDao().update(group);
-		return new GroupDto(group.getId(), group.getName());
 	}
 
 }

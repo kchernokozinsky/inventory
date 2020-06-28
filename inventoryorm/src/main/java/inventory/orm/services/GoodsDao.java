@@ -50,27 +50,20 @@ public class GoodsDao {
 	}
 
 	public Goods findById(int id) {
-		Session session = HibernateSessionFactoryUtil.getSessionFactory(Goods.class).openSession();
-		Transaction tx1 = session.beginTransaction();
-		Goods goods = session.get(Goods.class, id);
+		Goods goods = HibernateSessionFactoryUtil.getSessionFactory(Goods.class).openSession().get(Goods.class, id);
 		if (goods != null) {
 			return goods;
 		}
-		tx1.commit();
-		session.close();
 		throw new NoSuchElementException("Goods with such id do not exist");
 	}
 
 	public Goods findByName(String name) {
 		Session session = HibernateSessionFactoryUtil.getSessionFactory(Goods.class).openSession();
-		Transaction tx1 = session.beginTransaction();
 		Criteria criteria = session.createCriteria(Goods.class);
 		Goods goods = (Goods) criteria.add(Restrictions.eq("name", name)).uniqueResult();
 		if (goods != null) {
 			return goods;
 		}
-		tx1.commit();
-		session.close();
 		throw new NoSuchElementException("Goods with such name do not exist");
 	}
 
@@ -78,44 +71,37 @@ public class GoodsDao {
 		if ("".equals(name))
 			return findAll();
 		Session session = HibernateSessionFactoryUtil.getSessionFactory(Goods.class).openSession();
-		Transaction tx1 = session.beginTransaction();
 		Criteria criteria = session.createCriteria(Goods.class);
 		Criterion c1 = Restrictions.like("name", name, MatchMode.ANYWHERE);
 		criteria.add(c1);
-		List<Goods> res = criteria.list();
-		tx1.commit();
-		session.close();
-		return res;
+		return criteria.list();
 	}
 
 	public List<Goods> getListByNumber(int number) {
 		Session session = HibernateSessionFactoryUtil.getSessionFactory(Goods.class).openSession();
-		Transaction tx1 = session.beginTransaction();
 		Criteria crit = session.createCriteria(Goods.class);
 		crit.add(Restrictions.eq("number", number));
-		List<Goods> res = crit.list();
-		session.close();
-		return res;
+		return crit.list();
 	}
 
 	public List<Goods> findAll() {
-		Session session = HibernateSessionFactoryUtil.getSessionFactory(Goods.class).openSession();
-		Transaction tx1 = session.beginTransaction();
-		List<Goods> res = session.createQuery("From inventory.orm.entity.Goods").list();
-		tx1.commit();
-		session.close();
-		return res;
-
+		return (List<Goods>) HibernateSessionFactoryUtil.getSessionFactory(Goods.class).openSession()
+				.createQuery("From inventory.orm.entity.Goods").list();
 	}
 
 	public List<Goods> getListByGroupId(int id) {
 		Session session = HibernateSessionFactoryUtil.getSessionFactory(Goods.class).openSession();
-		Transaction tx1 = session.beginTransaction();
 		Criteria crit = session.createCriteria(Goods.class);
 		crit.add(Restrictions.eq("groupId", id));
-		List<Goods> goods = crit.list();
-		tx1.commit();
-		session.close();
-		return goods;
+		return crit.list();
+	}
+
+	public List<Goods> getListByGroupIdAndNameLike(int id, String name) {
+		Session session = HibernateSessionFactoryUtil.getSessionFactory(Goods.class).openSession();
+		Criteria crit = session.createCriteria(Goods.class);
+		crit.add(Restrictions.eq("groupId", id));
+		Criterion c1 = Restrictions.like("name", name, MatchMode.ANYWHERE);
+		crit.add(c1);
+		return crit.list();
 	}
 }

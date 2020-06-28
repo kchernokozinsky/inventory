@@ -53,11 +53,11 @@ public class UserDao {
 		Session session = HibernateSessionFactoryUtil.getSessionFactory(User.class).openSession();
 		Transaction tx1 = session.beginTransaction();
 		User user = session.get(User.class, id);
+		tx1.commit();
+		session.close();
 		if (user != null) {
 			return user;
 		}
-		tx1.commit();
-		session.close();
 		throw new NoSuchElementException("User with such id does not exist");
 	}
 
@@ -66,22 +66,21 @@ public class UserDao {
 		Transaction tx1 = session.beginTransaction();
 		Criteria criteria = session.createCriteria(User.class);
 		User user = (User) criteria.add(Restrictions.eq("login", login)).uniqueResult();
+		tx1.commit();
+		session.close();
 		if (user != null) {
 			return user;
 		}
-		tx1.commit();
-		session.close();
-		System.out.println("11111111111111" + session);
 		throw new NoSuchElementException("User with such login does not exist");
 	}
 
 	public List<User> findAll() {
 		Session session = HibernateSessionFactoryUtil.getSessionFactory(User.class).openSession();
 		Transaction tx1 = session.beginTransaction();
-		List<User> ret = (List<User>) session.createQuery("From inventory.orm.entity.User").list();
+		List<User> users = session.createQuery("From inventory.orm.entity.User").list();
 		tx1.commit();
 		session.close();
-		return ret;
+		return users;
 	}
 
 	public User validateUser(String login, String password) {

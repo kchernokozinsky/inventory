@@ -1,8 +1,8 @@
 package inventory.orm.entity;
 
 import inventory.shared.Dto.GoodsDto;
-
 import javax.persistence.*;
+import javax.persistence.Entity;
 
 @Entity
 @Table(name = "goods")
@@ -17,14 +17,15 @@ public class Goods {
 	@Column(name = "number")
 	private int number;
 
-	@Column(name = "group_id")
-	private int groupId;
+	@ManyToOne
+	@JoinColumn(name = "group_id")
+	private Group group;
 
 	public Goods(GoodsDto goods) {
 		this.id = goods.getId();
 		this.name = goods.getName();
 		this.number = goods.getNumber();
-		this.groupId = goods.getGroupId();
+		this.group = new Group(goods.getGroup());
 	}
 
 	public Goods() {
@@ -54,12 +55,12 @@ public class Goods {
 		this.number = number;
 	}
 
-	public int getGroupId() {
-		return groupId;
+	public Group getGroup() {
+		return group;
 	}
 
-	public void setGroupId(int groupId) {
-		this.groupId = groupId;
+	public void setGroup(Group group) {
+		this.group = group;
 	}
 
 	@Override

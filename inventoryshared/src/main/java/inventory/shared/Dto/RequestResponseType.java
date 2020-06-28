@@ -3,8 +3,9 @@ package inventory.shared.Dto;
 public enum RequestResponseType {
 	// [] returns with id so it`s not necessary to use something by name
 	// (but if it will be useful)
-	FIND_GROUPS(String.class, GroupDto[].class),
-	FIND_GOODS(String.class, GoodsDto[].class),
+	FIND_GROUPS_BY_NAME_LIKE(String.class, GroupDto[].class),
+	FIND_GOODS_BY_NAME_LIKE(String.class, GoodsDto[].class),
+	FIND_GOODS_IN_GROUP_BY_NAME_LIKE(FindGoodsInGroupByNameLike.class, GoodsDto[].class),
 	GET_ALL_GOODS(null, GoodsDto[].class),
 	GET_ALL_GROUPS(null,GroupDto[].class),
 	AUTH(AuthDto.class, null),
@@ -15,8 +16,10 @@ public enum RequestResponseType {
 	REMOVE_GROUP(GroupDto.class, GroupDto[].class),
 	REMOVE_GOODS(GoodsDto.class, GoodsDto[].class),
 	CHANGE_GOODS_QUANTITY(ChangeGoodsQuantityDto.class, null),
-	FIND_GROUP(String.class, GroupDto.class),
-	FIND_GOOD(String.class, GoodsDto.class),
+	FIND_GROUP_BY_NAME(String.class, GroupDto.class),
+	FIND_GOOD_BY_NAME(String.class, GoodsDto.class),
+	FIND_GROUP_BY_ID(Integer.class, GroupDto.class),
+	FIND_GOOD_BY_ID(Integer.class, GoodsDto.class),
 	// refresh and access token - response
 	// refresh token - request
 	REFRESH_JWT(null, null);

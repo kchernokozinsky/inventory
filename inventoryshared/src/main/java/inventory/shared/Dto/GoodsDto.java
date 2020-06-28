@@ -8,20 +8,36 @@ public class GoodsDto {
 
 	private int number;
 
-	private int groupId;
+	private GroupDto group;
 
 
+	public GoodsDto(String name, int number, GroupDto group) {
+		this.name = name;
+		this.number = number;
+		this.group = group;
+	}
+
+	public GoodsDto(int id, String name, int number, GroupDto group) {
+		this.id = id;
+		this.name = name;
+		this.number = number;
+		this.group = group;
+	}
 	public GoodsDto(String name, int number, int groupId) {
 		this.name = name;
 		this.number = number;
-		this.groupId = groupId;
+		GroupDto groupDto = new GroupDto();
+		groupDto.setId(groupId);
+		this.group = groupDto;
 	}
 
 	public GoodsDto(int id, String name, int number, int groupId) {
 		this.id = id;
 		this.name = name;
 		this.number = number;
-		this.groupId = groupId;
+		GroupDto groupDto = new GroupDto();
+		groupDto.setId(groupId);
+		this.group = groupDto;
 	}
 
     public GoodsDto() {}
@@ -50,17 +66,21 @@ public class GoodsDto {
 		this.number = number;
 	}
 
-	public int getGroupId() {
-		return groupId;
+	public GroupDto getGroup() {
+		return group;
 	}
 
-	public void setGroupId(int groupId) {
-		this.groupId = groupId;
+	public void setGroup(GroupDto group) {
+		this.group = group;
 	}
 
 	@Override
 	public String toString() {
-		return "GoodsDto{" + "id=" + id + ", name='" + name + '\'' + ", number=" + number + ", groupId=" + groupId +
+		return "GoodsDto{" +
+				"id=" + id +
+				", name='" + name + '\'' +
+				", number=" + number +
+				", group=" + group +
 				'}';
 	}
 }

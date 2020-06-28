@@ -64,7 +64,7 @@ public class ProxyServiceMock implements IProxyService {
 	public ArrayList<GoodsDto> findGoods(GroupDto groupDto) {
 		ArrayList<GoodsDto> res = new ArrayList<>();
 		for (GoodsDto goodsDto : goods) {
-			if (goodsDto.getGroupId() == groupDto.getId())
+			if (goodsDto.getGroup().getId() == groupDto.getId())
 			{
 				res.add(goodsDto);
 			}
@@ -76,7 +76,7 @@ public class ProxyServiceMock implements IProxyService {
 	public ArrayList<GoodsDto> findGoods(GroupDto groupDto, String substring) {
 		ArrayList<GoodsDto> res = new ArrayList<>();
 		for (GoodsDto goodsDto : goods) {
-			if (goodsDto.getGroupId() == groupDto.getId() && goodsDto.getName().toLowerCase().contains(substring.toLowerCase()))
+			if (goodsDto.getGroup().getId() == groupDto.getId() && goodsDto.getName().toLowerCase().contains(substring.toLowerCase()))
 			{
 				res.add(goodsDto);
 			}
@@ -123,7 +123,7 @@ public class ProxyServiceMock implements IProxyService {
 	public void removeGroup(GroupDto groupDto){
 		int groupId = groupDto.getId();
 			for (int i = 0; i < goods.size(); i++) {
-				if(goods.get(i).getGroupId() == groupId) {
+				if(goods.get(i).getGroup().getId() == groupId) {
 					removeGoods(goods.get(i));
 					i--;
 				}
