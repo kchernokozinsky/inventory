@@ -1,6 +1,7 @@
 package inventory.client.ui;
 
-import inventory.shared.Dto.ProxyServiceMock;
+import inventory.shared.api.IProxyService;
+import inventory.shared.impl.ProxyServiceMock;
 import inventory.client.impl.InventoryClient;
 import javafx.fxml.FXML;
 
@@ -15,11 +16,11 @@ public class AppController {
 	AddGroupViewController addGroupViewController;
 
 
-	private ProxyServiceMock proxyServiceMock;
+	private IProxyService proxyServiceMock;
 
 	private InventoryClient inventoryClient;
 
-	public ProxyServiceMock getProxyServiceMock() {
+	public IProxyService getProxyServiceMock() {
 		return proxyServiceMock;
 	}
 

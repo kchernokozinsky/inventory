@@ -1,12 +1,12 @@
-package inventory.shared.Dto;
+package inventory.shared.impl;
 
 import inventory.shared.Dto.GoodsDto;
 import inventory.shared.Dto.GroupDto;
-import inventory.shared.Dto.UserDto;
+import inventory.shared.api.IProxyService;
 
 import java.util.ArrayList;
 
-public class ProxyServiceMock {
+public class ProxyServiceMock implements IProxyService {
 	private ArrayList<GroupDto> groups;
 	private ArrayList<GoodsDto> goods;
 

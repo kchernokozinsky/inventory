@@ -15,6 +15,10 @@ public interface IProxyService {
 
 	public ArrayList<GoodsDto> findGoods(String substring);
 
+	public ArrayList<GoodsDto> findGoods(GroupDto groupDto);
+
+	public ArrayList<GoodsDto> findGoods(GroupDto groupDto, String substring);
+
 	public void addGroup(GroupDto groupDto);
 
 	public void addGoods(GoodsDto goodsDto);
