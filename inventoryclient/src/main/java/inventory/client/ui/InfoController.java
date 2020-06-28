@@ -1,13 +1,9 @@
 package inventory.client.ui;
 
-import inventory.client.impl.RequestPacketsUtil;
-import inventory.client.impl.RequestUtil;
 import inventory.shared.Dto.GoodsDto;
 import inventory.shared.Dto.GroupDto;
-import inventory.shared.Dto.RequestDto;
-import inventory.shared.Dto.ResponseDto;
-import inventory.shared.impl.Packet;
-import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -95,6 +91,22 @@ public class InfoController {
 	}
 
 	public void init() {
+		groupComboBox.getSelectionModel().selectedItemProperty().addListener( (options, oldValue, newValue) -> {
+					if (newValue == null) {
+						fillGoodsTable();
+					}
+					else {
+						ObservableList<GoodsDto> data = FXCollections.<GoodsDto>observableArrayList();
+						data.addAll(appController.getProxyServiceMock().findGoods(newValue));
+						goodsTable.setItems(data);
+					}
+				}
+		);
+		ObservableList<GroupDto> options =
+				FXCollections.<GroupDto>observableArrayList();
+		options.addAll(appController.getProxyServiceMock().getGroups());
+		groupComboBox.setItems(options);
+		groupComboBox.getItems().add(0,null);
 		goodsTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
 			if (newSelection != null) {
 				removeBtn.setDisable(false);
@@ -224,12 +236,12 @@ public class InfoController {
 		switch (typeView){
 			case GOODS:
 						GoodsDto goodsDto = goodsTable.getSelectionModel().getSelectedItem();
-						appController.getMockDB().removeGoods(goodsDto);
+						appController.getProxyServiceMock().removeGoods(goodsDto);
 						fillGoodsTable();
 				break;
 			case GROUP:
 				GroupDto groupDto = groupTable.getSelectionModel().getSelectedItem();
-				appController.getMockDB().removeGroup(groupDto);
+				appController.getProxyServiceMock().removeGroup(groupDto);
 				fillGroupTable();
 				break;
 
@@ -242,6 +254,12 @@ public class InfoController {
 
 	@FXML
 	void chooseGoods() {
+		ObservableList<GroupDto> options =
+				FXCollections.<GroupDto>observableArrayList();
+		options.addAll(appController.getProxyServiceMock().getGroups());
+		groupComboBox.setItems(options);
+		groupComboBox.getItems().add(0,null);
+		groupComboBox.setItems(options);
 		groupComboBox.setVisible(true);
 		groupFilterLbl.setVisible(true);
 		removeBtn.setDisable(true);
@@ -290,9 +308,9 @@ public class InfoController {
 	void fillGroupTable(){
 		ObservableList<GroupDto> data = FXCollections.<GroupDto>observableArrayList();
 		if (searchField.getText().isEmpty())
-			data.addAll(appController.getMockDB().getGroups());
+			data.addAll(appController.getProxyServiceMock().getGroups());
 		else {
-			data.addAll(appController.getMockDB().findGroups(searchField.getText()));
+			data.addAll(appController.getProxyServiceMock().findGroups(searchField.getText()));
 		}
 
 		groupTable.setItems(data);
@@ -301,10 +319,17 @@ public class InfoController {
 		System.out.println(searchField.getText());
 		goodsTable.getItems().clear();
 		ObservableList<GoodsDto> data = FXCollections.<GoodsDto>observableArrayList();
-		if (searchField.getText().isEmpty())
-		data.addAll(appController.getMockDB().getGoods());
-		else {
-			data.addAll(appController.getMockDB().findGoods(searchField.getText()));
+
+		if (searchField.getText().isEmpty() && groupComboBox.getSelectionModel().getSelectedItem() == null)
+		data.addAll(appController.getProxyServiceMock().getGoods());
+		else if (!searchField.getText().isEmpty() && groupComboBox.getSelectionModel().getSelectedItem() == null){
+			data.addAll(appController.getProxyServiceMock().findGoods(searchField.getText()));
+		}
+		else if (!searchField.getText().isEmpty() && groupComboBox.getSelectionModel().getSelectedItem() != null){
+			data.addAll(appController.getProxyServiceMock().findGoods(groupComboBox.getSelectionModel().getSelectedItem(), searchField.getText()));
+		}
+		else if (searchField.getText().isEmpty() && groupComboBox.getSelectionModel().getSelectedItem() != null){
+			data.addAll(appController.getProxyServiceMock().findGoods(groupComboBox.getSelectionModel().getSelectedItem()));
 		}
 
 		goodsTable.setItems(data);

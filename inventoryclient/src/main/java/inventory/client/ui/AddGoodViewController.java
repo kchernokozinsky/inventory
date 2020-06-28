@@ -5,7 +5,6 @@ import inventory.shared.Dto.GroupDto;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.Group;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -57,7 +56,7 @@ public class AddGoodViewController {
 			nameLblErr.setVisible(true);
 		}
 		else {
-			if (appController.getMockDB().findGood(nameTextField.getText())){
+			if (appController.getProxyServiceMock().findGood(nameTextField.getText())){
 				nameLblErr.setText(ErrConstants.NAME_EXIST);
 				nameLblErr.setVisible(true);
 			}
@@ -95,7 +94,7 @@ public class AddGoodViewController {
 			goodsDto.setName(nameTextField.getText());
 			goodsDto.setNumber(number);
 			goodsDto.setGroupId(groupComboBox.getSelectionModel().getSelectedItem().getId());
-			appController.getMockDB().addGoods(goodsDto);
+			appController.getProxyServiceMock().addGoods(goodsDto);
 			infoController.fillGoodsTable();
 			infoController.getAddBtn().setDisable(true);
 			infoController.getSubtractBtn().setDisable(true);
@@ -113,7 +112,7 @@ public class AddGoodViewController {
 	public void init(){
 		ObservableList<GroupDto> options =
 				FXCollections.<GroupDto>observableArrayList();
-		options.addAll(appController.getMockDB().getGroups());
+		options.addAll(appController.getProxyServiceMock().getGroups());
 		groupComboBox.setItems(options);
 	}
 }

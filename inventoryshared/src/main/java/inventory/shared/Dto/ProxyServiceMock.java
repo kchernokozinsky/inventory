@@ -1,4 +1,4 @@
-package inventory.client;
+package inventory.shared.Dto;
 
 import inventory.shared.Dto.GoodsDto;
 import inventory.shared.Dto.GroupDto;
@@ -13,8 +13,6 @@ public class ProxyServiceMock {
 	public ProxyServiceMock() {
 		groups = new ArrayList<>();
 		goods = new ArrayList<>();
-
-		UserDto userDto = new UserDto("Cherny", "cherny123");
 
 		for (int i = 0; i < 10; i++) {
 			GoodsDto goodsDto = new GoodsDto(i, "Goods" + i, i, i);
@@ -53,6 +51,30 @@ public class ProxyServiceMock {
 		ArrayList<GoodsDto> res = new ArrayList<>();
 		for (GoodsDto goodsDto : goods) {
 			if (goodsDto.getName().toLowerCase().contains(substring.toLowerCase()))
+			{
+				res.add(goodsDto);
+			}
+
+		}
+		return  res;
+	}
+
+	public ArrayList<GoodsDto> findGoods(GroupDto groupDto) {
+		ArrayList<GoodsDto> res = new ArrayList<>();
+		for (GoodsDto goodsDto : goods) {
+			if (goodsDto.getGroupId() == groupDto.getId())
+			{
+				res.add(goodsDto);
+			}
+
+		}
+		return  res;
+	}
+
+	public ArrayList<GoodsDto> findGoods(GroupDto groupDto, String substring) {
+		ArrayList<GoodsDto> res = new ArrayList<>();
+		for (GoodsDto goodsDto : goods) {
+			if (goodsDto.getGroupId() == groupDto.getId() && goodsDto.getName().toLowerCase().contains(substring.toLowerCase()))
 			{
 				res.add(goodsDto);
 			}

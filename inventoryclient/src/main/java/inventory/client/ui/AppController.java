@@ -1,6 +1,6 @@
 package inventory.client.ui;
 
-import inventory.client.ProxyServiceMock;
+import inventory.shared.Dto.ProxyServiceMock;
 import inventory.client.impl.InventoryClient;
 import javafx.fxml.FXML;
 
@@ -15,12 +15,12 @@ public class AppController {
 	AddGroupViewController addGroupViewController;
 
 
-	private ProxyServiceMock mockDB;
+	private ProxyServiceMock proxyServiceMock;
 
 	private InventoryClient inventoryClient;
 
-	public ProxyServiceMock getMockDB() {
-		return mockDB;
+	public ProxyServiceMock getProxyServiceMock() {
+		return proxyServiceMock;
 	}
 
 	public InfoController getInfoController() {
@@ -44,7 +44,7 @@ public class AppController {
 	}
 
 	public void init() {
-		mockDB = new ProxyServiceMock();
+		proxyServiceMock = new ProxyServiceMock();
 		System.out.println(loginController);
 		System.out.println(infoController);
 		loginController.setAppController(this);

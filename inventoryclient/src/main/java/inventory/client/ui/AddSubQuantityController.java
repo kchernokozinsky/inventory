@@ -83,10 +83,10 @@ public class AddSubQuantityController {
 		if (!quantityLblErr.isVisible()) {
 			switch (typeView){
 				case SUB:
-					appController.getMockDB().subQuantity(goodsDto,quantity);
+					appController.getProxyServiceMock().subQuantity(goodsDto,quantity);
 					break;
 				case ADD:
-					appController.getMockDB().addQuantity(goodsDto,quantity);
+					appController.getProxyServiceMock().addQuantity(goodsDto,quantity);
 					break;
 			}
 			infoController.fillGoodsTable();
