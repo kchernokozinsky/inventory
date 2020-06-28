@@ -4,6 +4,9 @@ public class AuthDto {
     private String login;
     private String password;
 
+    public AuthDto() {
+    }
+
     public AuthDto(String login, String password) {
         this.login = login;
         this.password = password;

@@ -9,6 +9,7 @@ public class RequestUtil {
 	public static ResponseDto packetToResponse(Packet packet){
 		ResponseDto responseDto =
 				(ResponseDto) JsonConverter.jsonToObj(packet.getbMsq().getMessage(), ResponseDto.class);
+		JsonConverter.fixResponse(responseDto);
 		return responseDto;
 	}
 

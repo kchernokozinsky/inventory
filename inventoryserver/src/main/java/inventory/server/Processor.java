@@ -245,7 +245,7 @@ public class Processor implements IProcessor {
 		if(responseDto.getResponseErrorType() == ResponseErrorType.FAILED_AUTH || 
 				responseDto.getResponseErrorType() == ResponseErrorType.EXPIRED_JWT)
 			return responseDto;
-		GroupDto[] groupDtos = (GroupDto[]) GoodsService.getGoodsService().getAll().toArray();
+		GroupDto[] groupDtos = GroupService.getGroupService().getAll().toArray(new GroupDto[0]);
 		responseDto.setData(groupDtos);
 		responseDto.setResponseErrorType(ResponseErrorType.OK);
 		return responseDto;
@@ -256,7 +256,7 @@ public class Processor implements IProcessor {
 		if(responseDto.getResponseErrorType() == ResponseErrorType.FAILED_AUTH || 
 				responseDto.getResponseErrorType() == ResponseErrorType.EXPIRED_JWT)
 			return responseDto;
-		GoodsDto[] goodsDto = (GoodsDto[]) GoodsService.getGoodsService().getAll().toArray();
+		GoodsDto[] goodsDto = GoodsService.getGoodsService().getAll().toArray(new GoodsDto[0]);
 		responseDto.setData(goodsDto);
 		responseDto.setResponseErrorType(ResponseErrorType.OK);
 		return responseDto;

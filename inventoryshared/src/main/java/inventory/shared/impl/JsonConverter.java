@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import inventory.shared.Dto.RequestDto;
 import inventory.shared.Dto.RequestResponseType;
+import inventory.shared.Dto.ResponseDto;
 
 import java.io.IOException;
 
@@ -42,6 +43,18 @@ public class JsonConverter {
 			String dataJson = objToJson(data);
 			data = jsonToObj(dataJson, requestResponseType.getRequestKlass());
 			requestDto.setData(data);
+		}
+	}
+
+	public static void fixResponse(Object obj) {
+		if (obj instanceof ResponseDto) {
+			ResponseDto responseDto = (ResponseDto)obj;
+			Object data = responseDto.getData();
+			RequestResponseType requestResponseType = responseDto.getRequestResponseType();
+			if (data == null || requestResponseType == null) return;
+			String dataJson = objToJson(data);
+			data = jsonToObj(dataJson, requestResponseType.getResponseKlass());
+			responseDto.setData(data);
 		}
 	}
 
