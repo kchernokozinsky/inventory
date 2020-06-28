@@ -1,6 +1,6 @@
-package inventory.server;
+package inventory.shared.impl;
 
-import inventory.shared.impl.Packet;
+import inventory.shared.api.IProcessor;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -8,9 +8,9 @@ import java.net.Socket;
 public class TCPSocketThread extends Thread {
 	private Socket clientSocket;
 	private volatile boolean running;
-	private Processor processor;
+	private IProcessor processor;
 
-	public TCPSocketThread(Socket clientSocket, Processor processor) {
+	public TCPSocketThread(Socket clientSocket, IProcessor processor) {
 		this.clientSocket = clientSocket;
 		this.processor = processor;
 

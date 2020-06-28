@@ -4,7 +4,7 @@ import inventory.orm.services.GoodsService;
 import inventory.orm.services.GroupService;
 import inventory.orm.services.UserService;
 import inventory.shared.Dto.*;
-import inventory.shared.api.IProccesor;
+import inventory.shared.api.IProcessor;
 import inventory.shared.api.ISender;
 import inventory.shared.impl.JsonConverter;
 import inventory.shared.impl.Message;
@@ -15,7 +15,7 @@ import io.jsonwebtoken.ExpiredJwtException;
 import javax.persistence.EntityExistsException;
 import java.util.NoSuchElementException;
 
-public class Processor implements IProccesor {
+public class Processor implements IProcessor {
 	private ISender sender;
 
 	public Processor(ISender sender) {
@@ -81,6 +81,11 @@ public class Processor implements IProccesor {
 		}
 		Packet response = createResponsePacket(responseDto, request);
 		sender.sendMessage(response, response.getClientAddress());
+	}
+
+	@Override
+	public void setSender(ISender sender) {
+		this.sender = sender;
 	}
 
 	private ResponseDto findGood(RequestDto requestDto) {

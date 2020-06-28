@@ -1,4 +1,4 @@
-package inventory.client.impl;
+package inventory.shared.impl;
 
 import inventory.shared.impl.Packet;
 

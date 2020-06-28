@@ -27,7 +27,7 @@ public class GroupService {
 		Group group = new Group(groupDTO);
 		try {
 			getByName(group.getName());
-			throw new EntityExistsException("Group with this name alreaty exict");
+			throw new EntityExistsException("Group with this name already exist");
 		} catch (NoSuchElementException e) {
 			GroupDao.getGroupDao().save(group);
 			return new GroupDto(group.getId(), group.getName());

@@ -1,8 +1,7 @@
-package inventory.server;
+package inventory.shared.impl;
 
+import inventory.shared.api.IProcessor;
 import inventory.shared.api.ISender;
-import inventory.shared.impl.Encryptor;
-import inventory.shared.impl.Packet;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -14,14 +13,14 @@ import java.util.concurrent.ConcurrentHashMap;
 public class StoreServerTCP extends Thread {
 	private ServerSocket serverSocket;
 	private Map<InetAddress, TCPSocketThread> socketThreads = new ConcurrentHashMap<>();
-	private ISender sender;
 	private volatile boolean running;
-	private Processor processor;
+	private IProcessor processor;
 
-	public StoreServerTCP(int port, String key) throws IOException {
+	public StoreServerTCP(int port, String key, IProcessor processor) throws IOException {
 		serverSocket = new ServerSocket(port);
-		sender = new Sender(new Encryptor(key));
-		processor = new Processor(sender);
+		ISender sender = new Sender(new Encryptor(key));
+		processor.setSender(sender);
+		this.processor = processor;
 	}
 
 	public void run() {

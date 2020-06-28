@@ -1,16 +1,17 @@
 package inventory.server;
 
-import inventory.shared.impl.Encryptor;
+import inventory.shared.api.IProcessor;
 import inventory.shared.impl.SettingsConst;
+import inventory.shared.impl.StoreServerTCP;
 
 import java.io.IOException;
-import java.net.ServerSocket;
 
 public class InventoryServer {
 	private StoreServerTCP storeServerTCP;
 
 	public InventoryServer(int port, String key) throws IOException {
-		storeServerTCP = new StoreServerTCP(port, key);
+		IProcessor processor = new Processor();
+		storeServerTCP = new StoreServerTCP(port, key, processor);
 	}
 
 	public void run(){
@@ -29,4 +30,6 @@ public class InventoryServer {
 			e.printStackTrace();
 		}
 	}
+
+
 }
