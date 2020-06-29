@@ -10,6 +10,8 @@ public class GoodsDto {
 
 	private int groupId;
 
+	private String groupName;
+
 	public GoodsDto(String name, int number, int groupId) {
 		this.name = name;
 		this.number = number;
@@ -56,6 +58,14 @@ public class GoodsDto {
 
 	public void setGroupId(int groupId) {
 		this.groupId = groupId;
+	}
+
+	public String getGroupName() {
+		return groupName;
+	}
+
+	public void setGroupName(String groupName) {
+		this.groupName = groupName;
 	}
 
 	@Override

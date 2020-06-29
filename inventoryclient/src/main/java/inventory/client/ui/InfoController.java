@@ -54,7 +54,7 @@ public class InfoController {
 	@FXML
 	private TableColumn columnQuantity;
 	@FXML
-	private TableColumn columnGroupId;
+	private TableColumn columnGroup;
 
 	@FXML
 	private ComboBox<GroupDto> groupComboBox;
@@ -112,7 +112,8 @@ public class InfoController {
 		});
 		columnGoodsName.setCellValueFactory(new PropertyValueFactory<GoodsDto, String>("name"));
 		columnQuantity.setCellValueFactory(new PropertyValueFactory<GoodsDto, Integer>("number"));
-		columnGroupId.setCellValueFactory(new PropertyValueFactory<GoodsDto, Integer>("groupId"));
+//		columnGroup.setCellValueFactory(new PropertyValueFactory<GoodsDto, Integer>("groupId"));
+		columnGroup.setCellValueFactory(new PropertyValueFactory<GoodsDto, String>("groupName"));
 		columnGroupName.setCellValueFactory(new PropertyValueFactory<GroupDto, Integer>("name"));
 		fillGoodsTable();
 	}
