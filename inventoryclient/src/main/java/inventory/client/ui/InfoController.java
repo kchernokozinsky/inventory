@@ -303,7 +303,6 @@ public class InfoController {
 		else {
 			data.addAll(appController.getProxyService().findGroups(searchField.getText()));
 		}
-
 		groupTable.setItems(data);
 	}
 
@@ -311,7 +310,6 @@ public class InfoController {
 		System.out.println(searchField.getText());
 		goodsTable.getItems().clear();
 		ObservableList<GoodsDto> data = FXCollections.<GoodsDto>observableArrayList();
-
 		if (searchField.getText().isEmpty() && groupComboBox.getSelectionModel().getSelectedItem() == null)
 			data.addAll(appController.getProxyService().getGoods());
 		else if (!searchField.getText().isEmpty() && groupComboBox.getSelectionModel().getSelectedItem() == null) {
@@ -322,7 +320,6 @@ public class InfoController {
 		} else if (searchField.getText().isEmpty() && groupComboBox.getSelectionModel().getSelectedItem() != null) {
 			data.addAll(appController.getProxyService().findGoods(groupComboBox.getSelectionModel().getSelectedItem()));
 		}
-
 		goodsTable.setItems(data);
 	}
 
@@ -342,7 +339,6 @@ public class InfoController {
 			addSubQuantityController.setTypeView(TypeView.ADD);
 			addSubQuantityController.init();
 			newWindow.setTitle("Add");
-
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -370,7 +366,6 @@ public class InfoController {
 			addSubQuantityController.setTypeView(TypeView.SUB);
 			addSubQuantityController.init();
 			newWindow.setTitle("Subtract");
-
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

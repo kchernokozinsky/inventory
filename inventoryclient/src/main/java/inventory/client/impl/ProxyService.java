@@ -227,14 +227,11 @@ public class ProxyService implements IProxyService {
 		if (responseDto.getResponseErrorType() != ResponseErrorType.OK) {
 			throw new Exception("This user already exists");
 		}
-
 	}
-
 	@Override
 	public void logOut() {
 		inventoryClient.setJwt(null);
 		goods = null;
 		groups = null;
-
 	}
 }

@@ -57,8 +57,6 @@ public class AddGroupViewController {
 				nameLblErr.setText(ErrConstants.NAME_EXIST);
 				nameLblErr.setVisible(true);
 			}
-
 		}
-
 	}
 }

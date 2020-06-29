@@ -43,8 +43,6 @@ public class InventoryClient {
 		this.jwt = jwt;
 	}
 
-	//
-
 }
 
 

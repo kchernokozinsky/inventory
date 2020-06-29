@@ -20,7 +20,6 @@ public class UserService {
 			userService = new UserService();
 		}
 		return userService;
-
 	}
 
 	public UserDto save(UserDto userDTO) {

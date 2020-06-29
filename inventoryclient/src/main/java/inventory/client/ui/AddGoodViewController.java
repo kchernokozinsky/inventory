@@ -100,9 +100,7 @@ public class AddGoodViewController {
 				nameLblErr.setText(ErrConstants.NAME_EXIST);
 				nameLblErr.setVisible(true);
 			}
-
 		}
-
 	}
 
 	public void setAppController(AppController appController) {

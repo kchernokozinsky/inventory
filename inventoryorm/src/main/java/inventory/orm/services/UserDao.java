@@ -71,7 +71,6 @@ public class UserDao {
 		}
 		tx1.commit();
 		session.close();
-		System.out.println("11111111111111" + session);
 		throw new NoSuchElementException("User with such login does not exist");
 	}
 

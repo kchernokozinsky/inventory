@@ -68,7 +68,6 @@ public class LoginController {
 			errLbl.setVisible(true);
 			errLbl.setText(ErrConstants.USER_EXIST);
 		}
-
 	}
 
 	public void show() {

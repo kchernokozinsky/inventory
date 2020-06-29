@@ -1,16 +1,13 @@
 package inventory.client.ui;
-
 import inventory.client.impl.ProxyService;
 import inventory.shared.api.IProxyService;
 import javafx.fxml.FXML;
-import javafx.scene.layout.BorderPane;
 
 public class AppController {
 	@FXML
 	InfoController infoController;
 	@FXML
 	LoginController loginController;
-
 
 	private IProxyService proxyService;
 
@@ -26,7 +23,6 @@ public class AppController {
 		return loginController;
 	}
 
-
 	public void init() {
 		proxyService = new ProxyService();
 		proxyService.start();
@@ -34,6 +30,5 @@ public class AppController {
 		infoController.setAppController(this);
 		loginController.init();
 		infoController.hide();
-
 	}
 }

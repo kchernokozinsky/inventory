@@ -105,7 +105,6 @@ public class GoodsDao {
 		tx1.commit();
 		session.close();
 		return res;
-
 	}
 
 	public List<Goods> getListByGroupId(int id) {

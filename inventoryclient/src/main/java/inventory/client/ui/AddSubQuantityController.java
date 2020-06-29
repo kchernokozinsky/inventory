@@ -91,8 +91,6 @@ public class AddSubQuantityController {
 				quantityLblErr.setText(ErrConstants.INVALID_NUMBER);
 				quantityLblErr.setVisible(true);
 			}
-
-
 		}
 	}
 
