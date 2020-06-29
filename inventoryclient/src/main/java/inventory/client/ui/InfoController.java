@@ -27,8 +27,6 @@ public class InfoController {
 	@FXML
 	private TextField searchField;
 
-	@FXML
-	private ListView<?> List;
 
 	@FXML
 	private Label goodsLbl;
@@ -36,8 +34,6 @@ public class InfoController {
 	@FXML
 	private Label groupsLbl;
 
-	@FXML
-	private Button newBtn;
 
 	@FXML
 	private ImageView avatar;
@@ -184,7 +180,6 @@ public class InfoController {
 
 	@FXML
 	void newGoodOrGroup() {
-		// New window (Stage)
 		Stage newWindow = new Stage();
 		Scene secondScene = null;
 		try {
@@ -215,13 +210,8 @@ public class InfoController {
 			e.printStackTrace();
 		}
 		newWindow.setScene(secondScene);
-		// Specifies the modality for new window.
 		newWindow.initModality(Modality.WINDOW_MODAL);
-		// Specifies the owner Window (parent) for new window
 		newWindow.initOwner(App.getRootStage());
-		// Set position of second window, related to primary window.
-		newWindow.setX(App.getRootStage().getX() + 200);
-		newWindow.setY(App.getRootStage().getY() + 100);
 		newWindow.setResizable(false);
 		newWindow.show();
 	}
@@ -307,7 +297,6 @@ public class InfoController {
 	}
 
 	void fillGoodsTable() {
-		System.out.println(searchField.getText());
 		goodsTable.getItems().clear();
 		ObservableList<GoodsDto> data = FXCollections.<GoodsDto>observableArrayList();
 		if (searchField.getText().isEmpty() && groupComboBox.getSelectionModel().getSelectedItem() == null)
@@ -322,7 +311,6 @@ public class InfoController {
 		}
 		goodsTable.setItems(data);
 	}
-
 
 	@FXML
 	private void addQuantity() {
@@ -372,8 +360,6 @@ public class InfoController {
 		newWindow.setScene(secondScene);
 		newWindow.initModality(Modality.WINDOW_MODAL);
 		newWindow.initOwner(App.getRootStage());
-		newWindow.setX(App.getRootStage().getX() + 200);
-		newWindow.setY(App.getRootStage().getY() + 100);
 		newWindow.setResizable(false);
 		newWindow.show();
 	}

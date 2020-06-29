@@ -4,7 +4,6 @@ import inventory.client.impl.Utils.RequestPacketsUtil;
 import inventory.client.impl.Utils.RequestUtil;
 import inventory.shared.Dto.*;
 import inventory.shared.api.IProxyService;
-import inventory.shared.impl.JsonConverter;
 import inventory.shared.impl.Packet;
 import inventory.shared.impl.SettingsConst;
 

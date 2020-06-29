@@ -34,7 +34,6 @@ public class HibernateSessionFactoryUtil {
 
 		if (sessionFactory == null) {
 			try {
-				System.out.println("1111");
 				StandardServiceRegistryBuilder builder =
 						new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
 				sessionFactory = configuration.buildSessionFactory(builder.build());

@@ -1,10 +1,12 @@
 import inventory.orm.services.GroupService;
 import inventory.orm.services.UserService;
 import inventory.server.Processor;
+import inventory.shared.Dto.*;
+import org.junit.Test;
 
 public class ProcessorTest {
 
-	@Ignore
+	@Test
 	public void Test() throws InterruptedException {
 		String jwtAccess;
 		String jwtRefresh;
