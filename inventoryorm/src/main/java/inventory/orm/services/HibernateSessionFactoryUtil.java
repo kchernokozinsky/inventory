@@ -11,8 +11,16 @@ public class HibernateSessionFactoryUtil {
 	private static SessionFactory sessionFactoryGoods = null;
 	private static SessionFactory sessionFactoryGroup = null;
 	private static SessionFactory sessionFactoryUser = null;
+	private static Configuration configuration = null;
 
 	public static SessionFactory getSessionFactory(Class klass) {
+		if (configuration == null){
+			configuration = new Configuration().configure();
+			configuration.addAnnotatedClass(Group.class);
+			configuration.addAnnotatedClass(User.class);
+			configuration.addAnnotatedClass(Goods.class);
+		}
+
 		SessionFactory sessionFactory = null;
 		if (klass == Goods.class) {
 			sessionFactory = sessionFactoryGoods;
@@ -24,15 +32,9 @@ public class HibernateSessionFactoryUtil {
 			sessionFactory = sessionFactoryUser;
 		}
 
-		System.out.println(sessionFactoryGoods);
-		System.out.println(sessionFactoryGroup);
-		System.out.println(sessionFactoryUser);
-
 		if (sessionFactory == null) {
 			try {
 				System.out.println("1111");
-				Configuration configuration = new Configuration().configure();
-				configuration.addAnnotatedClass(klass);
 				StandardServiceRegistryBuilder builder =
 						new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
 				sessionFactory = configuration.buildSessionFactory(builder.build());

@@ -94,6 +94,7 @@ public class LoginController {
 			appController.infoController.init();
 			appController.getInfoController().show();
 		} else {
+			errLbl.setText(ErrConstants.INVALID_USER);
 			errLbl.setVisible(true);
 		}
 	}

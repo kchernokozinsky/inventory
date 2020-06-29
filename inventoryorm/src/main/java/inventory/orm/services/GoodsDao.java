@@ -53,11 +53,11 @@ public class GoodsDao {
 		Session session = HibernateSessionFactoryUtil.getSessionFactory(Goods.class).openSession();
 		Transaction tx1 = session.beginTransaction();
 		Goods goods = session.get(Goods.class, id);
+		tx1.commit();
+		session.close();
 		if (goods != null) {
 			return goods;
 		}
-		tx1.commit();
-		session.close();
 		throw new NoSuchElementException("Goods with such id do not exist");
 	}
 
@@ -66,11 +66,12 @@ public class GoodsDao {
 		Transaction tx1 = session.beginTransaction();
 		Criteria criteria = session.createCriteria(Goods.class);
 		Goods goods = (Goods) criteria.add(Restrictions.eq("name", name)).uniqueResult();
+		tx1.commit();
+		session.close();
 		if (goods != null) {
 			return goods;
 		}
-		tx1.commit();
-		session.close();
+
 		throw new NoSuchElementException("Goods with such name do not exist");
 	}
 
@@ -94,6 +95,7 @@ public class GoodsDao {
 		Criteria crit = session.createCriteria(Goods.class);
 		crit.add(Restrictions.eq("number", number));
 		List<Goods> res = crit.list();
+		tx1.commit();
 		session.close();
 		return res;
 	}

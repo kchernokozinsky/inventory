@@ -53,11 +53,11 @@ public class GroupDao {
 		Session session = HibernateSessionFactoryUtil.getSessionFactory(Group.class).openSession();
 		Transaction tx1 = session.beginTransaction();
 		Group group = session.get(Group.class, id);
+		tx1.commit();
+		session.close();
 		if (group != null) {
 			return group;
 		}
-		tx1.commit();
-		session.close();
 		throw new NoSuchElementException("Group with such id does not exist");
 	}
 
@@ -66,11 +66,11 @@ public class GroupDao {
 		Transaction tx1 = session.beginTransaction();
 		Criteria criteria = session.createCriteria(Group.class);
 		Group group = (Group) criteria.add(Restrictions.eq("name", name)).uniqueResult();
+		tx1.commit();
+		session.close();
 		if (group != null) {
 			return group;
 		}
-		tx1.commit();
-		session.close();
 		throw new NoSuchElementException("Group with such name does not exist");
 	}
 

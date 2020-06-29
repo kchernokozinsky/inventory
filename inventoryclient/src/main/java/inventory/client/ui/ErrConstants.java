@@ -8,4 +8,5 @@ public class ErrConstants {
 	public static final String EMPTY_GROUP = "You should choose group";
 	public static final String NAME_EXIST = "This name`s already engaged";
 	public static final String USER_EXIST = "This user already exist";
+	public static final String INVALID_USER = "Login or password is invalid";
 }
