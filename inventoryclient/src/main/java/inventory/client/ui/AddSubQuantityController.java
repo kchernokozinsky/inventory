@@ -62,39 +62,38 @@ public class AddSubQuantityController {
 			quantityLblErr.setVisible(true);
 		} else {
 			quantityLblErr.setVisible(false);
-			int quantity = 0;
+			int quantity;
 			try {
 				quantity = Integer.parseInt(quantityTextField.getText());
-				quantityLblErr.setVisible(false);
-			} catch (NumberFormatException ex) {
+				if (typeView == TypeView.SUB && quantity > goodsDto.getNumber()) {
+					quantityLblErr.setText(ErrConstants.TO_BIG_NUMBER);
+					quantityLblErr.setVisible(true);
+				} else {
+					quantityLblErr.setVisible(false);
+				}
+
+				if (!quantityLblErr.isVisible()) {
+					switch (typeView) {
+						case SUB:
+							appController.getProxyService().subQuantity(goodsDto, quantity);
+							break;
+						case ADD:
+							appController.getProxyService().addQuantity(goodsDto, quantity);
+							break;
+					}
+					infoController.fillGoodsTable();
+					infoController.getAddBtn().setDisable(true);
+					infoController.getSubtractBtn().setDisable(true);
+					infoController.getRemoveBtn().setDisable(true);
+					stage.close();
+				}
+			} catch (NumberFormatException  ex) {
 				quantityLblErr.setText(ErrConstants.INVALID_NUMBER);
 				quantityLblErr.setVisible(true);
 			}
 
-			if (typeView == TypeView.SUB && quantity > goodsDto.getNumber()) {
-				quantityLblErr.setText(ErrConstants.TO_BIG_NUMBER);
-				quantityLblErr.setVisible(true);
-			} else {
-				quantityLblErr.setVisible(false);
-			}
 
-			if (!quantityLblErr.isVisible()) {
-				switch (typeView) {
-					case SUB:
-						appController.getProxyService().subQuantity(goodsDto, quantity);
-						break;
-					case ADD:
-						appController.getProxyService().addQuantity(goodsDto, quantity);
-						break;
-				}
-				infoController.fillGoodsTable();
-				infoController.getAddBtn().setDisable(true);
-				infoController.getSubtractBtn().setDisable(true);
-				infoController.getRemoveBtn().setDisable(true);
-				stage.close();
-			}
 		}
-
 	}
 
 	@FXML

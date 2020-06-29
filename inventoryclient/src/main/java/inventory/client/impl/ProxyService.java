@@ -4,6 +4,7 @@ import inventory.client.impl.Utils.RequestPacketsUtil;
 import inventory.client.impl.Utils.RequestUtil;
 import inventory.shared.Dto.*;
 import inventory.shared.api.IProxyService;
+import inventory.shared.impl.JsonConverter;
 import inventory.shared.impl.Packet;
 import inventory.shared.impl.SettingsConst;
 
@@ -88,12 +89,9 @@ public class ProxyService implements IProxyService {
 	@Override
 	public ArrayList<GoodsDto> findGoods(GroupDto groupDto) {
 		ArrayList<GoodsDto> res = new ArrayList<>();
-		for (GoodsDto goodsDto : goods) {
-			if (goodsDto.getGroupId() == groupDto.getId()) {
+		for (GoodsDto goodsDto : goods)
+			if (goodsDto.getGroupId() == groupDto.getId())
 				res.add(goodsDto);
-			}
-
-		}
 		return res;
 	}
 
@@ -112,24 +110,31 @@ public class ProxyService implements IProxyService {
 	}
 
 	@Override
-	public void addGroup(GroupDto groupDto) {
+	public void addGroup(GroupDto groupDto) throws Exception {
 		RequestDto requestDto = RequestUtil.addGroup(groupDto, inventoryClient.getJwt());
 		Packet requestPacket = RequestPacketsUtil
 				.createRequestPacket(requestDto, inventoryClient.getClientSocket().getInetAddress(),
 						inventoryClient.getClientSocket().getPort());
 		ResponseDto responseDto = RequestUtil.packetToResponse(inventoryClient.sendMessage(requestPacket.encode()));
-		System.out.println(responseDto.getData());
-		groups = new ArrayList<GroupDto>(Arrays.asList((GroupDto[]) responseDto.getData()));
+		if (responseDto.getResponseErrorType() == ResponseErrorType.OK)
+			groups = new ArrayList<GroupDto>(Arrays.asList((GroupDto[]) responseDto.getData()));
+		else
+			throw new Exception("This group already exist");
+
 	}
 
 	@Override
-	public void addGoods(GoodsDto goodsDto) {
+	public void addGoods(GoodsDto goodsDto) throws Exception {
 		RequestDto requestDto = RequestUtil.addGoods(goodsDto, inventoryClient.getJwt());
 		Packet requestPacket = RequestPacketsUtil
 				.createRequestPacket(requestDto, inventoryClient.getClientSocket().getInetAddress(),
 						inventoryClient.getClientSocket().getPort());
 		ResponseDto responseDto = RequestUtil.packetToResponse(inventoryClient.sendMessage(requestPacket.encode()));
-		goods = new ArrayList<GoodsDto>(Arrays.asList((GoodsDto[]) responseDto.getData()));
+		if (responseDto.getResponseErrorType() == ResponseErrorType.OK)
+			goods = new ArrayList<GoodsDto>(Arrays.asList((GoodsDto[]) responseDto.getData()));
+		else
+			throw new Exception("This goods already exist");
+
 	}
 
 	@Override
@@ -213,12 +218,16 @@ public class ProxyService implements IProxyService {
 	}
 
 	@Override
-	public void addUser(UserDto userDto) {
+	public void addUser(UserDto userDto) throws Exception {
 		RequestDto requestDto = RequestUtil.addUser(userDto);
 		Packet requestPacket = RequestPacketsUtil
 				.createRequestPacket(requestDto, inventoryClient.getClientSocket().getInetAddress(),
 						inventoryClient.getClientSocket().getPort());
-		inventoryClient.sendMessage(requestPacket.encode());
+		ResponseDto responseDto = RequestUtil.packetToResponse(inventoryClient.sendMessage(requestPacket.encode()));
+		if (responseDto.getResponseErrorType() != ResponseErrorType.OK) {
+			throw new Exception("This user already exists");
+		}
+
 	}
 
 	@Override
@@ -226,7 +235,6 @@ public class ProxyService implements IProxyService {
 		inventoryClient.setJwt(null);
 		goods = null;
 		groups = null;
-
 
 	}
 }

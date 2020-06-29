@@ -89,12 +89,18 @@ public class AddGoodViewController {
 			goodsDto.setName(nameTextField.getText());
 			goodsDto.setNumber(number);
 			goodsDto.setGroupId(groupComboBox.getSelectionModel().getSelectedItem().getId());
-			appController.getProxyService().addGoods(goodsDto);
-			infoController.fillGoodsTable();
-			infoController.getAddBtn().setDisable(true);
-			infoController.getSubtractBtn().setDisable(true);
-			infoController.getRemoveBtn().setDisable(true);
-			stage.close();
+			try {
+				appController.getProxyService().addGoods(goodsDto);
+				infoController.fillGoodsTable();
+				infoController.getAddBtn().setDisable(true);
+				infoController.getSubtractBtn().setDisable(true);
+				infoController.getRemoveBtn().setDisable(true);
+				stage.close();
+			} catch (Exception e) {
+				nameLblErr.setText(ErrConstants.NAME_EXIST);
+				nameLblErr.setVisible(true);
+			}
+
 		}
 
 	}

@@ -49,9 +49,15 @@ public class AddGroupViewController {
 
 		if (!nameLblErr.isVisible()) {
 			GroupDto groupDto = new GroupDto(nameTextField.getText());
-			appController.getProxyService().addGroup(groupDto);
-			infoController.fillGroupTable();
-			stage.close();
+			try {
+				appController.getProxyService().addGroup(groupDto);
+				infoController.fillGroupTable();
+				stage.close();
+			} catch (Exception e) {
+				nameLblErr.setText(ErrConstants.NAME_EXIST);
+				nameLblErr.setVisible(true);
+			}
+
 		}
 
 	}

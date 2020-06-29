@@ -41,8 +41,7 @@ public class LoginController {
 		if (loginTextField.getText().length() >= 8 && passwordTextField.getText().length() >= 8) {
 			signInBtn.setDisable(false);
 			signUpBtn.setDisable(false);
-		}
-		else {
+		} else {
 			signInBtn.setDisable(true);
 			signUpBtn.setDisable(true);
 		}
@@ -53,8 +52,7 @@ public class LoginController {
 		if (loginTextField.getText().length() >= 8 && passwordTextField.getText().length() >= 8) {
 			signInBtn.setDisable(false);
 			signUpBtn.setDisable(false);
-		}
-		else {
+		} else {
 			signInBtn.setDisable(true);
 			signUpBtn.setDisable(true);
 		}
@@ -62,7 +60,14 @@ public class LoginController {
 
 	@FXML
 	private void signUp() throws IOException {
-		appController.getProxyService().addUser(new UserDto(loginTextField.getText(), passwordTextField.getText()));
+		try {
+			appController.getProxyService().addUser(new UserDto(loginTextField.getText(),
+					passwordTextField.getText()));
+			errLbl.setVisible(false);
+		} catch (Exception e) {
+			errLbl.setVisible(true);
+			errLbl.setText(ErrConstants.USER_EXIST);
+		}
 
 	}
 
@@ -89,8 +94,7 @@ public class LoginController {
 			hide();
 			appController.infoController.init();
 			appController.getInfoController().show();
-		}
-		else {
+		} else {
 			errLbl.setVisible(true);
 		}
 	}

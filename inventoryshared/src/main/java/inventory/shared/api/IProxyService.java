@@ -21,9 +21,9 @@ public interface IProxyService {
 
 	public ArrayList<GoodsDto> findGoods(GroupDto groupDto, String substring);
 
-	public void addGroup(GroupDto groupDto);
+	public void addGroup(GroupDto groupDto) throws Exception;
 
-	public void addGoods(GoodsDto goodsDto);
+	public void addGoods(GoodsDto goodsDto) throws Exception;
 
 	public void addQuantity(GoodsDto goodsDto, int quantity);
 
@@ -41,7 +41,7 @@ public interface IProxyService {
 
 	public boolean auth(AuthDto authDto);
 
-	public void addUser(UserDto userDto);
+	public void addUser(UserDto userDto) throws Exception;
 
 	public void logOut();
 

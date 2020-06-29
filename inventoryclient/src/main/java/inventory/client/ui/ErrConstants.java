@@ -7,4 +7,5 @@ public class ErrConstants {
 	public static final String TO_BIG_NUMBER = "Number should be less than you have";
 	public static final String EMPTY_GROUP = "You should choose group";
 	public static final String NAME_EXIST = "This name`s already engaged";
+	public static final String USER_EXIST = "This user already exist";
 }
