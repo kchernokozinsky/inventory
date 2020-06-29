@@ -14,22 +14,21 @@ public class InventoryServer {
 		storeServerTCP = new StoreServerTCP(port, key, processor);
 	}
 
-	public void run(){
-		storeServerTCP.run();
-	}
-
-	public void close() throws IOException {
-		storeServerTCP.close();
-	}
-
 	public static void main(String[] args) {
 		try {
-			InventoryServer inventoryServer = new InventoryServer(SettingsConst.TCP_SERVER_PORT,SettingsConst.KEY);
+			InventoryServer inventoryServer = new InventoryServer(SettingsConst.TCP_SERVER_PORT, SettingsConst.KEY);
 			inventoryServer.run();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
+	public void run() {
+		storeServerTCP.run();
+	}
+
+	public void close() throws IOException {
+		storeServerTCP.close();
+	}
 
 }

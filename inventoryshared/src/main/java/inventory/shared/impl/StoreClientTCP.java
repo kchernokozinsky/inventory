@@ -1,7 +1,5 @@
 package inventory.shared.impl;
 
-import inventory.shared.impl.Packet;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;

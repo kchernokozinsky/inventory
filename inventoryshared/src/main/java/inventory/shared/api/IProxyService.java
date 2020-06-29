@@ -40,6 +40,9 @@ public interface IProxyService {
 	public void start();
 
 	public boolean auth(AuthDto authDto);
+
 	public void addUser(UserDto userDto);
+
+	public void logOut();
 
 }

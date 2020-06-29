@@ -24,13 +24,12 @@ public class AddSubQuantityController {
 	private Label quantityLblErr;
 	private Stage stage;
 
-	public void init(){
+	public void init() {
 		if (TypeView.SUB == typeView) {
 			quantitySlider.setMax(goodsDto.getNumber());
 		}
 		quantitySlider.valueProperty().addListener(new ChangeListener<Number>() {
-			public void changed(ObservableValue<? extends Number> ov,
-								Number old_val, Number new_val) {
+			public void changed(ObservableValue<? extends Number> ov, Number old_val, Number new_val) {
 				quantityTextField.setText(Integer.toString(new_val.intValue()));
 			}
 		});
@@ -58,11 +57,10 @@ public class AddSubQuantityController {
 
 	@FXML
 	private void addOrSub() {
-		if (quantityTextField.getText().isEmpty()){
+		if (quantityTextField.getText().isEmpty()) {
 			quantityLblErr.setText(ErrConstants.EMPTY_FIELD);
 			quantityLblErr.setVisible(true);
-		}
-		else {
+		} else {
 			quantityLblErr.setVisible(false);
 			int quantity = 0;
 			try {
@@ -80,27 +78,24 @@ public class AddSubQuantityController {
 				quantityLblErr.setVisible(false);
 			}
 
-		if (!quantityLblErr.isVisible()) {
-			switch (typeView){
-				case SUB:
-					appController.getProxyService().subQuantity(goodsDto,quantity);
-					break;
-				case ADD:
-					appController.getProxyService().addQuantity(goodsDto,quantity);
-					break;
+			if (!quantityLblErr.isVisible()) {
+				switch (typeView) {
+					case SUB:
+						appController.getProxyService().subQuantity(goodsDto, quantity);
+						break;
+					case ADD:
+						appController.getProxyService().addQuantity(goodsDto, quantity);
+						break;
+				}
+				infoController.fillGoodsTable();
+				infoController.getAddBtn().setDisable(true);
+				infoController.getSubtractBtn().setDisable(true);
+				infoController.getRemoveBtn().setDisable(true);
+				stage.close();
 			}
-			infoController.fillGoodsTable();
-			infoController.getAddBtn().setDisable(true);
-			infoController.getSubtractBtn().setDisable(true);
-			infoController.getRemoveBtn().setDisable(true);
-			stage.close();
-		}
 		}
 
 	}
-
-
-
 
 	@FXML
 	private void cancel() {

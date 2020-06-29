@@ -51,45 +51,40 @@ public class AddGoodViewController {
 
 	@FXML
 	void create() {
-		if(nameTextField.getText().isEmpty()) {
+		if (nameTextField.getText().isEmpty()) {
 			nameLblErr.setText(ErrConstants.EMPTY_FIELD);
 			nameLblErr.setVisible(true);
-		}
-		else {
-			if (appController.getProxyService().findGood(nameTextField.getText())){
+		} else {
+			if (appController.getProxyService().findGood(nameTextField.getText())) {
 				nameLblErr.setText(ErrConstants.NAME_EXIST);
 				nameLblErr.setVisible(true);
-			}
-			else {
+			} else {
 				nameLblErr.setVisible(false);
 			}
 		}
 
-
-		if (groupComboBox.getSelectionModel().isEmpty()){
+		if (groupComboBox.getSelectionModel().isEmpty()) {
 			groupLblErr.setText(ErrConstants.EMPTY_GROUP);
 			groupLblErr.setVisible(true);
-		}
-		else {
+		} else {
 			groupLblErr.setVisible(false);
 		}
 
 		int number = 0;
 		try {
 			number = Integer.parseInt(numberTextField.getText());
-			if ( number <= 0) {
+			if (number <= 0) {
 				numberLblErr.setText(ErrConstants.TO_SMALL_NUMBER);
 				numberLblErr.setVisible(true);
-			}
-			else {
+			} else {
 				numberLblErr.setVisible(false);
 			}
-		}catch (NumberFormatException ex){
+		} catch (NumberFormatException ex) {
 			numberLblErr.setText(ErrConstants.INVALID_NUMBER);
 			numberLblErr.setVisible(true);
 		}
 
-		if (!numberLblErr.isVisible() && !nameLblErr.isVisible() && !groupLblErr.isVisible()){
+		if (!numberLblErr.isVisible() && !nameLblErr.isVisible() && !groupLblErr.isVisible()) {
 			GoodsDto goodsDto = new GoodsDto();
 			goodsDto.setName(nameTextField.getText());
 			goodsDto.setNumber(number);
@@ -102,16 +97,14 @@ public class AddGoodViewController {
 			stage.close();
 		}
 
-
 	}
 
 	public void setAppController(AppController appController) {
 		this.appController = appController;
 	}
 
-	public void init(){
-		ObservableList<GroupDto> options =
-				FXCollections.<GroupDto>observableArrayList();
+	public void init() {
+		ObservableList<GroupDto> options = FXCollections.<GroupDto>observableArrayList();
 		options.addAll(appController.getProxyService().getGroups());
 		groupComboBox.setItems(options);
 	}

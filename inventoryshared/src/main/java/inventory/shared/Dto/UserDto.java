@@ -21,12 +21,13 @@ public class UserDto {
 		this.passwordHash = passwordHash;
 	}
 
-	public UserDto(AuthDto authDto){
+	public UserDto(AuthDto authDto) {
 		this.login = authDto.getLogin();
 		this.passwordHash = BCrypt.hashpw(login + ':' + authDto.getPassword(), BCrypt.gensalt());
 	}
 
-    public UserDto() {}
+	public UserDto() {
+	}
 
 	public int getId() {
 		return id;

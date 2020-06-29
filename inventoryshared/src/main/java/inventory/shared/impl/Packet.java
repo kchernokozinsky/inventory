@@ -128,7 +128,8 @@ public class Packet {
 	}
 
 	public Short getWHeaderCrc16() {
-		return data.containsKey(Segments.wHeaderCrc16) ? PacketUtil.bytesToShort(data.get(Segments.wHeaderCrc16), 0) : null;
+		return data.containsKey(Segments.wHeaderCrc16) ? PacketUtil.bytesToShort(data.get(Segments.wHeaderCrc16), 0) :
+				null;
 	}
 
 	public Message getbMsq() {
@@ -139,7 +140,8 @@ public class Packet {
 
 	public Short getWBodyCrc16() {
 
-		return data.containsKey(Segments.wBodyCrc16) ? PacketUtil.bytesToShort(data.get(Segments.wBodyCrc16), 0) : null;
+		return data.containsKey(Segments.wBodyCrc16) ? PacketUtil.bytesToShort(data.get(Segments.wBodyCrc16), 0) :
+				null;
 	}
 
 	/* End of Properties section */
@@ -184,14 +186,15 @@ public class Packet {
 			}
 
 			//checking Header Crc16
-			short crc16 = PacketUtil.getCrc16(
-					PacketUtil.flatten(data.get(Segments.bMagic), data.get(Segments.bSrc), data.get(Segments.bPktId),
+			short crc16 = PacketUtil.getCrc16(PacketUtil
+					.flatten(data.get(Segments.bMagic), data.get(Segments.bSrc), data.get(Segments.bPktId),
 							data.get(Segments.wLen)));
 			if (crc16 != PacketUtil.bytesToShort(data.get(Segments.wHeaderCrc16), 0))
 				throw new IllegalStateException("Invalid data!");
 
 			//checking Message Crc16
-			if (PacketUtil.bytesToShort(data.get(Segments.wBodyCrc16), 0) != PacketUtil.getCrc16(data.get(Segments.bMsq))) {
+			if (PacketUtil.bytesToShort(data.get(Segments.wBodyCrc16), 0) !=
+					PacketUtil.getCrc16(data.get(Segments.bMsq))) {
 				System.out.println(PacketUtil.bytesToShort(data.get(Segments.wBodyCrc16), 0) + " " +
 						PacketUtil.getCrc16(data.get(Segments.bMsq)));
 				throw new IllegalStateException("Invalid data!");
@@ -215,8 +218,8 @@ public class Packet {
 			}
 
 			//checking Header Crc16
-			short crc16 = PacketUtil.getCrc16(
-					PacketUtil.flatten(data.get(Segments.bMagic), data.get(Segments.bSrc), data.get(Segments.bPktId),
+			short crc16 = PacketUtil.getCrc16(PacketUtil
+					.flatten(data.get(Segments.bMagic), data.get(Segments.bSrc), data.get(Segments.bPktId),
 							data.get(Segments.wLen)));
 			if (crc16 != PacketUtil.bytesToShort(data.get(Segments.wHeaderCrc16), 0))
 				throw new IllegalStateException("Invalid data!");
@@ -293,8 +296,8 @@ public class Packet {
 				this.setWLen(data.get(Segments.bMsq).length);
 
 			if (!data.containsKey(Segments.wHeaderCrc16))
-				this.setSegment(Segments.wHeaderCrc16, PacketUtil.getCrc16(
-						PacketUtil.flatten(data.get(Segments.bMagic), data.get(Segments.bSrc), data.get(Segments.bPktId),
+				this.setSegment(Segments.wHeaderCrc16, PacketUtil.getCrc16(PacketUtil
+						.flatten(data.get(Segments.bMagic), data.get(Segments.bSrc), data.get(Segments.bPktId),
 								data.get(Segments.wLen))));
 
 			if (!data.containsKey(Segments.wBodyCrc16))

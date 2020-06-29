@@ -9,6 +9,9 @@ public class ChangeGoodsQuantityDto {
 		this.quantity = quantity;
 	}
 
+	public ChangeGoodsQuantityDto() {
+	}
+
 	public GoodsDto getGoodsDto() {
 		return goodsDto;
 	}
@@ -23,5 +26,10 @@ public class ChangeGoodsQuantityDto {
 
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
+	}
+
+	@Override
+	public String toString() {
+		return "ChangeGoodsQuantityDto{" + "goodsDto=" + goodsDto + ", quantity=" + quantity + '}';
 	}
 }

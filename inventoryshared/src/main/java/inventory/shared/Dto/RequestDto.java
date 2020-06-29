@@ -8,7 +8,6 @@ public class RequestDto {
 	private String jwtAccess;
 	private String jwtRefresh;
 
-
 	public RequestDto(RequestResponseType requestType, Object data) {
 		this.requestType = requestType;
 		this.data = data;
@@ -33,7 +32,7 @@ public class RequestDto {
 		this.data = data;
 	}
 
-	public String toJson(){
+	public String toJson() {
 		return JsonConverter.objToJson(this);
 	}
 

@@ -66,7 +66,6 @@ public class InfoController {
 	@FXML
 	private Label groupFilterLbl;
 
-
 	@FXML
 	private TableView<GoodsDto> goodsTable;
 	@FXML
@@ -89,22 +88,19 @@ public class InfoController {
 	}
 
 	public void init() {
-		groupComboBox.getSelectionModel().selectedItemProperty().addListener( (options, oldValue, newValue) -> {
-					if (newValue == null) {
-						fillGoodsTable();
-					}
-					else {
-						ObservableList<GoodsDto> data = FXCollections.<GoodsDto>observableArrayList();
-						data.addAll(appController.getProxyService().findGoods(newValue));
-						goodsTable.setItems(data);
-					}
-				}
-		);
-		ObservableList<GroupDto> options =
-				FXCollections.<GroupDto>observableArrayList();
+		groupComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
+			if (newValue == null) {
+				fillGoodsTable();
+			} else {
+				ObservableList<GoodsDto> data = FXCollections.<GoodsDto>observableArrayList();
+				data.addAll(appController.getProxyService().findGoods(newValue));
+				goodsTable.setItems(data);
+			}
+		});
+		ObservableList<GroupDto> options = FXCollections.<GroupDto>observableArrayList();
 		options.addAll(appController.getProxyService().getGroups());
 		groupComboBox.setItems(options);
-		groupComboBox.getItems().add(0,null);
+		groupComboBox.getItems().add(0, null);
 		goodsTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
 			if (newSelection != null) {
 				removeBtn.setDisable(false);
@@ -140,7 +136,7 @@ public class InfoController {
 
 	@FXML
 	void goodsOnMouseExited() {
-		switch (typeView){
+		switch (typeView) {
 			case GOODS:
 
 				break;
@@ -159,7 +155,7 @@ public class InfoController {
 
 	@FXML
 	void groupsOnMouseExited() {
-		switch (typeView){
+		switch (typeView) {
 			case GOODS:
 				groupsLbl.setUnderline(false);
 				break;
@@ -176,8 +172,10 @@ public class InfoController {
 
 		MenuItem item = new MenuItem("Log out");
 		item.setOnAction(event1 -> {
-				hide();
-				appController.getLoginController().show();
+			hide();
+			appController.getProxyService().logOut();
+			appController.loginController.init();
+			appController.getLoginController().show();
 
 		});
 		contextMenu.getItems().addAll(item);
@@ -190,7 +188,7 @@ public class InfoController {
 		Stage newWindow = new Stage();
 		Scene secondScene = null;
 		try {
-			switch (typeView){
+			switch (typeView) {
 				case GOODS:
 					FXMLLoader goodFxmlLoader = new FXMLLoader(App.class.getResource("goodView.fxml"));
 					secondScene = new Scene(goodFxmlLoader.load());
@@ -227,21 +225,21 @@ public class InfoController {
 		newWindow.setResizable(false);
 		newWindow.show();
 	}
+
 	@FXML
 	void remove() {
 
-		switch (typeView){
+		switch (typeView) {
 			case GOODS:
-						GoodsDto goodsDto = goodsTable.getSelectionModel().getSelectedItem();
-						appController.getProxyService().removeGoods(goodsDto);
-						fillGoodsTable();
+				GoodsDto goodsDto = goodsTable.getSelectionModel().getSelectedItem();
+				appController.getProxyService().removeGoods(goodsDto);
+				fillGoodsTable();
 				break;
 			case GROUP:
 				GroupDto groupDto = groupTable.getSelectionModel().getSelectedItem();
 				appController.getProxyService().removeGroup(groupDto);
 				fillGroupTable();
 				break;
-
 		}
 
 		removeBtn.setDisable(true);
@@ -251,11 +249,10 @@ public class InfoController {
 
 	@FXML
 	void chooseGoods() {
-		ObservableList<GroupDto> options =
-				FXCollections.<GroupDto>observableArrayList();
+		ObservableList<GroupDto> options = FXCollections.<GroupDto>observableArrayList();
 		options.addAll(appController.getProxyService().getGroups());
 		groupComboBox.setItems(options);
-		groupComboBox.getItems().add(0,null);
+		groupComboBox.getItems().add(0, null);
 		groupComboBox.setItems(options);
 		groupComboBox.setVisible(true);
 		groupFilterLbl.setVisible(true);
@@ -268,7 +265,6 @@ public class InfoController {
 		groupTable.setVisible(false);
 		goodsTable.setVisible(true);
 		fillGoodsTable();
-//		FillList();
 	}
 
 	@FXML
@@ -286,12 +282,11 @@ public class InfoController {
 		goodsTable.setVisible(false);
 		groupTable.setVisible(true);
 		fillGroupTable();
-
-//		FillList();
 	}
+
 	@FXML
 	void onSearchFieldChange() {
-		switch (typeView){
+		switch (typeView) {
 			case GROUP:
 				fillGroupTable();
 				break;
@@ -301,8 +296,7 @@ public class InfoController {
 		}
 	}
 
-
-	void fillGroupTable(){
+	void fillGroupTable() {
 		ObservableList<GroupDto> data = FXCollections.<GroupDto>observableArrayList();
 		if (searchField.getText().isEmpty())
 			data.addAll(appController.getProxyService().getGroups());
@@ -312,20 +306,20 @@ public class InfoController {
 
 		groupTable.setItems(data);
 	}
-	void fillGoodsTable(){
+
+	void fillGoodsTable() {
 		System.out.println(searchField.getText());
 		goodsTable.getItems().clear();
 		ObservableList<GoodsDto> data = FXCollections.<GoodsDto>observableArrayList();
 
 		if (searchField.getText().isEmpty() && groupComboBox.getSelectionModel().getSelectedItem() == null)
-		data.addAll(appController.getProxyService().getGoods());
-		else if (!searchField.getText().isEmpty() && groupComboBox.getSelectionModel().getSelectedItem() == null){
+			data.addAll(appController.getProxyService().getGoods());
+		else if (!searchField.getText().isEmpty() && groupComboBox.getSelectionModel().getSelectedItem() == null) {
 			data.addAll(appController.getProxyService().findGoods(searchField.getText()));
-		}
-		else if (!searchField.getText().isEmpty() && groupComboBox.getSelectionModel().getSelectedItem() != null){
-			data.addAll(appController.getProxyService().findGoods(groupComboBox.getSelectionModel().getSelectedItem(), searchField.getText()));
-		}
-		else if (searchField.getText().isEmpty() && groupComboBox.getSelectionModel().getSelectedItem() != null){
+		} else if (!searchField.getText().isEmpty() && groupComboBox.getSelectionModel().getSelectedItem() != null) {
+			data.addAll(appController.getProxyService()
+					.findGoods(groupComboBox.getSelectionModel().getSelectedItem(), searchField.getText()));
+		} else if (searchField.getText().isEmpty() && groupComboBox.getSelectionModel().getSelectedItem() != null) {
 			data.addAll(appController.getProxyService().findGoods(groupComboBox.getSelectionModel().getSelectedItem()));
 		}
 
@@ -333,55 +327,21 @@ public class InfoController {
 	}
 
 
-//	void FillList() {
-//		RequestDto requestDto = null;
-//		switch (typeView){
-//			case GOODS:
-//				if (searchField.getText().isEmpty()) {
-//					requestDto = RequestUtil.getAllGroups(appController.getInventoryClient().getJwt());
-//				}
-//				else {
-//					requestDto = RequestUtil.findGroups(searchField.getText(), appController.getInventoryClient().getJwt());
-//				}
-//				break;
-//			case GROUP:
-//				if (searchField.getText().isEmpty()) {
-//					requestDto = RequestUtil.getAllGoods(appController.getInventoryClient().getJwt());
-//				}
-//				else {
-//					requestDto = RequestUtil.findGoods(searchField.getText(), appController.getInventoryClient().getJwt());
-//				}
-//				break;
-//
-//		}
-//
-//		Packet packet = RequestPacketsUtil.createRequestPacket(requestDto,
-//				appController.getInventoryClient().getClientSocket().getInetAddress(),
-//				appController.getInventoryClient().getClientSocket().getPort());
-//		try {
-//			Packet responsePacket = appController.getInventoryClient().sendMessage(packet.encode());
-//			ResponseDto responseDto = RequestUtil.packetToResponse(responsePacket);
-//
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//	}
-
 	@FXML
-	private void addQuantity(){
+	private void addQuantity() {
 		Stage newWindow = new Stage();
 		Scene secondScene = null;
 		try {
-					FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("addSubQuantity.fxml"));
-					secondScene = new Scene(fxmlLoader.load());
-					AddSubQuantityController addSubQuantityController = fxmlLoader.getController();
-					addSubQuantityController.setAppController(appController);
-					addSubQuantityController.setInfoController(this);
-					addSubQuantityController.setGoodsDto(goodsTable.getSelectionModel().getSelectedItem());
-					addSubQuantityController.setStage(newWindow);
-					addSubQuantityController.setTypeView(TypeView.ADD);
-					addSubQuantityController.init();
-					newWindow.setTitle("Add");
+			FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("addSubQuantity.fxml"));
+			secondScene = new Scene(fxmlLoader.load());
+			AddSubQuantityController addSubQuantityController = fxmlLoader.getController();
+			addSubQuantityController.setAppController(appController);
+			addSubQuantityController.setInfoController(this);
+			addSubQuantityController.setGoodsDto(goodsTable.getSelectionModel().getSelectedItem());
+			addSubQuantityController.setStage(newWindow);
+			addSubQuantityController.setTypeView(TypeView.ADD);
+			addSubQuantityController.init();
+			newWindow.setTitle("Add");
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -396,7 +356,7 @@ public class InfoController {
 	}
 
 	@FXML
-	private void subQuantity(){
+	private void subQuantity() {
 		Stage newWindow = new Stage();
 		Scene secondScene = null;
 		try {
@@ -422,6 +382,5 @@ public class InfoController {
 		newWindow.setResizable(false);
 		newWindow.show();
 	}
-
 
 }

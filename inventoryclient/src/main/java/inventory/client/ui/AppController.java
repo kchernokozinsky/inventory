@@ -2,18 +2,14 @@ package inventory.client.ui;
 
 import inventory.client.impl.ProxyService;
 import inventory.shared.api.IProxyService;
-import inventory.shared.impl.ProxyServiceMock;
 import javafx.fxml.FXML;
+import javafx.scene.layout.BorderPane;
 
 public class AppController {
 	@FXML
 	InfoController infoController;
 	@FXML
 	LoginController loginController;
-	@FXML
-	AddGoodViewController addGoodViewController;
-	@FXML
-	AddGroupViewController addGroupViewController;
 
 
 	private IProxyService proxyService;
@@ -30,13 +26,6 @@ public class AppController {
 		return loginController;
 	}
 
-	public AddGoodViewController getAddGoodViewController() {
-		return addGoodViewController;
-	}
-
-	public AddGroupViewController getAddGroupViewController() {
-		return addGroupViewController;
-	}
 
 	public void init() {
 		proxyService = new ProxyService();
@@ -45,7 +34,6 @@ public class AppController {
 		infoController.setAppController(this);
 		loginController.init();
 		infoController.hide();
-
 
 	}
 }

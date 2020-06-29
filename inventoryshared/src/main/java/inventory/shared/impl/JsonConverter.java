@@ -2,7 +2,6 @@ package inventory.shared.impl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import inventory.shared.Dto.RequestDto;
 import inventory.shared.Dto.RequestResponseType;
 import inventory.shared.Dto.ResponseDto;
@@ -22,12 +21,12 @@ public class JsonConverter {
 		return res;
 	}
 
-	public static Object jsonToObj(String json, Class<?> klass){
+	public static Object jsonToObj(String json, Class<?> klass) {
 
 		ObjectMapper objectMapper = new ObjectMapper();
 		Object value = null;
 		try {
-			 value = objectMapper.readValue(json, klass);
+			value = objectMapper.readValue(json, klass);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -36,10 +35,11 @@ public class JsonConverter {
 
 	public static void fixRequest(Object obj) {
 		if (obj instanceof RequestDto) {
-			RequestDto requestDto = (RequestDto)obj;
+			RequestDto requestDto = (RequestDto) obj;
 			Object data = requestDto.getData();
 			RequestResponseType requestResponseType = requestDto.getRequestType();
-			if (data == null || requestResponseType == null) return;
+			if (data == null || requestResponseType == null)
+				return;
 			String dataJson = objToJson(data);
 			data = jsonToObj(dataJson, requestResponseType.getRequestKlass());
 			requestDto.setData(data);
@@ -48,10 +48,11 @@ public class JsonConverter {
 
 	public static void fixResponse(Object obj) {
 		if (obj instanceof ResponseDto) {
-			ResponseDto responseDto = (ResponseDto)obj;
+			ResponseDto responseDto = (ResponseDto) obj;
 			Object data = responseDto.getData();
 			RequestResponseType requestResponseType = responseDto.getRequestResponseType();
-			if (data == null || requestResponseType == null) return;
+			if (data == null || requestResponseType.getResponseKlass() == null)
+				return;
 			String dataJson = objToJson(data);
 			data = jsonToObj(dataJson, requestResponseType.getResponseKlass());
 			responseDto.setData(data);

@@ -41,7 +41,7 @@ public class ResponseDto {
 		this.data = data;
 	}
 
-	public String toJson(){
+	public String toJson() {
 		return JsonConverter.objToJson(this);
 	}
 

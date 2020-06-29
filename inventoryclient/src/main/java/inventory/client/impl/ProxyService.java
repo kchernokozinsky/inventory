@@ -118,6 +118,7 @@ public class ProxyService implements IProxyService {
 				.createRequestPacket(requestDto, inventoryClient.getClientSocket().getInetAddress(),
 						inventoryClient.getClientSocket().getPort());
 		ResponseDto responseDto = RequestUtil.packetToResponse(inventoryClient.sendMessage(requestPacket.encode()));
+		System.out.println(responseDto.getData());
 		groups = new ArrayList<GroupDto>(Arrays.asList((GroupDto[]) responseDto.getData()));
 	}
 
@@ -135,6 +136,7 @@ public class ProxyService implements IProxyService {
 	public void addQuantity(GoodsDto goodsDto, int quantity) {
 		ChangeGoodsQuantityDto changeGoodsQuantityDto = new ChangeGoodsQuantityDto(goodsDto, quantity);
 		RequestDto requestDto = RequestUtil.changeGoodsQuantity(changeGoodsQuantityDto, inventoryClient.getJwt());
+		System.out.println("Request: " + requestDto.getData());
 		Packet requestPacket = RequestPacketsUtil
 				.createRequestPacket(requestDto, inventoryClient.getClientSocket().getInetAddress(),
 						inventoryClient.getClientSocket().getPort());
@@ -146,6 +148,7 @@ public class ProxyService implements IProxyService {
 	public void subQuantity(GoodsDto goodsDto, int quantity) {
 		ChangeGoodsQuantityDto changeGoodsQuantityDto = new ChangeGoodsQuantityDto(goodsDto, -1 * quantity);
 		RequestDto requestDto = RequestUtil.changeGoodsQuantity(changeGoodsQuantityDto, inventoryClient.getJwt());
+		System.out.println("Request: " + requestDto);
 		Packet requestPacket = RequestPacketsUtil
 				.createRequestPacket(requestDto, inventoryClient.getClientSocket().getInetAddress(),
 						inventoryClient.getClientSocket().getPort());
@@ -216,5 +219,14 @@ public class ProxyService implements IProxyService {
 				.createRequestPacket(requestDto, inventoryClient.getClientSocket().getInetAddress(),
 						inventoryClient.getClientSocket().getPort());
 		inventoryClient.sendMessage(requestPacket.encode());
+	}
+
+	@Override
+	public void logOut() {
+		inventoryClient.setJwt(null);
+		goods = null;
+		groups = null;
+
+
 	}
 }

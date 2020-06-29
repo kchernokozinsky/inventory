@@ -10,7 +10,6 @@ public class GoodsDto {
 
 	private int groupId;
 
-
 	public GoodsDto(String name, int number, int groupId) {
 		this.name = name;
 		this.number = number;
@@ -24,7 +23,8 @@ public class GoodsDto {
 		this.groupId = groupId;
 	}
 
-    public GoodsDto() {}
+	public GoodsDto() {
+	}
 
 	public int getId() {
 		return id;

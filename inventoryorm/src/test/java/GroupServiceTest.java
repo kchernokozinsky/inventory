@@ -1,4 +1,3 @@
-import inventory.orm.entity.Group;
 import inventory.orm.services.GoodsService;
 import inventory.orm.services.GroupService;
 import inventory.shared.Dto.GoodsDto;
@@ -51,24 +50,24 @@ public class GroupServiceTest {
 		GroupService.getGroupService().update(new GroupDto(GroupDTO.getId(), "name"));
 	}
 
-    @Ignore
-    public void deleteTest() {
-        try {
-            GroupService.getGroupService().delete(GroupService.getGroupService().getByName("name"));
-        } catch (Exception e) {
-        }
-        try {
-            GroupService.getGroupService().delete(GroupService.getGroupService().getByName("group"));
-        } catch (Exception e) {
-        }
-        try {
-            GroupService.getGroupService().delete(GroupService.getGroupService().getByName("anme"));
-        } catch (Exception e) {
-        }
-        try {
-            GroupService.getGroupService().delete(GroupService.getGroupService().getByName("pugro"));
-        } catch (Exception e) {
-        }
-    }
+	@Ignore
+	public void deleteTest() {
+		try {
+			GroupService.getGroupService().delete(GroupService.getGroupService().getByName("name"));
+		} catch (Exception e) {
+		}
+		try {
+			GroupService.getGroupService().delete(GroupService.getGroupService().getByName("group"));
+		} catch (Exception e) {
+		}
+		try {
+			GroupService.getGroupService().delete(GroupService.getGroupService().getByName("anme"));
+		} catch (Exception e) {
+		}
+		try {
+			GroupService.getGroupService().delete(GroupService.getGroupService().getByName("pugro"));
+		} catch (Exception e) {
+		}
+	}
 
 }

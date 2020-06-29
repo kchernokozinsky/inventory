@@ -1,7 +1,6 @@
 package inventory.client.impl.Utils;
 
 import inventory.shared.Dto.RequestDto;
-import inventory.shared.Dto.ResponseDto;
 import inventory.shared.impl.JsonConverter;
 import inventory.shared.impl.Message;
 import inventory.shared.impl.Packet;
@@ -10,11 +9,7 @@ import java.net.InetAddress;
 
 public class RequestPacketsUtil {
 
-
-
-
-
-	public static Packet createRequestPacket(RequestDto request, InetAddress clientAddress, int clientPort){
+	public static Packet createRequestPacket(RequestDto request, InetAddress clientAddress, int clientPort) {
 		String requestJson = JsonConverter.objToJson(request);
 		Message.Builder mBuilder = new Message.Builder();
 		mBuilder.setCType(1).setBUserId(1).setMessage(requestJson);

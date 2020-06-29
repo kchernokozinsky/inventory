@@ -6,7 +6,7 @@ import inventory.shared.impl.Packet;
 
 public class RequestUtil {
 
-	public static ResponseDto packetToResponse(Packet packet){
+	public static ResponseDto packetToResponse(Packet packet) {
 		ResponseDto responseDto =
 				(ResponseDto) JsonConverter.jsonToObj(packet.getbMsq().getMessage(), ResponseDto.class);
 		JsonConverter.fixResponse(responseDto);
@@ -92,7 +92,6 @@ public class RequestUtil {
 
 	}
 
-
 	public static RequestDto findGroups(String substring, String jwt) {
 		RequestDto requestDto = new RequestDto();
 		requestDto.setJwtAccess(jwt);
@@ -117,11 +116,6 @@ public class RequestUtil {
 		requestDto.setRequestType(RequestResponseType.FIND_GROUP);
 		return requestDto;
 	}
-
-
-
-
-
 
 	public static RequestDto authorisation(AuthDto authDto) {
 		RequestDto requestDto = new RequestDto();

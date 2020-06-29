@@ -28,7 +28,6 @@ public class HibernateSessionFactoryUtil {
 		System.out.println(sessionFactoryGroup);
 		System.out.println(sessionFactoryUser);
 
-
 		if (sessionFactory == null) {
 			try {
 				System.out.println("1111");

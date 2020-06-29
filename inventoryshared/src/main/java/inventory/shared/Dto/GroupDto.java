@@ -14,7 +14,8 @@ public class GroupDto {
 		this.name = name;
 	}
 
-    public GroupDto() {}
+	public GroupDto() {
+	}
 
 	public String getName() {
 		return name;
@@ -24,12 +25,12 @@ public class GroupDto {
 		this.name = name;
 	}
 
-	public void setId(int id) {
-		this.id = id;
-	}
-
 	public int getId() {
 		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	@Override

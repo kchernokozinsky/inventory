@@ -42,6 +42,10 @@ public class LoginController {
 			signInBtn.setDisable(false);
 			signUpBtn.setDisable(false);
 		}
+		else {
+			signInBtn.setDisable(true);
+			signUpBtn.setDisable(true);
+		}
 	}
 
 	@FXML
@@ -49,6 +53,10 @@ public class LoginController {
 		if (loginTextField.getText().length() >= 8 && passwordTextField.getText().length() >= 8) {
 			signInBtn.setDisable(false);
 			signUpBtn.setDisable(false);
+		}
+		else {
+			signInBtn.setDisable(true);
+			signUpBtn.setDisable(true);
 		}
 	}
 
@@ -67,7 +75,11 @@ public class LoginController {
 	}
 
 	public void init() {
+		passwordTextField.setText("");
+		loginTextField.setText("");
 		errLbl.setVisible(false);
+		signInBtn.setDisable(true);
+		signUpBtn.setDisable(true);
 	}
 
 	@FXML
@@ -77,6 +89,9 @@ public class LoginController {
 			hide();
 			appController.infoController.init();
 			appController.getInfoController().show();
+		}
+		else {
+			errLbl.setVisible(true);
 		}
 	}
 }

@@ -10,6 +10,10 @@ public class AddGroupViewController {
 	private AppController appController;
 	private InfoController infoController;
 	private Stage stage;
+	@FXML
+	private TextField nameTextField;
+	@FXML
+	private Label nameLblErr;
 
 	public void setAppController(AppController appController) {
 		this.appController = appController;
@@ -24,34 +28,26 @@ public class AddGroupViewController {
 	}
 
 	@FXML
-	private TextField nameTextField;
-
-	@FXML
-	private Label nameLblErr;
-
-	@FXML
 	void cancel() {
 		stage.close();
 	}
 
 	@FXML
 	void create() {
-		if (nameTextField.getText().isEmpty()){
+		if (nameTextField.getText().isEmpty()) {
 			nameLblErr.setText(ErrConstants.EMPTY_FIELD);
 			nameLblErr.setVisible(true);
-		}
-		else {
+		} else {
 			nameLblErr.setVisible(false);
 		}
-		if (appController.getProxyService().findGroup(nameTextField.getText())){
+		if (appController.getProxyService().findGroup(nameTextField.getText())) {
 			nameLblErr.setText(ErrConstants.NAME_EXIST);
 			nameLblErr.setVisible(true);
-		}
-		else {
+		} else {
 			nameLblErr.setVisible(false);
 		}
 
-		if (!nameLblErr.isVisible()){
+		if (!nameLblErr.isVisible()) {
 			GroupDto groupDto = new GroupDto(nameTextField.getText());
 			appController.getProxyService().addGroup(groupDto);
 			infoController.fillGroupTable();
