@@ -8,7 +8,8 @@ import java.net.Socket;
 
 public class InventoryClient {
 	private StoreClientTCP storeClientTCP;
-	private String jwt;
+	private String jwtAccess;
+	private String jwtRefresh;
 
 	public InventoryClient() {
 		this.storeClientTCP = new StoreClientTCP();
@@ -35,14 +36,29 @@ public class InventoryClient {
 		storeClientTCP.stopConnection();
 	}
 
-	public String getJwt() {
-		return jwt;
+	public String getJwtAccess() {
+		return jwtAccess;
 	}
 
-	public void setJwt(String jwt) {
-		this.jwt = jwt;
+	public void setJwtAccess(String jwtAccess) {
+		this.jwtAccess = jwtAccess;
 	}
 
+	public StoreClientTCP getStoreClientTCP() {
+		return storeClientTCP;
+	}
+
+	public void setStoreClientTCP(StoreClientTCP storeClientTCP) {
+		this.storeClientTCP = storeClientTCP;
+	}
+
+	public String getJwtRefresh() {
+		return jwtRefresh;
+	}
+
+	public void setJwtRefresh(String jwtRefresh) {
+		this.jwtRefresh = jwtRefresh;
+	}
 }
 
 

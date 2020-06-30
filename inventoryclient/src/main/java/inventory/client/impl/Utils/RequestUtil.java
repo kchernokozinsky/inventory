@@ -123,4 +123,11 @@ public class RequestUtil {
 		requestDto.setData(authDto);
 		return requestDto;
 	}
+
+	public static RequestDto refreshJwt(String jwt) {
+		RequestDto requestDto = new RequestDto();
+		requestDto.setRequestType(RequestResponseType.REFRESH_JWT);
+		requestDto.setJwtRefresh(jwt);
+		return requestDto;
+	}
 }

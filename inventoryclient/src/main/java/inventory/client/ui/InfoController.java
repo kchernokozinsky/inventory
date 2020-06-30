@@ -160,7 +160,6 @@ public class InfoController {
 				break;
 
 		}
-
 	}
 
 	@FXML
@@ -300,14 +299,17 @@ public class InfoController {
 	void fillGoodsTable() {
 		goodsTable.getItems().clear();
 		ObservableList<GoodsDto> data = FXCollections.<GoodsDto>observableArrayList();
-		if (searchField.getText().isEmpty() && groupComboBox.getSelectionModel().getSelectedItem() == null)
+		if (searchField.getText().isEmpty() && groupComboBox.getSelectionModel().getSelectedItem() == null){
 			data.addAll(appController.getProxyService().getGoods());
-		else if (!searchField.getText().isEmpty() && groupComboBox.getSelectionModel().getSelectedItem() == null) {
+		}
+		else if (!searchField.getText().isEmpty() && groupComboBox.getSelectionModel().getSelectedItem() == null){
 			data.addAll(appController.getProxyService().findGoods(searchField.getText()));
-		} else if (!searchField.getText().isEmpty() && groupComboBox.getSelectionModel().getSelectedItem() != null) {
+		}
+		else if (!searchField.getText().isEmpty() && groupComboBox.getSelectionModel().getSelectedItem() != null) {
 			data.addAll(appController.getProxyService()
 					.findGoods(groupComboBox.getSelectionModel().getSelectedItem(), searchField.getText()));
-		} else if (searchField.getText().isEmpty() && groupComboBox.getSelectionModel().getSelectedItem() != null) {
+		}
+		else if (searchField.getText().isEmpty() && groupComboBox.getSelectionModel().getSelectedItem() != null) {
 			data.addAll(appController.getProxyService().findGoods(groupComboBox.getSelectionModel().getSelectedItem()));
 		}
 		goodsTable.setItems(data);

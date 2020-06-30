@@ -18,6 +18,8 @@ import java.util.concurrent.TimeUnit;
 
 public class Processor implements IProcessor {
 	private ISender sender;
+	private static final long JWT_ACCESS_TIME = TimeUnit.HOURS.toMillis(1);
+	private static final long JWT_REFRESH_TIME = TimeUnit.HOURS.toMillis(10);
 
 	public Processor(ISender sender) {
 		this.sender = sender;
@@ -198,8 +200,8 @@ public class Processor implements IProcessor {
 			return responseDto;
 		}
 		responseDto.setResponseErrorType(ResponseErrorType.OK);
-		responseDto.setJwtAccess(JwtTokenUtil.createJWT("inventory", userDto.getLogin(), 20, false));
-		responseDto.setJwtRefresh(JwtTokenUtil.createJWT("inventory", userDto.getLogin(), 1000000000, true));
+		responseDto.setJwtAccess(JwtTokenUtil.createJWT("inventory", userDto.getLogin(), JWT_ACCESS_TIME, false));
+		responseDto.setJwtRefresh(JwtTokenUtil.createJWT("inventory", userDto.getLogin(), JWT_REFRESH_TIME, true));
 		return responseDto;
 	}
 
@@ -343,8 +345,8 @@ public class Processor implements IProcessor {
 		}
 
 		responseDto.setResponseErrorType(ResponseErrorType.OK);
-		String setJwtAccess = JwtTokenUtil.createJWT("inventory", jwtRefresh.getSubject(), 20, false);
-		String setJwtRefresh = JwtTokenUtil.createJWT("inventory", jwtRefresh.getSubject(), 1000000000, true);
+		String setJwtAccess = JwtTokenUtil.createJWT("inventory", jwtRefresh.getSubject(), JWT_ACCESS_TIME, false);
+		String setJwtRefresh = JwtTokenUtil.createJWT("inventory", jwtRefresh.getSubject(), JWT_REFRESH_TIME, true);
 		System.out.println("jwt trouble  ");
 		System.out.println(setJwtAccess);
 		System.out.println(setJwtRefresh);
@@ -369,9 +371,9 @@ public class Processor implements IProcessor {
 		}
 		responseDto.setResponseErrorType(ResponseErrorType.OK);
 		responseDto.setJwtAccess(
-				JwtTokenUtil.createJWT("inventory", userDto.getLogin(), TimeUnit.HOURS.toMillis(1), false));
+				JwtTokenUtil.createJWT("inventory", userDto.getLogin(), JWT_ACCESS_TIME, false));
 		responseDto.setJwtRefresh(
-				JwtTokenUtil.createJWT("inventory", userDto.getLogin(), TimeUnit.HOURS.toMillis(10), true));
+				JwtTokenUtil.createJWT("inventory", userDto.getLogin(), JWT_REFRESH_TIME, true));
 		return responseDto;
 	}
 
