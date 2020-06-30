@@ -86,10 +86,16 @@ public class InfoController {
 	public void init() {
 		groupComboBox.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
 			if (newValue == null) {
+				columnGroup.setVisible(true);
 				fillGoodsTable();
 			} else {
+				columnGroup.setVisible(false);
 				ObservableList<GoodsDto> data = FXCollections.<GoodsDto>observableArrayList();
+				if(searchField.getText().isEmpty())
 				data.addAll(appController.getProxyService().findGoods(newValue));
+				else {
+					data.addAll(appController.getProxyService().findGoods(newValue, searchField.getText()));
+				}
 				goodsTable.setItems(data);
 			}
 		});
